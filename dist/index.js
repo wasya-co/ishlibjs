@@ -2,14 +2,14 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = _interopDefault(require('react'));
 
-var styles = {"test":"_3ybTi"};
-
-var ExampleComponent = function ExampleComponent(_ref) {
-  var text = _ref.text;
-  return /*#__PURE__*/React.createElement("div", {
-    className: styles.test
-  }, "Example Component: ", text);
+var SimpleJwtRow = function SimpleJwtRow() {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "SimpleJwtRow"));
 };
 
-exports.ExampleComponent = ExampleComponent;
+var index = {
+  __proto__: null,
+  SimpleJwtRow: SimpleJwtRow
+};
+
+exports.jwtManager = index;
 //# sourceMappingURL=index.js.map

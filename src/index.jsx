@@ -1,3 +1,5 @@
 import React from 'react'
 
-export { * as jwtManager } from './jwt_manager'
+import * as jwtManager from './jwt_manager'
+export { jwtManager }
+

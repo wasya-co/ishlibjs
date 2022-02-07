@@ -13,12 +13,10 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-import C from "./C"
-
 /* A */
-export { default as useApi } from "./Api"
-export { default as AppMock } from "./AppMock"
-export { default as AppRouter } from "./AppRouter"
+// export { default as useApi } from "./Api"
+// export { default as AppMock } from "./AppMock"
+// export { default as AppRouter } from "./AppRouter"
 
 /* B */
 
@@ -48,7 +46,6 @@ export const Btn = styled.div`
 
 /* C */
 
-export { C }
 export const ChevronLeft = styled(_ChevronLeft)`
   color: ${(p) => p.theme.colors.text}
 `;
@@ -69,35 +66,6 @@ export const Card = styled(_Box)`
   flex-direction: column;
 `;
 
-export { default as Collapsible } from "./Collapsible"
-export const CollapsibleContext = React.createContext({})
-/**
- * @TODO: test-driven
- */
-export const CollapsibleContextProvider = ({ children, ...props }) => {
-  // logg(props, 'CollapsibleContextProvider')
-
-  let defaultCollapsibles = {
-    [C.collapsible.descr]: true,
-  }
-  let tmp
-  if (tmp = localStorage.getItem(C.collapsibles)) {
-    try {
-      defaultCollapsibles = JSON.parse(tmp)
-    } catch (err) {
-      logg(err, 'Could not parse collapsibles from localStorage')
-    }
-  }
-  const [ collapsibles, _setCollapsibles ] = useState(defaultCollapsibles)
-  const setCollapsibles = (m) => {
-    localStorage.setItem(C.collapsibles, JSON.stringify(m))
-    _setCollapsibles(m)
-  }
-
-  return <CollapsibleContext.Provider value={{
-    collapsibles, setCollapsibles,
-  }} >{ children }</CollapsibleContext.Provider>
-}
 
 /* D */
 /* I */
@@ -116,9 +84,6 @@ export const inflector = {
     }
   },
 }
-
-/* J */
-
 
 /* L */
 
@@ -184,92 +149,6 @@ export { default as request } from "./request"
 export { default as S } from "./S"
 
 /* T */
-
-export const TwofoldContext = React.createContext({})
-export const TwofoldContextProvider = ({ children, ...props }) => {
-  // logg(props, 'TwofoldContextProvider')
-  const {
-    layout, setLayout,
-    loginModalOpen, setLoginModalOpen,
-    theme, toggleTheme,
-  } = props
-
-  /* B */
-  // @TODO: does localStorage work like this on mobile?
-  // @TODO: try and catch
-  const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(JSON.parse(localStorage.getItem(C.bottomDrawerOpen)))
-  const setBottomDrawerOpen = (m) => {
-    localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
-    _setBottomDrawerOpen(m)
-  }
-
-  /* F */
-  const [ folded, setFolded ] = useState()
-
-  /* I */
-  const [ itemToUnlock, _setItemToUnlock ] = useState({})
-  const setItemToUnlock = (item) => {
-    if (itemToUnlock.id !== item.id && !loginModalOpen) {
-      _setItemToUnlock(item)
-    }
-  }
-
-  /* M */
-  const [ mapPanelWidth, setMapPanelWidth ] = useState(null)
-  const [ mapPanelHeight, setMapPanelHeight ] = useState(null)
-
-  /* R */
-  const [ ratedConfirmation, _setRatedConfirmation ] = useState(JSON.parse(localStorage.getItem(C.ratedConfirmation)))
-  const setRatedConfirmation = (which) => {
-    logg(which, 'setting')
-
-    localStorage.setItem(C.ratedConfirmation, JSON.stringify(which))
-    _setRatedConfirmation(which)
-  }
-
-  /* S */
-  const [ showItem, setShowItem ] = useState(false)
-  const [ showUrl, setShowUrl ] = useState(false)
-
-  /* T */
-  let tmp, defaultTwofoldPercent = 0.5
-  if (tmp = localStorage.getItem(C.twofoldPercent)) {
-    try {
-      defaultTwofoldPercent = JSON.parse(tmp)
-    } catch (err) {
-      logg(err, 'cannot get twofoldPercent from localStorage')
-    }
-  }
-  const [ twofoldPercent, setTwofoldPercent ] = useState(0.5)
-
-  /* Z */
-  const [ zoom, setZoom ] = useState(1)
-
-  return <TwofoldContext.Provider value={{
-    bottomDrawerOpen, setBottomDrawerOpen,
-
-    folded, setFolded,
-
-    itemToUnlock, setItemToUnlock,
-
-    layout, setLayout,
-    loginModalOpen, setLoginModalOpen,
-
-    mapPanelHeight, setMapPanelHeight,
-    mapPanelWidth, setMapPanelWidth,
-
-    ratedConfirmation, setRatedConfirmation,
-
-    showItem, setShowItem,
-    showUrl, setShowUrl,
-
-    twofoldPercent, setTwofoldPercent,
-
-    zoom, setZoom,
-
-    theme, toggleTheme,
-  }} >{ children }</TwofoldContext.Provider>
-}
 
 /* U */
 export { default as useWindowSize } from './useWindowSize'

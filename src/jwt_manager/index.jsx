@@ -4,6 +4,9 @@
 
 import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
+
+import { Btn, logg, request } from "../shared" // @TODO: alias $shared
 
 
 
@@ -30,7 +33,6 @@ JwtContextProvider.props = {
 }
 export { JwtContextProvider }
 
-import { Btn, logg, request } from "../shared" // @TODO: alias $shared
 
 export const SimpleJwtRow = () => {
   return <div>

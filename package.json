@@ -53,6 +53,8 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "prop-types": "^15.8.1"
+    "axios": "^0.25.0",
+    "prop-types": "^15.8.1",
+    "styled-components": "^5.3.3"
   }
 }

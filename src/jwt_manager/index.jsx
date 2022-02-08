@@ -3,10 +3,10 @@
  */
 
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 
-import { Btn, logg, request } from "../shared" // @TODO: alias $shared
+import { Btn, C, logg, request } from "../shared" // @TODO: alias $shared
 
 
 
@@ -14,12 +14,13 @@ import { Btn, logg, request } from "../shared" // @TODO: alias $shared
 // @TODO: replace TwofoldContext in guydme with the one from ishjs.
 export const JwtContext = React.createContext({})
 const JwtContextProvider = ({ children, ...props }) => {
-  // logg(props, 'JwtContextProvider')
+  logg(props, 'JwtContextProvider')
   const {
     config,
   } = props
 
-  const [ currentUser, setCurrentUser ] = useState({})
+  const maybeUser = localStorage.getItem(C.current_user)||{}
+  const [ currentUser, setCurrentUser ] = useState(maybeUser) // @TODO: see if localStorage has me already logged in!
   const [ loginModalOpen, setLoginModalOpen ] = useState({})
 
   return <JwtContext.Provider value={{
@@ -33,11 +34,33 @@ JwtContextProvider.props = {
 }
 export { JwtContextProvider }
 
+// @TODO: move to shared?
+const FlexRow = styled.div`
+  display: flex;
+
+  > * {
+    margin: auto .4em;
+  }
+`;
+
+const W1 = styled.div`
+  border: 1px solid red;
+`;
 
 export const SimpleJwtRow = () => {
-  return <div>
-    <h1>SimpleJwtRow2</h1>
-  </div>
+  const {
+    config,
+    currentUser, setCurrentUser,
+    loginModalOpen, setLoginModalOpen,
+  } = useContext(JwtContext)
+
+  return <W1>
+    <FlexRow>
+      { /* <FbLogin /> */ }
+      { currentUser.email && <i>{currentUser.email}</i> }
+      { !currentUser.email && <LoginWithPassword /> }
+    </FlexRow>
+  </W1>
 }
 
 
@@ -51,6 +74,7 @@ const _W = styled.div`
 `;
 
 export const LoginWithPassword = (props) => {
+  logg(useContext(JwtContext), 'useContext(JwtContext)')
   const {
     config,
     currentUser, setCurrentUser,
@@ -60,7 +84,8 @@ export const LoginWithPassword = (props) => {
   const [ password, setPassword ] = useState('')
 
   const doPasswordLogin = async (email, password) => {
-    request.post(`${config.apiOrigin}${config.routes.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
+    logg(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, 'doPasswordLogin')
+    request.post(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, { email, password }).then((r) => r.data).then((resp) => {
       localStorage.setItem(C.jwt_token, resp.jwt_token)
       localStorage.setItem(C.current_user, JSON.stringify(resp))
       setCurrentUser(resp) // must be done *after* setting C.jwt_token
@@ -79,7 +104,7 @@ export const LoginWithPassword = (props) => {
         if (e.key === 'Enter') { doPasswordLogin(email, password) }
       }}
     />
-    <Btn onClick={() => doPasswordLogin(email, password)}>Password Login</Btn>
+    <Btn onClick={() => doPasswordLogin(email, password)}>Login</Btn>
   </_W>
 }
 

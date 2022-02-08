@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import 'ionicons/icons';
@@ -50,6 +50,60 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   strings.raw = raw;
   return strings;
 }
+
+var C = {
+  anonUser: {},
+  bottomDrawerOpen: 'bottom-drawer-open',
+  collapsible: {
+    description: "descr-sec",
+    extra1: "extra1-sec",
+    extra2: "extra2-sec",
+    extra3: "extra3-sec",
+    map: "map-sec",
+    markers: "markers-sec"
+  },
+  collapsibles: 'collapsibles',
+  current_user: 'current_user',
+  foldedCenter: 'folded-center',
+  foldedLeft: 'folded-left',
+  foldedRight: 'folded-right',
+  horizontal: 'horizontal',
+  item_types: {
+    gallery: 'Gallery',
+    report: 'Report',
+    video: 'Video'
+  },
+  jwt_token: 'jwt_token',
+  layout_onecol: 'onecol',
+  layout_mapui: 'mapui',
+  locations: {
+    earth: 'earth'
+  },
+  map_panel_types: {
+    Equirectangular: "Equirectangular",
+    MapPanel: "MapPanel",
+    MapPanelNoZoom: "MapPanelNoZoom",
+    ThreePanelV1: "ThreePanelV1",
+    ThreePanelV4: "ThreePanelV4"
+  },
+  rated: {
+    nc17: 'nc-17'
+  },
+  ratedConfirmation: 'rated-confirmation',
+  theme: 'theme',
+  themes: {
+    dark: 'dark',
+    light: 'light'
+  },
+  twofoldPercent: 'twofold-percent',
+  variants: {
+    bordered: 'bordered',
+    floating: 'floating',
+    inline: 'inline',
+    transparent: 'transparent'
+  },
+  vertical: 'vertical'
+};
 
 var request = axios.create({});
 
@@ -144,7 +198,7 @@ var WBorderedItem = styled.div(_templateObject9 || (_templateObject9 = _taggedTe
 var Wrapper = styled.div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
 var ZoomContext = React.createContext({});
 
-var _templateObject$1;
+var _templateObject$1, _templateObject2$1, _templateObject3$1;
 
 var _excluded = ["children"];
 var JwtContext = React.createContext({});
@@ -153,9 +207,11 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
   var children = _ref.children,
       props = _objectWithoutPropertiesLoose(_ref, _excluded);
 
+  logg(props, 'JwtContextProvider');
   var config = props.config;
+  var maybeUser = localStorage.getItem(C.current_user) || {};
 
-  var _useState = useState({}),
+  var _useState = useState(maybeUser),
       currentUser = _useState[0],
       setCurrentUser = _useState[1];
 
@@ -177,17 +233,24 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
 JwtContextProvider.props = {
   config: PropTypes.object
 };
+var FlexRow = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
+var W1 = styled.div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n  border: 1px solid red;\n"])));
 var SimpleJwtRow = function SimpleJwtRow() {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "SimpleJwtRow2"));
+  var _useContext = useContext(JwtContext),
+      currentUser = _useContext.currentUser;
+
+  return /*#__PURE__*/React.createElement(W1, null, /*#__PURE__*/React.createElement(FlexRow, null, currentUser.email && /*#__PURE__*/React.createElement("i", null, currentUser.email), !currentUser.email && /*#__PURE__*/React.createElement(LoginWithPassword, null)));
 };
 
-var _W = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
+var _W = styled.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
 
 var LoginWithPassword = function LoginWithPassword(props) {
-  var _useContext = useContext(JwtContext),
-      config = _useContext.config,
-      setCurrentUser = _useContext.setCurrentUser,
-      setLoginModalOpen = _useContext.setLoginModalOpen;
+  logg(useContext(JwtContext), 'useContext(JwtContext)');
+
+  var _useContext2 = useContext(JwtContext),
+      config = _useContext2.config,
+      setCurrentUser = _useContext2.setCurrentUser,
+      setLoginModalOpen = _useContext2.setLoginModalOpen;
 
   var _useState3 = useState(''),
       email = _useState3[0],
@@ -199,7 +262,8 @@ var LoginWithPassword = function LoginWithPassword(props) {
 
   var doPasswordLogin = function doPasswordLogin(email, password) {
     try {
-      request.post("" + config.apiOrigin + config.routes.loginPath, {
+      logg("" + config.apiOrigin + config.routes.loginWithPasswordPath, 'doPasswordLogin');
+      request.post("" + config.apiOrigin + config.routes.loginWithPasswordPath, {
         email: email,
         password: password
       }).then(function (r) {
@@ -241,11 +305,11 @@ var LoginWithPassword = function LoginWithPassword(props) {
     onClick: function onClick() {
       return doPasswordLogin(email, password);
     }
-  }, "Password Login"));
+  }, "Login"));
 };
 var Logout = function Logout() {
-  var _useContext2 = useContext(JwtContext),
-      setCurrentUser = _useContext2.setCurrentUser;
+  var _useContext3 = useContext(JwtContext),
+      setCurrentUser = _useContext3.setCurrentUser;
 
   var doLogout = function doLogout() {
     localStorage.removeItem(C.jwt_token);

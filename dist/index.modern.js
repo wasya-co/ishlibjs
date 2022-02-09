@@ -198,7 +198,7 @@ var WBorderedItem = styled.div(_templateObject9 || (_templateObject9 = _taggedTe
 var Wrapper = styled.div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
 var ZoomContext = React.createContext({});
 
-var _templateObject$1, _templateObject2$1, _templateObject3$1;
+var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
 
 var _excluded = ["children"];
 var JwtContext = React.createContext({});
@@ -207,9 +207,8 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
   var children = _ref.children,
       props = _objectWithoutPropertiesLoose(_ref, _excluded);
 
-  logg(props, 'JwtContextProvider');
   var config = props.config;
-  var maybeUser = localStorage.getItem(C.current_user) || {};
+  var maybeUser = JSON.parse(localStorage.getItem(C.current_user)) || {};
 
   var _useState = useState(maybeUser),
       currentUser = _useState[0],
@@ -235,14 +234,16 @@ JwtContextProvider.props = {
 };
 var FlexRow = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
 var W1 = styled.div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n  border: 1px solid red;\n"])));
+var W2 = styled.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n"])));
 var SimpleJwtRow = function SimpleJwtRow() {
   var _useContext = useContext(JwtContext),
       currentUser = _useContext.currentUser;
 
-  return /*#__PURE__*/React.createElement(W1, null, /*#__PURE__*/React.createElement(FlexRow, null, currentUser.email && /*#__PURE__*/React.createElement("i", null, currentUser.email), !currentUser.email && /*#__PURE__*/React.createElement(LoginWithPassword, null)));
+  logg(currentUser, 'simple row');
+  return /*#__PURE__*/React.createElement(W1, null, /*#__PURE__*/React.createElement(FlexRow, null, currentUser.email && /*#__PURE__*/React.createElement(W2, null, /*#__PURE__*/React.createElement("i", null, currentUser.email), /*#__PURE__*/React.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React.createElement(LoginWithPassword, null)));
 };
 
-var _W = styled.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
+var _W = styled.div(_templateObject4$1 || (_templateObject4$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
 
 var LoginWithPassword = function LoginWithPassword(props) {
   logg(useContext(JwtContext), 'useContext(JwtContext)');

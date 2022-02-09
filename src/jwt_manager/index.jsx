@@ -14,12 +14,11 @@ import { Btn, C, logg, request } from "../shared" // @TODO: alias $shared
 // @TODO: replace TwofoldContext in guydme with the one from ishjs.
 export const JwtContext = React.createContext({})
 const JwtContextProvider = ({ children, ...props }) => {
-  logg(props, 'JwtContextProvider')
   const {
     config,
   } = props
 
-  const maybeUser = localStorage.getItem(C.current_user)||{}
+  const maybeUser = JSON.parse(localStorage.getItem(C.current_user))||{}
   const [ currentUser, setCurrentUser ] = useState(maybeUser) // @TODO: see if localStorage has me already logged in!
   const [ loginModalOpen, setLoginModalOpen ] = useState({})
 
@@ -47,6 +46,10 @@ const W1 = styled.div`
   border: 1px solid red;
 `;
 
+const W2 = styled.div`
+  display: flex;
+`;
+
 export const SimpleJwtRow = () => {
   const {
     config,
@@ -54,10 +57,15 @@ export const SimpleJwtRow = () => {
     loginModalOpen, setLoginModalOpen,
   } = useContext(JwtContext)
 
+  logg(currentUser, 'simple row')
+
   return <W1>
     <FlexRow>
       { /* <FbLogin /> */ }
-      { currentUser.email && <i>{currentUser.email}</i> }
+      { currentUser.email && <W2>
+        <i>{currentUser.email}</i>
+        <Logout />
+      </W2>}
       { !currentUser.email && <LoginWithPassword /> }
     </FlexRow>
   </W1>

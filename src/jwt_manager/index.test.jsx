@@ -4,14 +4,12 @@ import { mount, shallow } from "enzyme"
 import React, { useState } from "react"
 import { act } from '@testing-library/react'
 
-import { PasswordLogin } from "."
-import { AppMock, logg, request } from "$shared"
+import { JwtContextProvider, LoginWithPassword } from "."
+import { logg, request } from "../shared"
 
 enzyme.configure({ adapter: new Adapter() })
 
-jest.mock('request')
-request.post = jest.fn().mockImplementationOnce(() => new Promise(() => {}, () => {}))
-
+/*
 class LocalStorageMock {
   constructor() {
     this.store = {};
@@ -34,47 +32,28 @@ class LocalStorageMock {
   }
 }
 
-const mockFn = jest.fn()
-localStorage.prototype.getItem = new mockFn()
-
+localStorage.getItem = new localStorageMock()
 global.localStorage = new LocalStorageMock
-
-/*
-jest.mock('$shared/request', () => {
-  const originalModule = jest.requireActual("$shared/request")
-  return {
-    __esModule: true,
-    ...originalModule,
-    default: {
-      post: () => {
-        return new Promise((resolve, reject) => {
-          resolve({
-            data: {
-            }
-          })
-        })
-      },
-    }
-  }
-}) */
+*/
 
 describe("PasswordLogin", () => {
 
+  beforeEach(() => {
+    jest.spyOn(request, 'post').mockResolvedValue({ data: { some: 'dataz?' } })
+  })
+
   it("submits on Enter", async () => {
-    let component = mount(<AppMock ><PasswordLogin /></AppMock>)
+    let component = mount(<JwtContextProvider config={{ routes: {}  }} >
+      <LoginWithPassword />
+    </JwtContextProvider>)
     expect(component.find('input[type="password"]').length).toEqual(1)
 
     component.find('input[type="password"]').simulate('keydown', { key: 'Enter' })
     await act(() => new Promise(setImmediate))
+
+    logg(request.post.mock, 'mock data')
+
     expect(request.post).toHaveBeenCalled()
   })
 
-})
-
-describe("JwtContextProvider", () => {
-  it('logs in the user from local storage', () => {
-    let component = mount(<AppMock><JwtContextProvider /></AppMock>)
-    expect(mockFn).toHaveBeenCalled()
-
-  })
 })

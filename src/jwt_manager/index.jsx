@@ -93,7 +93,9 @@ export const LoginWithPassword = (props) => {
 
   const doPasswordLogin = async (email, password) => {
     logg(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, 'doPasswordLogin')
-    request.post(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, { email, password }).then((r) => r.data).then((resp) => {
+    request.post(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, { email, password }
+    ).then((r) => r.data
+    ).then((resp) => {
       localStorage.setItem(C.jwt_token, resp.jwt_token)
       localStorage.setItem(C.current_user, JSON.stringify(resp))
       setCurrentUser(resp) // must be done *after* setting C.jwt_token

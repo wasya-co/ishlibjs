@@ -1,13 +1,22 @@
 #!/usr/bin/env ruby
 
+require 'json'
+
 def puts! a, b=''
   puts "+++ +++ #{b}:"
   puts a.inspect
 end
 
-require 'json'
+if ARGV.length != 1
+  puts ""
+  puts "+++ +++ Usage:"
+  puts "  ./script/link_peer_dependencies <project-name>"
+  puts "Project names: guydjs , iron_warbler ."
+  puts ""
+  exit -3
+end
 
-host_path = '/Users/piousbox/projects/ruby/microsites3/iron_warbler'
+host_path = "/Users/piousbox/projects/node/#{ARGV[0]}"
 
 json = JSON.parse(File.read('package.json'))
 json['peerDependencies'].each do |d|

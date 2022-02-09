@@ -3,7 +3,7 @@
  */
 // alphabetized
 import { arrowBack } from 'ionicons/icons'
-import { IonIcon } from '@ionic/react'
+// import { IonIcon } from '@ionic/react'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
@@ -23,7 +23,9 @@ import styled from 'styled-components'
 /**
  * Back Button
  */
-const BackIcon = styled(IonIcon)`
+// const BackIcon = styled(IonIcon)
+// @TODO: reintroduce IonIcon maybe?
+const BackIcon = styled.div`
   margin-right: 5px;
   cursor: pointer;
 `;

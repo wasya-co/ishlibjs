@@ -17,6 +17,7 @@
     "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
+    "@testing-library/react": "^9.4.0",
     "babel-eslint": "^10.0.3",
     "config": "file:/Users/piousbox/projects/ruby/microsites3/iron_warbler/config/environments/development_web",
     "cross-env": "^7.0.2",
@@ -33,7 +34,8 @@
     "npm-run-all": "^4.1.5",
     "react-scripts": "^3.4.1",
     "enzyme-adapter-react-16": "^1.15.6",
-    "enzyme": "^3.11.0"
+    "enzyme": "^3.11.0",
+    "link-module-alias": "^1.2.0"
   },
   "files": [
     "dist"
@@ -57,6 +59,12 @@
     },
     "resetMocks": true
   },
+  "_moduleAliases": {
+    "$components": "src/components",
+    "$lib": "src/lib",
+    "$shared": "src/shared",
+    "$src": "src"
+  },
   "dependencies": {
     "@ionic/react": "^6.0.5",
     "@material-ui/core": "^4.12.3",
@@ -78,6 +86,7 @@
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build",
-    "linkPeerDependencies": "./scripts/link_peer_dependencies"
+    "linkPeerDependencies": "./scripts/link_peer_dependencies",
+    "postinstall": "link-module-alias"
   }
 }

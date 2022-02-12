@@ -3,7 +3,7 @@
  */
 
 import PropTypes from 'prop-types'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { Btn, C, logg, request } from "../shared" // @TODO: alias $shared
@@ -15,21 +15,37 @@ import { Btn, C, logg, request } from "../shared" // @TODO: alias $shared
 export const JwtContext = React.createContext({})
 const JwtContextProvider = ({ children, ...props }) => {
   const {
-    config,
+    api,
   } = props
 
   const maybeUser = JSON.parse(localStorage.getItem(C.current_user))||{}
-  const [ currentUser, setCurrentUser ] = useState(maybeUser) // @TODO: see if localStorage has me already logged in!
+  // call to verify creds
+  useEffect(() => {
+    // request.get(`${config.apiOrigin}${config.routes.myAccountPath}`).then((r) => r.data).then((resp) => {
+    api.getMyAccount().then((resp) => {
+      localStorage.setItem(C.current_user, JSON.stringify(resp))
+      setCurrentUser(resp) // must be done *after* setting C.jwt_token
+    }).catch((e) => {
+      logg(e, 'e322')
+      // toast("Login failed") // @TODO: re-add toast
+      setCurrentUser(C.anonUser)
+      localStorage.removeItem(C.current_user)
+      localStorage.removeItem(C.jwt_token)
+    })
+  }, [])
+
+
+  const [ currentUser, setCurrentUser ] = useState(maybeUser)
   const [ loginModalOpen, setLoginModalOpen ] = useState({})
 
   return <JwtContext.Provider value={{
-    config,
+    api,
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
   }} >{ children }</JwtContext.Provider>
 }
 JwtContextProvider.props = {
-  config: PropTypes.object,
+  api: PropTypes.object,
 }
 export { JwtContextProvider }
 
@@ -52,12 +68,10 @@ const W2 = styled.div`
 
 export const SimpleJwtRow = () => {
   const {
-    config,
+    api,
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
   } = useContext(JwtContext)
-
-  logg(currentUser, 'simple row')
 
   return <W1>
     <FlexRow>
@@ -82,9 +96,9 @@ const _W = styled.div`
 `;
 
 export const LoginWithPassword = (props) => {
-  logg(useContext(JwtContext), 'useContext(JwtContext)')
+  // logg(useContext(JwtContext), 'useContext(JwtContext)')
   const {
-    config,
+    api,
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
   } = useContext(JwtContext)
@@ -92,10 +106,11 @@ export const LoginWithPassword = (props) => {
   const [ password, setPassword ] = useState('')
 
   const doPasswordLogin = async (email, password) => {
-    logg(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, 'doPasswordLogin')
-    request.post(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, { email, password }
-    ).then((r) => r.data
-    ).then((resp) => {
+    // logg(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, 'doPasswordLogin')
+    // request.post(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, { email, password }).then((r) => r.data
+    api.postLoginWithPassword({ email, password }).then((resp) => {
+      logg(resp, 'ze resp')
+
       localStorage.setItem(C.jwt_token, resp.jwt_token)
       localStorage.setItem(C.current_user, JSON.stringify(resp))
       setCurrentUser(resp) // must be done *after* setting C.jwt_token

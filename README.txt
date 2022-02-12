@@ -10,21 +10,14 @@
 npm install --save ishjs
 ```
 
-## Usage
+## Test
 
-```jsx
-import React, { Component } from 'react'
+  yarn run test -- <the-file>
 
-import MyComponent from 'ishjs'
-import 'ishjs/dist/index.css'
+## Build
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
-```
+For iron_warbler env development_web:
 
-## License
+  yarn run build2
 
-Proprietary © [piousbox](https://github.com/piousbox)
+

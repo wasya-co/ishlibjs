@@ -80,6 +80,7 @@
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "react-scripts test --env=jsdom --colors --watchAll=false",
+    "jest": "react-scripts test --env=jsdom -t current --colors --watchAll=false",
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",

@@ -36,14 +36,37 @@ localStorage.getItem = new localStorageMock()
 global.localStorage = new LocalStorageMock
 */
 
-describe("PasswordLogin", () => {
+const mockApi = {
+  getMyAccount: () => {},
+  postLoginWithPassword: () => {},
+}
+
+
+describe("JwtContextProvider", () => {
+  beforeEach(() => {
+    jest.spyOn(mockApi, 'getMyAccount' ).mockRejectedValue({})
+    // jest.spyOn(mockApi, 'postLoginWithPassword').mockResolvedValue({ data: { email: 'dataz-2@gmail.com' } })
+  })
+
+  it("checks if the user is logged in, every time", async () => {
+    let component = mount(<JwtContextProvider api={mockApi} >
+      <div>hello</div>
+    </JwtContextProvider>)
+
+    await act(() => new Promise(setImmediate))
+    expect(mockApi.getMyAccount).toHaveBeenCalled()
+  })
+})
+
+describe("LoginWithPassword", () => {
 
   beforeEach(() => {
-    jest.spyOn(request, 'post').mockResolvedValue({ data: { some: 'dataz?' } })
+    jest.spyOn(mockApi, 'getMyAccount' ).mockResolvedValue({ data: { email: 'dataz-1@gmail.com' } })
+    jest.spyOn(mockApi, 'postLoginWithPassword').mockResolvedValue({ data: { email: 'dataz-2@gmail.com' } })
   })
 
   it("submits on Enter", async () => {
-    let component = mount(<JwtContextProvider config={{ routes: {}  }} >
+    let component = mount(<JwtContextProvider api={mockApi} >
       <LoginWithPassword />
     </JwtContextProvider>)
     expect(component.find('input[type="password"]').length).toEqual(1)
@@ -51,9 +74,7 @@ describe("PasswordLogin", () => {
     component.find('input[type="password"]').simulate('keydown', { key: 'Enter' })
     await act(() => new Promise(setImmediate))
 
-    logg(request.post.mock, 'mock data')
-
-    expect(request.post).toHaveBeenCalled()
+    expect(mockApi.postLoginWithPassword).toHaveBeenCalled()
   })
 
 })

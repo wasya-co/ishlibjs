@@ -1,6 +1,12 @@
 
 /**
  * Constants
+ *
+ * * C.anonUser
+ * * C.current_user
+ * * C.jwt_token
+ * * C.item_types
+ *
  */
 const C = {
 

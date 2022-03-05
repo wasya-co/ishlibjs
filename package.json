@@ -25,6 +25,7 @@
     "@storybook/addon-links": "^6.4.19",
     "@storybook/cli": "^6.4.19",
     "@storybook/react": "^6.4.19",
+    "@storybook/storybook-deployer": "^2.8.10",
     "@storybook/testing-library": "^0.0.9",
     "@testing-library/react": "^9.4.0",
     "babel-eslint": "^10.0.3",
@@ -93,6 +94,7 @@
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "build2": "NODE_PATH=~/projects/ruby/microsites3/iron_warbler/config/environments microbundle-crl --no-compress --format modern,cjs",
+    "deploy-storybook": "storybook-to-ghpages",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "react-scripts test --env=jsdom --colors --watchAll=false",

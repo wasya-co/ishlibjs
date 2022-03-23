@@ -1,6 +1,6 @@
 {
   "name": "ishjs",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "ishjs",
   "author": "piousbox",
   "license": "MIT",
@@ -9,7 +9,7 @@
   "module": "dist/index.modern.js",
   "source": "src/index.jsx",
   "engines": {
-    "node": ">=10"
+    "node": ">=16"
   },
   "peerDependencies": {
     "react": "^16.13.1",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@babel/plugin-transform-regenerator": "^7.16.7",
+    "@babel/preset-modules": "^0.1.5",
     "@storybook/addon-actions": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
     "@storybook/addon-interactions": "^6.4.19",

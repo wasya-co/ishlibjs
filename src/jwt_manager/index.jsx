@@ -14,11 +14,15 @@ import { Btn, C, logg, request } from "../shared" // @TODO: alias $shared
 // @TODO: replace TwofoldContext in guydme with the one from ishjs.
 export const JwtContext = React.createContext({})
 const JwtContextProvider = ({ children, ...props }) => {
+  logg(props, 'JwtContextProvider')
   const {
     api,
   } = props
 
-  const maybeUser = JSON.parse(localStorage.getItem(C.current_user))||{}
+  const maybeUser = JSON.parse(localStorage.getItem(C.current_user)) || C.anonUser
+  const [ currentUser, setCurrentUser ] = useState(maybeUser)
+  const [ loginModalOpen, setLoginModalOpen ] = useState({})
+
   // call to verify creds
   useEffect(() => {
     // request.get(`${config.apiOrigin}${config.routes.myAccountPath}`).then((r) => r.data).then((resp) => {
@@ -33,10 +37,6 @@ const JwtContextProvider = ({ children, ...props }) => {
       localStorage.removeItem(C.jwt_token)
     })
   }, [])
-
-
-  const [ currentUser, setCurrentUser ] = useState(maybeUser)
-  const [ loginModalOpen, setLoginModalOpen ] = useState({})
 
   return <JwtContext.Provider value={{
     api,
@@ -72,6 +72,7 @@ export const SimpleJwtRow = () => {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
   } = useContext(JwtContext)
+  logg(useContext(JwtContext), 'SimpleJwtRowUsedJwtContext')
 
   return <W1>
     <FlexRow>

@@ -5879,7 +5879,7 @@ concat-with-sourcemaps@^1.1.0:
   dependencies:
     source-map "^0.6.1"
 
-"config@file:../../../ruby/microsites3/iron_warbler/config/environments/development_web":
+"config@file:../../ruby/microsites3/iron_warbler/config/environments/development_web":
   version "0.0.0"
 
 configstore@^5.0.1:

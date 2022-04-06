@@ -59,11 +59,7 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx}",
-      "**/*_spec.jsx"
-    ],
+
     "transform": {
       "^.+\\.(js|jsx)$": "<rootDir>/config/jest/babelTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",

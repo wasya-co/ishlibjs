@@ -1,18 +1,28 @@
 
-import React from 'react'
+import React, { Fragment as F } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import {
-  AuthContext,
+  AuthContext, AuthContextProvider,
   FacebookLogin,
-  LoginWithEmail,
-  RegisterWithEmail,
+  LoginModal, LoginWithEmail,
+  RegisterModal, RegisterWithEmail,
 } from "$components/users"
 
 import {
   FlexCol,
 } from "$shared"
+
+
+
+const RegisterWithEmailBtn = (props) => {
+  return <Btn {...props} >Register with Email</Btn>
+}
+const LoginWithEmailBtn = (props) => {
+  return <Btn {...props} >Login with Email</Btn>
+}
+
 
 /**
  * If user is logged in, display the email/handle and allow logout.
@@ -24,15 +34,20 @@ const AuthWidget = (props) => {
     setRegisterModalOpen,
   } = useContext(AuthContext)
 
-  return <FlexCol>
-    <FacebookLogin />
-    <RegisterWithEmail onClick={() => {
-      setRegisterModalOpen(true)
-    }} />
-    <LoginWithEmail onClick={() => {
-      setLoginModalOpen(true)
-    }} />
-  </FlexCol>
+  return <F>
+    <FlexCol>
+      <FacebookLogin />
+      <RegisterWithEmailBtn onClick={() => {
+        setRegisterModalOpen(true)
+      }} />
+      <LoginWithEmailBtn onClick={() => {
+        setLoginModalOpen(true)
+      }} />
+    </FlexCol>
+
+    <RegisterModal />
+    <LoginModal />
+  </F>
 };
 AuthWidget.propTypes = {
   // none so far

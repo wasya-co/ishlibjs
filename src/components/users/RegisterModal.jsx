@@ -1,5 +1,13 @@
 
-import React from 'react'
+import React, { useContext, useState, } from 'react'
+import Modal from "react-modal"
+
+import {
+  AuthContext,
+  Btn,
+  FlexCol, FlexRow,
+  logg,
+} from '$shared'
 
 const RegisterModal = (props) => {
   // logg(props, 'RegisterModal')
@@ -7,8 +15,9 @@ const RegisterModal = (props) => {
   const {
     currentUser, setCurrentUser,
     registerModalOpen, setRegisterModalOpen,
-  } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'registerModalUsedContext')
+    useApi,
+  } = useContext(AuthContext)
+  // logg(useContext(AuthContext), 'registerModalUsedContext')
 
   const api = useApi()
   const [ email, setEmail ] = useState('')

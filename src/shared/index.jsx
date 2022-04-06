@@ -72,7 +72,9 @@ export const Card = styled(_Box)`
 
 
 /* D */
+
 /* F */
+
 const _FlexCol = styled.div`
   display: flex;
   flex-direction: column;
@@ -81,10 +83,23 @@ const _FlexCol = styled.div`
     margin: auto .4em;
   }
 `;
+
 /**
  * FlexCol
 **/
 export const FlexCol = ({ children, ...props }) => <_FlexCol className="FlexCol" {...props} >{children}</_FlexCol>
+
+/**
+ * FlexRow
+**/
+export const FlexRow = styled.div`
+  display: flex;
+
+  > * {
+    margin: auto .4em;
+  }
+`;
+
 
 /* I */
 

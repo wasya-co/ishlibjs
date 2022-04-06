@@ -2,9 +2,17 @@
 import { Plugins } from '@capacitor/core'
 import React, { createContext, useContext } from 'react'
 
+import {
+  Btn,
+} from '$shared'
+
 /* A */
-const AuthContext = createContext()
-const AuthContextProvider = <AuthContext.Provider values={{}}></AuthContext.Provider>
+const AuthContext = createContext({})
+const AuthContextProvider = ({children, ...props }) => {
+  return <AuthContext.Provider value={props}>
+    { children }
+  </AuthContext.Provider>
+}
 
 export {
   AuthContext, AuthContextProvider,
@@ -20,8 +28,13 @@ const FACEBOOK_PERMISSIONS = ['email']
  * FacebookLogin
 **/
 export const FacebookLogin = (props) => {
+
+  const {
+    currentUser, setCurrentUser,
+    useApi,
+  } = useContext(AuthContext)
+
   const api = useApi()
-  const { currentUser, setCurrentUser } = useContext(TwofoldContext)
 
   const doFbLogin = async () => {
     const result = await _FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });

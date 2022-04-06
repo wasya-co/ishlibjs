@@ -15,6 +15,9 @@ import {
   logg,
   request,
 } from "$shared"
+import {
+  AuthContext, AuthContextProvider,
+} from './'
 
 /**
  * LoginModal

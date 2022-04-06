@@ -8,7 +8,12 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import styled from 'styled-components'
 
-import { Btn, C, logg, request, SimpleContext, } from "$shared"
+import {
+  Btn, C, logg, request,
+} from "$shared"
+import {
+  AuthContext,
+} from './'
 
 const _W = styled.div`
   display: flex;

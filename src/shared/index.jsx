@@ -15,11 +15,10 @@ import {
 import styled from 'styled-components'
 
 import C from './C'
+import { AuthContext, AuthContextProvider, } from '$components/users'
 
 /* A */
-// export { default as useApi } from "./Api"
-// export { default as AppMock } from "./AppMock"
-// export { default as AppRouter } from "./AppRouter"
+export { AuthContext, AuthContextProvider, }
 
 /* B */
 
@@ -166,19 +165,6 @@ export { default as request } from "./request"
 
 /* S */
 export { default as S } from "./S"
-
-const SimpleContext = React.createContext({})
-const SimpleContextProvider = ({ children, ...props }) => {
-  return <SimpleContext.Provider
-    value={props}
-  >{ children }</SimpleContext.Provider>
-}
-// SimpleContextProvider.propTypes = {
-//   currentUser: PropTypes.object.isRequired,
-//   setCurrentUser: PropTypes.func.isRequired,
-//   useApi: PropTypes.func.isRequred,
-// }
-export { SimpleContext, SimpleContextProvider, }
 
 /* T */
 

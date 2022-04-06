@@ -5,7 +5,7 @@ import React, { useState } from "react"
 import { act } from '@testing-library/react'
 
 import { JwtContextProvider, LoginWithPassword } from "."
-import { logg, request } from "../shared"
+import { logg, request } from "$shared"
 
 enzyme.configure({ adapter: new Adapter() })
 

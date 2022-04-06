@@ -1,3 +1,6 @@
+
+import React from 'react'
+
 const RegisterModal = (props) => {
   // logg(props, 'RegisterModal')
 

@@ -2,15 +2,19 @@ import React from 'react'
 
 import {
   logg,
-  SimpleContext, SimpleContextProvider,
 } from "$shared"
+
+import {
+  AuthContext, AuthContextProvider,
+} from '$components/users'
 
 /* A */
 export { default as AuthWidget } from "./components/users/AuthWidget"
+export { AuthContext, AuthContextProvider, }
 
 /* J */
-// @TODO: Move jwtManager inside users resource?
-import * as jwtManager from './jwt_manager' // this syntax is correct
+// @TODO: rename
+import * as jwtManager from './components/users/JwtContext' // this syntax is correct
 export { jwtManager }
 
 /* L */
@@ -21,5 +25,5 @@ export { default as PasswordLogin } from "./components/users/PasswordLogin"
 
 /* S */
 export { default as Scratchpad } from "./components/users/Scratchpad"
-export { SimpleContext, SimpleContextProvider }
+
 

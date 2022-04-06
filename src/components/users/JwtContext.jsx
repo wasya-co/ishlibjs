@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Btn, C, logg, request } from "../shared" // @TODO: alias $shared
+import { Btn, C, logg, request } from "$shared" // @TODO: alias $shared
 
 
 

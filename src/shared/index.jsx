@@ -153,17 +153,29 @@ export { default as request } from "./request"
 /* S */
 export { default as S } from "./S"
 
+const SimpleContext = React.createContext({})
+const SimpleContextProvider = ({ children, ...props }) => {
+  return <SimpleContext.Provider
+    value={props}
+  >{ children }</SimpleContext.Provider>
+}
+// SimpleContextProvider.propTypes = {
+//   currentUser: PropTypes.object.isRequired,
+//   setCurrentUser: PropTypes.func.isRequired,
+//   useApi: PropTypes.func.isRequred,
+// }
+export { SimpleContext, SimpleContextProvider, }
+
 /* T */
 
 export const TwofoldContext = React.createContext({})
 export const TwofoldContextProvider = ({ children, ...props }) => {
-  logg(props, 'TwofoldContextProvider')
+  // logg(props, 'TwofoldContextProvider')
   const {
     currentUser, setCurrentUser,
     layout, setLayout,
     loginModalOpen, setLoginModalOpen,
     theme, toggleTheme,
-
     useApi,
   } = props
 

@@ -11,7 +11,7 @@ if ARGV.length != 1
   puts ""
   puts "+++ +++ Usage:"
   puts "  ./script/link_peer_dependencies <project-name>"
-  puts "Project names: guydjs , iron_warbler ."
+  puts "Project names: guydjs , iron_warbler , scratchpadjs ."
   puts ""
   exit -3
 end

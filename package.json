@@ -1,10 +1,10 @@
 {
-  "name": "ishjs",
+  "name": "ishlibjs",
   "version": "0.1.0",
-  "description": "ishjs",
+  "description": "ishlibjs",
   "author": "piousbox",
   "license": "MIT",
-  "repository": "wasyaco/ishjs",
+  "repository": "wasyaco/ishlibjs",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.jsx",
@@ -59,6 +59,11 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx}",
+      "**/*_spec.jsx"
+    ],
     "transform": {
       "^.+\\.(js|jsx)$": "<rootDir>/config/jest/babelTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
@@ -100,6 +105,7 @@
     "prepare": "run-s build",
     "test": "react-scripts test --env=jsdom --colors --watchAll=false",
     "jest": "react-scripts test --env=jsdom -t current --colors --watchAll=false",
+    "jest2": "react-scripts test --env=jsdom -t current2 --colors --watchAll=false",
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
@@ -108,6 +114,7 @@
     "deploy": "gh-pages -d example/build",
     "linkToIronWarbler": "./scripts/link_peer_dependencies iron_warbler",
     "linkToGuidjs": "./scripts/link_peer_dependencies guydjs",
-    "postinstall": "link-module-alias"
+    "postinstall": "link-module-alias",
+    "eject": "react-scripts eject"
   }
 }

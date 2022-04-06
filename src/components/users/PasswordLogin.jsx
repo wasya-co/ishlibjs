@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import styled from 'styled-components'
 
-import { Btn, C, logg, request, TwofoldContext, } from "$shared"
+import { Btn, C, logg, request, SimpleContext, } from "$shared"
 
 const _W = styled.div`
   display: flex;
@@ -36,8 +36,8 @@ const PasswordLogin = (props) => {
     currentUser, setCurrentUser,
     // loginModalOpen, setLoginModalOpen,
     useApi,
-  } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'PasswordLoginUsedTwofoldContext')
+  } = useContext(SimpleContext)
+  // logg(useContext(SimpleContext), 'PasswordLoginUsedContext')
 
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')

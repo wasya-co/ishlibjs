@@ -1,4 +1,8 @@
-# ishjs
+# Intro
+
+What on earth is this?!
+
+This is exactly ishlibjs (ishjs is an @deprecated alias.)
 
 > ishjs
 

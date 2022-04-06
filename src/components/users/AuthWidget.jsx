@@ -12,6 +12,7 @@ import {
 
 import {
   Btn,
+  C,
   FlexCol,
   logg,
 } from "$shared"
@@ -33,10 +34,22 @@ const AuthWidget = (props) => {
   logg(props, 'AuthWidget')
 
   const {
+    currentUser, setCurrentUser,
     setLoginModalOpen,
     setRegisterModalOpen,
   } = useContext(AuthContext)
   logg(useContext(AuthContext), 'AuthWidgetUsedContext')
+
+  // @TODO: does this belong here?
+  const doLogout = () => {
+    setCurrentUser(JSON.stringify(C.anonUser))
+  }
+
+  if (currentUser?.email) {
+    return <FlexCol>
+      [{currentUser.email} <Btn onClick={doLogout} >Logout</Btn> ]
+    </FlexCol>
+  }
 
   return <F>
     <FlexCol>

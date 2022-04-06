@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from 'react'
 
 import {
   Btn,
+  C,
   logg,
 } from '$shared'
 
@@ -12,13 +13,29 @@ const AuthContext = createContext({})
 const AuthContextProvider = ({children, ...props }) => {
   // logg(props, 'AuthContextProvider')
 
+  let defaultUser = localStorage.getItem(C.current_user)
+  logg(defaultUser, 'defaultUser')
+
+  defaultUser = defaultUser ? JSON.parse(defaultUser) : C.anonUser
+
+
+  const [ currentUser, _setCurrentUser ] = useState(defaultUser)
+  const setCurrentUser = (user) => {
+    localStorage.setItem(C.jwt_token, user.jwt_token)
+    localStorage.setItem(C.current_user, JSON.stringify(user))
+    _setCurrentUser(user)
+  }
+
   // @TODO: make these cascading from the props
   const [ loginModalOpen, setLoginModalOpen ] = useState(false)
   const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
   const moreProps = {
+    currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
     registerModalOpen, setRegisterModalOpen,
   }
+
+  logg(moreProps, 'moreProps')
 
   return <AuthContext.Provider value={{ ...props, ...moreProps }} >
     { children }

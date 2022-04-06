@@ -51,8 +51,6 @@ const PasswordLogin = (props) => {
 
   // api.doLogin = `${config.apiOrigin}${api.loginPath}`
   const doPasswordLogin = async (email, password) => {
-    logg('doPasswordLogin()', null)
-
     api.postLogin({ email, password }).then((resp) => {
       // localStorage.setItem(C.jwt_token, resp.jwt_token)
       // localStorage.setItem(C.current_user, JSON.stringify(resp))

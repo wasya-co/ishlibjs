@@ -1,15 +1,26 @@
 
 import { Plugins } from '@capacitor/core'
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 import {
   Btn,
+  logg,
 } from '$shared'
 
 /* A */
 const AuthContext = createContext({})
 const AuthContextProvider = ({children, ...props }) => {
-  return <AuthContext.Provider value={props}>
+  // logg(props, 'AuthContextProvider')
+
+  // @TODO: make these cascading from the props
+  const [ loginModalOpen, setLoginModalOpen ] = useState(false)
+  const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
+  const moreProps = {
+    loginModalOpen, setLoginModalOpen,
+    registerModalOpen, setRegisterModalOpen,
+  }
+
+  return <AuthContext.Provider value={{ ...props, ...moreProps }} >
     { children }
   </AuthContext.Provider>
 }
@@ -17,6 +28,8 @@ const AuthContextProvider = ({children, ...props }) => {
 export {
   AuthContext, AuthContextProvider,
 }
+export { default as AuthWidget } from './AuthWidget'
+
 
 /* F */
 const { FacebookLogin: _FacebookLogin } = Plugins

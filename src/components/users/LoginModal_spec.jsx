@@ -4,12 +4,13 @@ import Adapter from "enzyme-adapter-react-16"
 import React, { useState } from "react"
 import { act } from "react-dom/test-utils"
 
-import { LoginModal } from "$components/users"
 import {
-  AppMock,
+  AuthContextProvider,
+  LoginModal,
+} from "$components/users"
+import {
   C,
   logg,
-  TwofoldContext,
 } from "$shared"
 import request from "$shared/request"
 
@@ -40,13 +41,13 @@ describe("LoginModal", () => {
     let currentUser = C.anonUser
     const setCurrentUser = (props) => currentUser = props
 
-    let component = mount(<AppMock {...{ currentUser, setCurrentUser }} ><LoginModal /></AppMock>)
+    let component = mount(<AuthContextProvider {...{ currentUser, setCurrentUser }} ><LoginModal /></AuthContextProvider>)
     expect(component).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })
 
   it("submits on Enter - current2 ", async () => {
-    let component = mount(<MockTwofoldContextProvider ><LoginModal /></MockTwofoldContextProvider>)
+    let component = mount(<AuthContextProvider {...{ currentUser, setCurrentUser }} ><LoginModal /></AuthContextProvider>)
     logg(component.text(), 'component')
 
     expect(component.find('input[type="password"]').length).toEqual(1)

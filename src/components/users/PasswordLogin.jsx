@@ -39,7 +39,7 @@ const PasswordLogin = (props) => {
 
   const {
     currentUser, setCurrentUser,
-    // loginModalOpen, setLoginModalOpen,
+    loginModalOpen, setLoginModalOpen,
     useApi,
   } = useContext(SimpleContext)
   // logg(useContext(SimpleContext), 'PasswordLoginUsedContext')
@@ -51,11 +51,14 @@ const PasswordLogin = (props) => {
 
   // api.doLogin = `${config.apiOrigin}${api.loginPath}`
   const doPasswordLogin = async (email, password) => {
-    request.post(api.doLogin(), { email, password }).then((r) => r.data).then((resp) => {
-      localStorage.setItem(C.jwt_token, resp.jwt_token)
-      localStorage.setItem(C.current_user, JSON.stringify(resp))
-      setCurrentUser(resp) // must be done *after* setting C.jwt_token
-      // setLoginModalOpen(false)
+    logg('doPasswordLogin()', null)
+
+    api.postLogin({ email, password }).then((resp) => {
+      // localStorage.setItem(C.jwt_token, resp.jwt_token)
+      // localStorage.setItem(C.current_user, JSON.stringify(resp))
+      // setCurrentUser(resp) // must be done *after* setting C.jwt_token
+
+      setLoginModalOpen(false)
     }).catch((e) => {
       logg(e, 'e322')
       toast("Login failed")

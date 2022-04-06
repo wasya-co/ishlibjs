@@ -17,7 +17,6 @@ import {
 } from "$shared"
 
 
-
 const RegisterWithEmailBtn = (props) => {
   return <Btn {...props} >Register with Email</Btn>
 }

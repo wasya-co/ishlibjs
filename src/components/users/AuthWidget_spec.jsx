@@ -15,8 +15,13 @@ enzyme.configure({ adapter: new Adapter() })
 
 describe("AuthWidget", () => {
 
-  test(' current2 - renders', async () => {
-    let wrapper = mount(<AuthContextProvider >
+  test('renders', async () => {
+    const theseProps = {
+      loginModalOpen: false,
+      setLoginModalOpen: () => {},
+      useApi: () => ({}),
+    }
+    let wrapper = mount(<AuthContextProvider {...theseProps} >
       <AuthWidget />
     </AuthContextProvider>)
     expect(wrapper).toBeTruthy()

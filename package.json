@@ -1,6 +1,6 @@
 {
   "name": "ishlibjs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "ishlibjs",
   "author": "piousbox",
   "license": "MIT",
@@ -201,6 +201,6 @@
     "deploy": "gh-pages -d example/build",
     "linkToIronWarbler": "./scripts/link_peer_dependencies iron_warbler",
     "linkToGuidjs": "./scripts/link_peer_dependencies guydjs",
-    "postinstall": "link-module-alias"
+    "postinstall_trash": "link-module-alias"
   }
 }

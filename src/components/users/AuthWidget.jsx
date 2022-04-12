@@ -13,7 +13,8 @@ import {
 import {
   Btn,
   C,
-  FlexCol,
+  FlexCol, FlexRow,
+
   logg,
 } from "$shared"
 
@@ -46,9 +47,9 @@ const AuthWidget = (props) => {
   }
 
   if (currentUser?.email) {
-    return <FlexCol>
+    return <FlexRow>
       [{currentUser.email} <Btn onClick={doLogout} >Logout</Btn> ]
-    </FlexCol>
+    </FlexRow>
   }
 
   return <F>

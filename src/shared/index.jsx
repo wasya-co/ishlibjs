@@ -42,9 +42,9 @@ export const BackBtn = () => {
 export const Btn = styled.div`
   border: 1px solid gray;
   border-radius: 5px;
-
-  padding: .3em 1em;
   cursor: pointer;
+  display: inline-block;
+  padding: .3em 1em;
 `;
 
 

@@ -1,9 +1,23 @@
 
-import React, { Fragment as F, useState } from 'react'
+import React, { Fragment as F, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import {
+  AuthContext,
+} from '$components/users'
+import {
+  Btn,
+  C,
+  logg,
+} from '$shared'
+
 const W0 = styled.div`
+`;
+
+const Actions = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
 `;
 
 /**
@@ -12,24 +26,32 @@ const W0 = styled.div`
 const Scratchpad = (props) => {
   // logg(props, 'Scratchpad')
 
-  const [ txt, setTxt ] = useState(localStorage.getItem('txt')||'')
+  const {
+    useApi,
+  } = useContext(AuthContext)
+
+  const api = useApi()
+
+  const [ txt, setTxt ] = useState(localStorage.getItem(C.names.scratchpad) || '')
 
   const doSave = () => {
-    localStorage.setItem('txt', txt)
-    api.updateProfile({ scratchpad: txt }).then((data) => {
-      toast('Updated profile.')
+    localStorage.setItem(C.names.scratchpad, txt)
+    api.postProfile({ scratchpad: txt }).then((data) => {
+      // toast('Updated profile.')
     }).catch((err) => {
       logg('Cannot update profile:', err)
-      toast('e54 - Cannot update profile.')
+      // toast('e54 - Cannot update profile.')
     })
   }
 
   return <W0>
-    <textarea name='txt1' rows='20' cols='40'
+    <textarea name='scratchpad' rows='20' cols='40'
       onChange={(e) => setTxt(e.target.value) }
       value={txt}
     / >
-    <button onClick={doSave}>Save</button>
+    <Actions>
+      <Btn onClick={doSave}>Save</Btn>
+    </Actions>
   </W0>
 }
 Scratchpad.propTypes = {

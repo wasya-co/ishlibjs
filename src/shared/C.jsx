@@ -62,6 +62,11 @@ const C = {
     ThreePanelV4: "ThreePanelV4",
   },
 
+  // N
+  names: {
+    scratchpad: 'Scratchpad',
+  },
+
   // R
   rated: {
     nc17: 'nc-17',

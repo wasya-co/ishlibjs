@@ -11,22 +11,27 @@ import {
 /* A */
 const AuthContext = createContext({})
 const AuthContextProvider = ({children, ...props }) => {
+  let { currentUser, setCurrentUser } = props
   // logg(props, 'AuthContextProvider')
 
   let defaultUser = localStorage.getItem(C.current_user)
   logg(defaultUser, 'defaultUser')
-
   defaultUser = defaultUser ? JSON.parse(defaultUser) : C.anonUser
+  logg(defaultUser, 'defaultUser')
 
-
-  const [ currentUser, _setCurrentUser ] = useState(defaultUser)
-  const setCurrentUser = (user) => {
+  const [ localCurrentUser, _setCurrentUser ] = useState(defaultUser)
+  const setLocalCurrentUser = (user) => {
     localStorage.setItem(C.jwt_token, user.jwt_token)
     localStorage.setItem(C.current_user, JSON.stringify(user))
     _setCurrentUser(user)
   }
+  if (!currentUser) {
+    currentUser = localCurrentUser
+    setCurrentUser = setLocalCurrentUser
+  }
+  logg(currentUser, 'currentUser III')
 
-  // @TODO: make these cascading from the props
+  // @TODO: make these also cascading from the props
   const [ loginModalOpen, setLoginModalOpen ] = useState(false)
   const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
   const moreProps = {
@@ -34,8 +39,6 @@ const AuthContextProvider = ({children, ...props }) => {
     loginModalOpen, setLoginModalOpen,
     registerModalOpen, setRegisterModalOpen,
   }
-
-  logg(moreProps, 'moreProps')
 
   return <AuthContext.Provider value={{ ...props, ...moreProps }} >
     { children }

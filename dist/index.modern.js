@@ -2,15 +2,22 @@ import React, { useContext, Fragment, useState, createContext, useEffect } from 
 import 'ionicons/icons';
 import '@material-ui/core';
 import _Box from '@material-ui/core/Box';
-import { ChevronLeft as ChevronLeft$1, ChevronRight as ChevronRight$1, Menu } from '@material-ui/icons';
+import { ChevronLeft as ChevronLeft$1, ChevronRight as ChevronRight$1, Close, Menu } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Plugins } from '@capacitor/core';
-import Modal from 'react-modal';
+import _Modal from 'react-modal';
 import { toast as toast$1 } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import '@ionic/react';
+import Drawer from '@material-ui/core/Drawer';
+import Fab from '@material-ui/core/Fab';
+import '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import '@material-ui/core/ListItemIcon';
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -153,6 +160,22 @@ var AuthWidget = function AuthWidget(props) {
 
 AuthWidget.propTypes = {};
 
+var Modal = _Modal;
+var styles = {
+  LoginModal: {
+    margin: 'auto',
+    maxWidth: '500px'
+  },
+  LoginModalOverlay: {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    backgroundColor: "rebeccapurple"
+  }
+};
+
 var LoginModal = function LoginModal(props) {
   var _useContext = useContext(AuthContext),
       setCurrentUser = _useContext.setCurrentUser,
@@ -190,18 +213,31 @@ var LoginModal = function LoginModal(props) {
   };
 
   return /*#__PURE__*/React.createElement(Modal, {
-    isOpen: loginModalOpen
-  }, /*#__PURE__*/React.createElement("div", {
+    isOpen: loginModalOpen,
+    style: {
+      content: styles.LoginModal
+    }
+  }, /*#__PURE__*/React.createElement(FlexRow, {
+    style: {
+      flexDirection: 'row-reverse'
+    }
+  }, /*#__PURE__*/React.createElement(CloseBtn, {
     onClick: function onClick() {
       return setLoginModalOpen(false);
     }
-  }, "[x]"), /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement("input", {
+  })), /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement("label", {
+    "for": "email"
+  }, "Email"), /*#__PURE__*/React.createElement("input", {
+    name: "email",
     type: "email",
     value: email,
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     }
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+  }), /*#__PURE__*/React.createElement("label", {
+    "for": "password"
+  }, "Password"), /*#__PURE__*/React.createElement("input", {
+    name: "password",
     type: "password",
     value: password,
     onChange: function onChange(e) {
@@ -212,11 +248,16 @@ var LoginModal = function LoginModal(props) {
         doPasswordLogin(email, password);
       }
     }
-  }), /*#__PURE__*/React.createElement(Btn, {
+  }), /*#__PURE__*/React.createElement(FlexRow, {
+    style: {
+      justifyContent: 'space-between',
+      marginTop: '0.4em'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Forgot?"), /*#__PURE__*/React.createElement(Btn, {
     onClick: function onClick() {
       return doPasswordLogin(email, password);
     }
-  }, "Password Login")));
+  }, "Password Login"))));
 };
 
 var RegisterModal = function RegisterModal(props) {
@@ -265,7 +306,7 @@ var RegisterModal = function RegisterModal(props) {
     }
   };
 
-  return /*#__PURE__*/React.createElement(Modal, {
+  return /*#__PURE__*/React.createElement(_Modal, {
     style: {
       zIndex: 3
     },
@@ -441,7 +482,8 @@ var darkTheme = _extends({}, S, {
   }
 });
 
-var _excluded$1 = ["children"];
+var _excluded$1 = ["children"],
+    _excluded2 = ["children"];
 
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12;
 var BackIcon = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n  margin-right: 5px;\n  cursor: pointer;\n"])));
@@ -455,18 +497,26 @@ var ChevronRight = styled(ChevronRight$1)(_templateObject4 || (_templateObject4 
 var Card = styled(_Box)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteralLoose(["\n  margin-bottom: 1em;\n  padding: 1em;\n  background: white;\n  cursor: ", ";\n\n  display: flex;\n  flex-direction: column;\n"])), function (p) {
   return p.cursor ? p.cursor : 'auto';
 });
+var CloseBtn = function CloseBtn(_ref) {
+  var props = _objectWithoutPropertiesLoose(_ref, _excluded$1);
+
+  return /*#__PURE__*/React.createElement(Close, props);
+};
+CloseBtn.propTypes = {
+  onClick: PropTypes.func.isRequred
+};
 
 var _FlexCol = styled.div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: column;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
 
-var FlexCol = function FlexCol(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$1);
+var FlexCol = function FlexCol(_ref2) {
+  var children = _ref2.children,
+      props = _objectWithoutPropertiesLoose(_ref2, _excluded2);
 
   return /*#__PURE__*/React.createElement(_FlexCol, _extends({
     className: "FlexCol"
   }, props), children);
 };
-var FlexRow = styled.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
+var FlexRow = styled.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!\n  }\n"])));
 
 var _Circle = styled.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteralLoose(["\n  position: fixed;\n  z-index: 999;\n  overflow: show;\n  margin: auto;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  width: 50px;\n  height: 50px;\n"])));
 
@@ -754,5 +804,66 @@ var Scratchpad = function Scratchpad(props) {
 
 Scratchpad.propTypes = {};
 
-export { AuthContext, AuthContextProvider, AuthWidget, PasswordLogin, Scratchpad, JwtContext$1 as jwtManager, logg };
+var _excluded$3 = ["children"];
+
+var _templateObject$4;
+var W0$1 = styled.div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
+
+var SideMenu = function SideMenu(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
+
+  var listItems = props.listItems;
+  logg(props, 'SideMenu');
+
+  var _React$useState = React.useState(false),
+      drawerOpen = _React$useState[0],
+      setDrawerOpen = _React$useState[1];
+
+  var _useState = useState(false);
+
+  var history = useHistory();
+  return /*#__PURE__*/React.createElement(Fragment, null, props.variant === C$1.variants.floating ? /*#__PURE__*/React.createElement(Fab, {
+    onClick: function onClick() {
+      return setDrawerOpen(true);
+    },
+    style: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      margin: '.5em',
+      zIndex: 1
+    },
+    "aria-label": "main menu"
+  }, /*#__PURE__*/React.createElement(MenuIcon, null)) : /*#__PURE__*/React.createElement(MenuIcon, {
+    onClick: function onClick() {
+      return setDrawerOpen(true);
+    }
+  }), /*#__PURE__*/React.createElement(Drawer, {
+    anchor: "left",
+    open: drawerOpen,
+    onClose: function onClose() {
+      return setDrawerOpen(false);
+    }
+  }, /*#__PURE__*/React.createElement(W0$1, null, /*#__PURE__*/React.createElement(List, null, listItems.map(function (_ref2) {
+    var label = _ref2.label,
+        key = _ref2.key,
+        path = _ref2.path;
+    return /*#__PURE__*/React.createElement(ListItem, {
+      button: true,
+      key: key,
+      onClick: function onClick() {
+        setDrawerOpen(false);
+        history.push(path());
+      }
+    }, label);
+  })), children)));
+};
+
+SideMenu.propTypes = {
+  listItems: PropTypes.array.isRequired,
+  variant: PropTypes.string
+};
+
+export { AuthContext, AuthContextProvider, AuthWidget, PasswordLogin, Scratchpad, SideMenu, JwtContext$1 as jwtManager, logg };
 //# sourceMappingURL=index.modern.js.map

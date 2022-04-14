@@ -25,5 +25,5 @@ export { default as PasswordLogin } from "./components/users/PasswordLogin"
 
 /* S */
 export { default as Scratchpad } from "./components/users/Scratchpad"
-
+export { default as SideMenu } from './components/SideMenu'
 

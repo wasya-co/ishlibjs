@@ -1,3 +1,5 @@
 0.0.0 - 2022-03-01 - it works somewhat
 0.1.0 - 2022-03-05 - wiring in PasswordLogin, storybookjs
+0.1.2 - 2022-04-14 - scratchpad, authWidget
+                     sideMenu, option_price_items, stock_watches
 

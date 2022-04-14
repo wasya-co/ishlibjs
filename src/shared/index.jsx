@@ -2,11 +2,16 @@
  *  $shared / index
  */
 // alphabetized
-import { arrowBack } from 'ionicons/icons'
+import { arrowBack, closeOutline, } from 'ionicons/icons'
 // import { IonIcon } from '@ionic/react'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
-import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
+import {
+  ChevronLeft as _ChevronLeft,
+  ChevronRight as _ChevronRight,
+  Close as _Close,
+  Menu as _MenuIcon,
+} from '@material-ui/icons'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import {
@@ -58,7 +63,7 @@ export const ChevronRight = styled(_ChevronRight)`
 `;
 
 /**
- * A Card
+ * Card
  */
 export const Card = styled(_Box)`
   margin-bottom: 1em;
@@ -70,6 +75,16 @@ export const Card = styled(_Box)`
   flex-direction: column;
 `;
 
+/**
+ * CloseBtn
+**/
+export const CloseBtn = ({ children, ...props }) => {
+  // return <Btn {...props} ><_Close /></Btn>
+  return <_Close {...props} />
+};
+CloseBtn.propTypes = {
+  onClick: PropTypes.func.isRequred,
+}
 
 /* D */
 
@@ -96,7 +111,7 @@ export const FlexRow = styled.div`
   display: flex;
 
   > * {
-    margin: auto .4em;
+    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!
   }
 `;
 

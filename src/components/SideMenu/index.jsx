@@ -27,7 +27,7 @@ const W0 = styled.div`
 
 const SideMenu = ({ children, ...props }) => {
   const { listItems } = props
-  logg(props, 'SideMenu')
+  // logg(props, 'SideMenu')
 
   const [ drawerOpen, setDrawerOpen ] = React.useState(false)
   const [ loading, setLoading ] = useState(false)

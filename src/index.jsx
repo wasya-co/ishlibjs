@@ -19,6 +19,7 @@ export { jwtManager }
 
 /* L */
 export { logg }
+export { default as loginModalStyles } from './components/users/LoginModal.scss'
 
 /* P */
 export { default as PasswordLogin } from "./components/users/PasswordLogin"

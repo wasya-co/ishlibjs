@@ -8,6 +8,8 @@ import {
   logg,
 } from '$shared'
 
+export { default as loginModalStyles } from './LoginModal.scss'
+
 /* A */
 const AuthContext = createContext({})
 const AuthContextProvider = ({children, ...props }) => {
@@ -15,9 +17,7 @@ const AuthContextProvider = ({children, ...props }) => {
   // logg(props, 'AuthContextProvider')
 
   let defaultUser = localStorage.getItem(C.current_user)
-  logg(defaultUser, 'defaultUser')
   defaultUser = defaultUser ? JSON.parse(defaultUser) : C.anonUser
-  logg(defaultUser, 'defaultUser')
 
   const [ localCurrentUser, _setCurrentUser ] = useState(defaultUser)
   const setLocalCurrentUser = (user) => {
@@ -29,7 +29,6 @@ const AuthContextProvider = ({children, ...props }) => {
     currentUser = localCurrentUser
     setCurrentUser = setLocalCurrentUser
   }
-  logg(currentUser, 'currentUser III')
 
   // @TODO: make these also cascading from the props
   const [ loginModalOpen, setLoginModalOpen ] = useState(false)

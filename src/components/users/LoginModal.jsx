@@ -1,9 +1,9 @@
 
 /*
- * components / users / PasswordLoginModal
- */
+ * components / users / PasswordLoginModal.jsx
+**/
 import React, { Fragment as F, useContext, useState, } from 'react'
-import _Modal from "react-modal"
+import Modal from "react-modal"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import styled from 'styled-components'
@@ -19,28 +19,7 @@ import {
   AuthContext, AuthContextProvider,
 } from './'
 
-const Modal = _Modal
-
-const styles = {
-  LoginModal: {
-    margin: 'auto',
-    maxWidth: '500px',
-    // position: "absolute",
-    // top: "40px",
-    // left: "40px",
-    // right: "40px",
-    // bottom: "40px",
-    // backgroundColor: "papayawhip",
-  },
-  LoginModalOverlay: {
-    position: "fixed",
-    top: "0",
-    left: "0",
-    right: "0",
-    bottom: "0",
-    backgroundColor: "rebeccapurple",
-  },
-};
+import styles from './LoginModal.scss'
 
 /**
  * LoginModal
@@ -71,22 +50,14 @@ const LoginModal = (props) => {
   }
 
   return <Modal
-    isOpen={loginModalOpen}
-    style={{
-      content: styles.LoginModal,
-      // overlay: styles.LoginModalOverlay,
+    className={{
+      base: styles.LoginModal,
+      // afterOpen: 'after-open-1',
+      // beforeClose: 'after-open-2',
     }}
+    isOpen={loginModalOpen}
+    overlayClassName={styles.LoginModalOverlay}
     // portalClassName={'LoginModalPortal'}
-    // className={{
-    //   base: styles.LoginModal,
-    //   afterOpen: 'ReactModal__Content--after-open',
-    //   beforeClose: 'ReactModal__Content--before-close',
-    // }}
-    // overlayClassName={{
-    //   base: 'LoginModalOverlay',
-    //   afterOpen: 'ReactModal__Overlay--after-open',
-    //   beforeClose: 'ReactModal__Overlay--before-close',
-    // }}
   >
     <FlexRow style={{ flexDirection: 'row-reverse' }} >
       <CloseBtn onClick={() => setLoginModalOpen(false)} />

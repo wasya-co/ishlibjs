@@ -1,10 +1,13 @@
 ._1M_bQ {
+  background-color: papayawhip;
+  opacity: 1;
   position: absolute;
   top: 40px;
   left: 40px;
   right: 40px;
   bottom: 40px;
-  background-color: papayawhip;
+  margin: auto;
+  max-width: 500px;
 }
 
 ._1AJ7r {
@@ -13,5 +16,5 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rebeccapurple;
+  background-color: rgba(125, 125, 125, 0.3);
 }

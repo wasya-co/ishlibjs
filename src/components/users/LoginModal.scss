@@ -1,20 +1,27 @@
 
 .LoginModal {
+  background-color: papayawhip;
+  // background-color: #dedede;
+
+  opacity: 1;
   position: absolute;
-    top: 40px;
-    left: 40px;
-    right: 40px;
-    bottom: 40px;
-    background-color: papayawhip;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+
+  margin: auto;
+  max-width: 500px;
 }
 
 .LoginModalOverlay {
   position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rebeccapurple;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba(125,125,125, 0.3);
 }
 
 .LoginModalPortal {}

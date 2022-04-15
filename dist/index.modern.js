@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Plugins } from '@capacitor/core';
-import _Modal from 'react-modal';
+import Modal from 'react-modal';
 import { toast as toast$1 } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -118,6 +118,8 @@ var C$1 = {
   vertical: 'vertical'
 };
 
+var styles = {"LoginModal":"_1M_bQ","LoginModalOverlay":"_1AJ7r"};
+
 var RegisterWithEmailBtn = function RegisterWithEmailBtn(props) {
   return /*#__PURE__*/React.createElement(Btn, props, "Register with Email");
 };
@@ -160,22 +162,6 @@ var AuthWidget = function AuthWidget(props) {
 
 AuthWidget.propTypes = {};
 
-var Modal = _Modal;
-var styles = {
-  LoginModal: {
-    margin: 'auto',
-    maxWidth: '500px'
-  },
-  LoginModalOverlay: {
-    position: "fixed",
-    top: "0",
-    left: "0",
-    right: "0",
-    bottom: "0",
-    backgroundColor: "rebeccapurple"
-  }
-};
-
 var LoginModal = function LoginModal(props) {
   var _useContext = useContext(AuthContext),
       setCurrentUser = _useContext.setCurrentUser,
@@ -213,10 +199,11 @@ var LoginModal = function LoginModal(props) {
   };
 
   return /*#__PURE__*/React.createElement(Modal, {
+    className: {
+      base: styles.LoginModal
+    },
     isOpen: loginModalOpen,
-    style: {
-      content: styles.LoginModal
-    }
+    overlayClassName: styles.LoginModalOverlay
   }, /*#__PURE__*/React.createElement(FlexRow, {
     style: {
       flexDirection: 'row-reverse'
@@ -306,7 +293,7 @@ var RegisterModal = function RegisterModal(props) {
     }
   };
 
-  return /*#__PURE__*/React.createElement(_Modal, {
+  return /*#__PURE__*/React.createElement(Modal, {
     style: {
       zIndex: 3
     },
@@ -363,9 +350,7 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
   var currentUser = props.currentUser,
       setCurrentUser = props.setCurrentUser;
   var defaultUser = localStorage.getItem(C$1.current_user);
-  logg(defaultUser, 'defaultUser');
   defaultUser = defaultUser ? JSON.parse(defaultUser) : C$1.anonUser;
-  logg(defaultUser, 'defaultUser');
 
   var _useState = useState(defaultUser),
       localCurrentUser = _useState[0],
@@ -382,8 +367,6 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
     currentUser = localCurrentUser;
     setCurrentUser = setLocalCurrentUser;
   }
-
-  logg(currentUser, 'currentUser III');
 
   var _useState2 = useState(false),
       loginModalOpen = _useState2[0],
@@ -814,7 +797,6 @@ var SideMenu = function SideMenu(_ref) {
       props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
 
   var listItems = props.listItems;
-  logg(props, 'SideMenu');
 
   var _React$useState = React.useState(false),
       drawerOpen = _React$useState[0],
@@ -865,5 +847,5 @@ SideMenu.propTypes = {
   variant: PropTypes.string
 };
 
-export { AuthContext, AuthContextProvider, AuthWidget, PasswordLogin, Scratchpad, SideMenu, JwtContext$1 as jwtManager, logg };
+export { AuthContext, AuthContextProvider, AuthWidget, PasswordLogin, Scratchpad, SideMenu, JwtContext$1 as jwtManager, logg, styles as loginModalStyles };
 //# sourceMappingURL=index.modern.js.map

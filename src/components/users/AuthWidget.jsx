@@ -32,14 +32,14 @@ const LoginWithEmailBtn = (props) => {
  * If user is not logged in, allow registration and login via Fb, and email+passwd.
 **/
 const AuthWidget = (props) => {
-  logg(props, 'AuthWidget')
+  // logg(props, 'AuthWidget')
 
   const {
     currentUser, setCurrentUser,
     setLoginModalOpen,
     setRegisterModalOpen,
   } = useContext(AuthContext)
-  logg(useContext(AuthContext), 'AuthWidgetUsedContext')
+  // logg(useContext(AuthContext), 'AuthWidgetUsedAuthContext')
 
   // @TODO: does this belong here?
   const doLogout = () => {
@@ -55,12 +55,8 @@ const AuthWidget = (props) => {
   return <F>
     <FlexCol>
       <FacebookLogin />
-      <RegisterWithEmailBtn onClick={() => {
-        setRegisterModalOpen(true)
-      }} />
-      <LoginWithEmailBtn onClick={() => {
-        setLoginModalOpen(true)
-      }} />
+      <RegisterWithEmailBtn onClick={() => { setRegisterModalOpen(true) }} />
+      <LoginWithEmailBtn    onClick={() => { setLoginModalOpen(true) }} />
     </FlexCol>
 
     <RegisterModal />

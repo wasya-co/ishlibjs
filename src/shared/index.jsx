@@ -1,9 +1,7 @@
 /*
  *  $shared / index
  */
-// alphabetized
 import { arrowBack, closeOutline, } from 'ionicons/icons'
-// import { IonIcon } from '@ionic/react'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import {
@@ -15,7 +13,7 @@ import {
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
+  Route as _Route, useHistory,
 } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -23,7 +21,11 @@ import C from './C'
 import { AuthContext, AuthContextProvider, } from '$components/users'
 
 /* A */
-export { AuthContext, AuthContextProvider, }
+const Actions = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
+export { Actions, AuthContext, AuthContextProvider, }
 
 /* B */
 
@@ -79,7 +81,6 @@ export const Card = styled(_Box)`
  * CloseBtn
 **/
 export const CloseBtn = ({ children, ...props }) => {
-  // return <Btn {...props} ><_Close /></Btn>
   return <_Close {...props} />
 };
 CloseBtn.propTypes = {
@@ -90,18 +91,17 @@ CloseBtn.propTypes = {
 
 /* F */
 
+/**
+ * FlexCol
+**/
 const _FlexCol = styled.div`
   display: flex;
   flex-direction: column;
 
   > * {
-    margin: auto .4em;
+    margin: auto .4em; // @TODO: standardize this size!
   }
 `;
-
-/**
- * FlexCol
-**/
 export const FlexCol = ({ children, ...props }) => <_FlexCol className="FlexCol" {...props} >{children}</_FlexCol>
 
 /**

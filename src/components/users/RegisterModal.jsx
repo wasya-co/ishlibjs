@@ -9,6 +9,9 @@ import {
   logg,
 } from '$shared'
 
+/**
+ * RegisterModal
+**/
 const RegisterModal = (props) => {
   // logg(props, 'RegisterModal')
 

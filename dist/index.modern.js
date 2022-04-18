@@ -129,15 +129,13 @@ var LoginWithEmailBtn = function LoginWithEmailBtn(props) {
 };
 
 var AuthWidget = function AuthWidget(props) {
-  logg(props, 'AuthWidget');
-
   var _useContext = useContext(AuthContext),
       currentUser = _useContext.currentUser,
       setCurrentUser = _useContext.setCurrentUser,
       setLoginModalOpen = _useContext.setLoginModalOpen,
       setRegisterModalOpen = _useContext.setRegisterModalOpen;
 
-  logg(useContext(AuthContext), 'AuthWidgetUsedContext');
+  logg(useContext(AuthContext), 'AuthWidgetUsedAuthContext');
 
   var doLogout = function doLogout() {
     setCurrentUser(JSON.stringify(C$1.anonUser));
@@ -188,7 +186,7 @@ var LoginModal = function LoginModal(props) {
         setLoginModalOpen(false);
         toast$1('Login Successful.');
       })["catch"](function (err) {
-        logg(e, 'e323');
+        logg(err, 'e323');
         toast$1("Login failed");
         setCurrentUser(C$1.anonUser);
       });
@@ -199,9 +197,7 @@ var LoginModal = function LoginModal(props) {
   };
 
   return /*#__PURE__*/React.createElement(Modal, {
-    className: {
-      base: styles.LoginModal
-    },
+    className: "LoginModal " + styles.LoginModal,
     isOpen: loginModalOpen,
     overlayClassName: styles.LoginModalOverlay
   }, /*#__PURE__*/React.createElement(FlexRow, {
@@ -213,7 +209,7 @@ var LoginModal = function LoginModal(props) {
       return setLoginModalOpen(false);
     }
   })), /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement("label", {
-    "for": "email"
+    htmlFor: "email"
   }, "Email"), /*#__PURE__*/React.createElement("input", {
     name: "email",
     type: "email",
@@ -222,7 +218,7 @@ var LoginModal = function LoginModal(props) {
       return setEmail(e.target.value);
     }
   }), /*#__PURE__*/React.createElement("label", {
-    "for": "password"
+    htmlFor: "password"
   }, "Password"), /*#__PURE__*/React.createElement("input", {
     name: "password",
     type: "password",
@@ -468,16 +464,17 @@ var darkTheme = _extends({}, S, {
 var _excluded$1 = ["children"],
     _excluded2 = ["children"];
 
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12;
-var BackIcon = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n  margin-right: 5px;\n  cursor: pointer;\n"])));
-var Btn = styled.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteralLoose(["\n  border: 1px solid gray;\n  border-radius: 5px;\n  cursor: pointer;\n  display: inline-block;\n  padding: .3em 1em;\n"])));
-var ChevronLeft = styled(ChevronLeft$1)(_templateObject3 || (_templateObject3 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13;
+var Actions = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: row-reverse;\n"])));
+var BackIcon = styled.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteralLoose(["\n  margin-right: 5px;\n  cursor: pointer;\n"])));
+var Btn = styled.div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteralLoose(["\n  border: 1px solid gray;\n  border-radius: 5px;\n  cursor: pointer;\n  display: inline-block;\n  padding: .3em 1em;\n"])));
+var ChevronLeft = styled(ChevronLeft$1)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
   return p.theme.colors.text;
 });
-var ChevronRight = styled(ChevronRight$1)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+var ChevronRight = styled(ChevronRight$1)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
   return p.theme.colors.text;
 });
-var Card = styled(_Box)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteralLoose(["\n  margin-bottom: 1em;\n  padding: 1em;\n  background: white;\n  cursor: ", ";\n\n  display: flex;\n  flex-direction: column;\n"])), function (p) {
+var Card = styled(_Box)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteralLoose(["\n  margin-bottom: 1em;\n  padding: 1em;\n  background: white;\n  cursor: ", ";\n\n  display: flex;\n  flex-direction: column;\n"])), function (p) {
   return p.cursor ? p.cursor : 'auto';
 });
 var CloseBtn = function CloseBtn(_ref) {
@@ -489,7 +486,7 @@ CloseBtn.propTypes = {
   onClick: PropTypes.func.isRequred
 };
 
-var _FlexCol = styled.div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: column;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
+var _FlexCol = styled.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: column;\n\n  > * {\n    margin: auto .4em; // @TODO: standardize this size!\n  }\n"])));
 
 var FlexCol = function FlexCol(_ref2) {
   var children = _ref2.children,
@@ -499,9 +496,9 @@ var FlexCol = function FlexCol(_ref2) {
     className: "FlexCol"
   }, props), children);
 };
-var FlexRow = styled.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!\n  }\n"])));
+var FlexRow = styled.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!\n  }\n"])));
 
-var _Circle = styled.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteralLoose(["\n  position: fixed;\n  z-index: 999;\n  overflow: show;\n  margin: auto;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  width: 50px;\n  height: 50px;\n"])));
+var _Circle = styled.div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteralLoose(["\n  position: fixed;\n  z-index: 999;\n  overflow: show;\n  margin: auto;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  width: 50px;\n  height: 50px;\n"])));
 
 var logg = function logg(a, b, c) {
   if (b === void 0) {
@@ -520,18 +517,18 @@ var logg = function logg(a, b, c) {
 
   console.log("+++ " + b + ":", a);
 };
-var MenuIcon = styled(Menu)(_templateObject9 || (_templateObject9 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+var MenuIcon = styled(Menu)(_templateObject10 || (_templateObject10 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
   return p.theme.colors.text;
 });
 var TwofoldContext = React.createContext({});
-var WBordered = styled.div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  padding: .5em;\n\n  margin-bottom: 1em;\n"])), function (p) {
+var WBordered = styled.div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  padding: .5em;\n\n  margin-bottom: 1em;\n"])), function (p) {
   return p.theme.thinBorder;
 }, function (p) {
   return p.theme.thinBorderRadius;
 }, function (p) {
   return p.theme.colors.cardBackground;
 });
-var WBorderedItem = styled.div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  color: ", ";\n\n  margin: 0 .5em .5em 0;\n  padding: .5em;\n\n  text-align: center;\n\n  width: 18%;\n  max-width: 140px;\n  min-width: 120px;\n"])), function (p) {
+var WBorderedItem = styled.div(_templateObject12 || (_templateObject12 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  color: ", ";\n\n  margin: 0 .5em .5em 0;\n  padding: .5em;\n\n  text-align: center;\n\n  width: 18%;\n  max-width: 140px;\n  min-width: 120px;\n"])), function (p) {
   return p.theme.thinBorder;
 }, function (p) {
   return p.theme.thinBorderRadius;
@@ -540,7 +537,7 @@ var WBorderedItem = styled.div(_templateObject11 || (_templateObject11 = _tagged
 }, function (p) {
   return p.theme.colors.text;
 });
-var Wrapper = styled.div(_templateObject12 || (_templateObject12 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
+var Wrapper = styled.div(_templateObject13 || (_templateObject13 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
 var ZoomContext = React.createContext({});
 
 var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
@@ -749,9 +746,8 @@ var PasswordLogin = function PasswordLogin(props) {
 
 PasswordLogin.propTypes = {};
 
-var _templateObject$3, _templateObject2$2;
+var _templateObject$3;
 var W0 = styled.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n"])));
-var Actions = styled.div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: row-reverse;\n"])));
 
 var Scratchpad = function Scratchpad(props) {
   var _useContext = useContext(AuthContext),
@@ -847,5 +843,5 @@ SideMenu.propTypes = {
   variant: PropTypes.string
 };
 
-export { AuthContext, AuthContextProvider, AuthWidget, PasswordLogin, Scratchpad, SideMenu, JwtContext$1 as jwtManager, logg, styles as loginModalStyles };
+export { Actions, AuthContext, AuthContextProvider, AuthWidget, CloseBtn, FlexCol, FlexRow, LoginModal, PasswordLogin, RegisterModal, Scratchpad, SideMenu, JwtContext$1 as jwtManager, logg, styles as loginModalStyles };
 //# sourceMappingURL=index.modern.js.map

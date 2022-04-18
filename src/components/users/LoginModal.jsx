@@ -25,14 +25,14 @@ import styles from './LoginModal.scss'
  * LoginModal
 **/
 const LoginModal = (props) => {
-  // logg(props, 'LoginModal')
+  // logg(props, 'LoginModal, ishlibjs')
 
   const {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
     useApi,
   } = useContext(AuthContext)
-  // logg(useContext(TwofoldContext), 'LoginModalUsedContext')
+  // logg(useContext(AuthContext), 'LoginModalUsedAuthContext2')
 
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
@@ -43,18 +43,14 @@ const LoginModal = (props) => {
       setLoginModalOpen(false)
       toast('Login Successful.')
     }).catch((err) => {
-      logg(e, 'e323')
+      logg(err, 'e323')
       toast("Login failed")
       setCurrentUser(C.anonUser)
     })
   }
 
   return <Modal
-    className={{
-      base: styles.LoginModal,
-      // afterOpen: 'after-open-1',
-      // beforeClose: 'after-open-2',
-    }}
+    className={`LoginModal ${styles.LoginModal}`}
     isOpen={loginModalOpen}
     overlayClassName={styles.LoginModalOverlay}
     // portalClassName={'LoginModalPortal'}
@@ -63,10 +59,10 @@ const LoginModal = (props) => {
       <CloseBtn onClick={() => setLoginModalOpen(false)} />
     </FlexRow>
     <FlexCol>
-      <label for='email'>Email</label>
+      <label htmlFor='email'>Email</label>
       <input name='email' type='email' value={email} onChange={(e) => setEmail(e.target.value)    } />
 
-      <label for='password'>Password</label>
+      <label htmlFor='password'>Password</label>
       <input name='password' type='password' value={password} onChange={(e) => setPassword(e.target.value) }
         onKeyDown={(e) => { if (e.key === 'Enter') { doPasswordLogin(email, password) } }}
       />

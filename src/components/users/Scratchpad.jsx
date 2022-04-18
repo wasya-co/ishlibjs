@@ -7,6 +7,7 @@ import {
   AuthContext,
 } from '$components/users'
 import {
+  Actions,
   Btn,
   C,
   logg,
@@ -15,10 +16,6 @@ import {
 const W0 = styled.div`
 `;
 
-const Actions = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-`;
 
 /**
  * A single text area that saves locally and in the cloud.

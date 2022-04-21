@@ -22,6 +22,13 @@ import { AuthContext, AuthContextProvider, } from '$components/users'
 
 /* A */
 const Actions = styled.div`
+
+  // @TODO: this should use variables, for Modal inner size.
+  // I'd need to do dependency injection of the variable, from infiniteshelterjs into ishlibjs.
+  position: fixed; // for GalleriesShow
+  top: 60px;
+  right: 60px;
+
   display: flex;
   flex-direction: row-reverse;
 `;

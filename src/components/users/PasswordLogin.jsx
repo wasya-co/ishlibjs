@@ -5,7 +5,6 @@
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useState, } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import styled from 'styled-components'
 
 import {
@@ -14,6 +13,9 @@ import {
 import {
   AuthContext,
 } from './'
+
+// @TODO: do I even need to re-add this? ishlibjs is *always* used from elsewhere.
+// import 'react-toastify/dist/ReactToastify.css'
 
 const _W = styled.div`
   display: flex;

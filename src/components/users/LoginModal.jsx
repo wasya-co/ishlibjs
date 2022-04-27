@@ -5,7 +5,7 @@
 import React, { Fragment as F, useContext, useState, } from 'react'
 import Modal from "react-modal"
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
 import styled from 'styled-components'
 
 import {
@@ -19,6 +19,8 @@ import {
   AuthContext, AuthContextProvider,
 } from './'
 
+// @TODO: do I even need to re-add this? ishlibjs is *always* used from elsewhere.
+// import 'react-toastify/dist/ReactToastify.css'
 import styles from './LoginModal.scss'
 
 /**

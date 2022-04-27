@@ -2,4 +2,5 @@
 0.1.0 - 2022-03-05 - wiring in PasswordLogin, storybookjs
 0.1.2 - 2022-04-14 - scratchpad, authWidget
                      sideMenu, option_price_items, stock_watches
+0.1.3 - 2022-04-21 - css -> module.css and not importing ReactToastify.css locally, expecting the host to import styles.
 

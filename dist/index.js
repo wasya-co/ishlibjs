@@ -12,7 +12,6 @@ var styled = _interopDefault(require('styled-components'));
 var core$1 = require('@capacitor/core');
 var Modal = _interopDefault(require('react-modal'));
 var reactToastify = require('react-toastify');
-require('react-toastify/dist/ReactToastify.css');
 var axios = _interopDefault(require('axios'));
 require('@ionic/react');
 var Drawer = _interopDefault(require('@material-ui/core/Drawer'));
@@ -137,8 +136,6 @@ var AuthWidget = function AuthWidget(props) {
       setCurrentUser = _useContext.setCurrentUser,
       setLoginModalOpen = _useContext.setLoginModalOpen,
       setRegisterModalOpen = _useContext.setRegisterModalOpen;
-
-  logg(React.useContext(AuthContext), 'AuthWidgetUsedAuthContext');
 
   var doLogout = function doLogout() {
     setCurrentUser(JSON.stringify(C$1.anonUser));
@@ -468,7 +465,7 @@ var _excluded$1 = ["children"],
     _excluded2 = ["children"];
 
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13;
-var Actions = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: row-reverse;\n"])));
+var Actions = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n\n  // @TODO: this should use variables, for Modal inner size.\n  // I'd need to do dependency injection of the variable, from infiniteshelterjs into ishlibjs.\n  position: fixed; // for GalleriesShow\n  top: 60px;\n  right: 60px;\n\n  display: flex;\n  flex-direction: row-reverse;\n"])));
 var BackIcon = styled.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteralLoose(["\n  margin-right: 5px;\n  cursor: pointer;\n"])));
 var Btn = styled.div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteralLoose(["\n  border: 1px solid gray;\n  border-radius: 5px;\n  cursor: pointer;\n  display: inline-block;\n  padding: .3em 1em;\n"])));
 var ChevronLeft = styled(icons$1.ChevronLeft)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {

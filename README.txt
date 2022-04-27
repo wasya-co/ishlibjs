@@ -18,10 +18,13 @@ npm install --save ishjs
 
   yarn run test -- <the-file>
 
-## Build
-
 For iron_warbler env development_web:
 
-  yarn run build2
+  yarn run build2 # obsolete?
+
+## Build
+
+ ./scripts/version_bump
+ npm publish --access public
 
 

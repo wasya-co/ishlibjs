@@ -1,6 +1,6 @@
 {
   "name": "ishlibjs",
-  "version": "0.1.6",
+  "version": "0.2.2",
   "description": "ishlibjs",
   "author": "piousbox",
   "license": "MIT",
@@ -67,10 +67,10 @@
     "react-router": "5.2.0"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
-    "styled-components": "^5.3.5"
+    "styled-components": "5.3.5"
   },
   "devDependencies": {
     "sass-loader": "8.0.2",
@@ -183,7 +183,6 @@
   },
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
-    "build2": "NODE_PATH=~/projects/ruby/microsites3/iron_warbler/config/environments microbundle-crl --no-compress --format modern,cjs",
     "deploy-storybook": "storybook-to-ghpages",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
@@ -196,8 +195,6 @@
     "test:watch": "node scripts/test.js --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build",
-    "linkToIronWarbler": "./scripts/link_peer_dependencies iron_warbler",
-    "linkToGuidjs": "./scripts/link_peer_dependencies guydjs",
     "postinstall": "link-module-alias"
   }
 }

@@ -3,4 +3,5 @@
 0.1.2 - 2022-04-14 - scratchpad, authWidget
                      sideMenu, option_price_items, stock_watches
 0.1.3 - 2022-04-21 - css -> module.css and not importing ReactToastify.css locally, expecting the host to import styles.
+0.2.x - 2022-04-27 - automatic builds will use the patch number.
 

@@ -1,6 +1,6 @@
 {
   "name": "ishlibjs",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "ishlibjs",
   "author": "piousbox",
   "license": "MIT",
@@ -38,6 +38,7 @@
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.2",
+    "link-module-alias": "^1.2.0",
     "mini-css-extract-plugin": "0.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.6.4",
@@ -105,7 +106,6 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^2.2.0",
-    "link-module-alias": "^1.2.0",
     "microbundle-crl": "^0.13.10",
     "npm-run-all": "^4.1.5",
     "react": "^16.13.1",

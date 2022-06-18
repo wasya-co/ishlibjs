@@ -13,7 +13,10 @@ export { default as loginModalStyles } from './LoginModal.scss'
 /* A */
 const AuthContext = createContext({})
 const AuthContextProvider = ({children, ...props }) => {
-  let { currentUser, setCurrentUser } = props
+  let {
+    currentUser, setCurrentUser,
+    loginModalOpen, setLoginModalOpen,
+  } = props
   // logg(props, 'AuthContextProvider')
 
   let defaultUser = localStorage.getItem(C.current_user)
@@ -25,13 +28,20 @@ const AuthContextProvider = ({children, ...props }) => {
     localStorage.setItem(C.current_user, JSON.stringify(user))
     _setCurrentUser(user)
   }
-  if (!currentUser) {
+  if (!setCurrentUser) {
     currentUser = localCurrentUser
     setCurrentUser = setLocalCurrentUser
   }
 
+
+  if (typeof loginModalOpen === 'undefined') {
+    const [ _loginModalOpen, _setLoginModalOpen ] = useState(false)
+    loginModalOpen = _loginModalOpen
+    setLoginModalOpen = _setLoginModalOpen
+  }
+
+
   // @TODO: make these also cascading from the props
-  const [ loginModalOpen, setLoginModalOpen ] = useState(false)
   const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
   const moreProps = {
     currentUser, setCurrentUser,
@@ -54,6 +64,8 @@ export { default as AuthWidget } from './AuthWidget'
 const { FacebookLogin: _FacebookLogin } = Plugins
 
 const FACEBOOK_PERMISSIONS = ['email']
+
+/* J */
 
 
 /**

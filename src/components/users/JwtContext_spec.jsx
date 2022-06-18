@@ -4,7 +4,7 @@ import { mount, shallow } from "enzyme"
 import React, { useState } from "react"
 import { act } from '@testing-library/react'
 
-import { JwtContextProvider, LoginWithPassword } from "."
+import { JwtContextProvider, LoginWithPassword } from "./JwtContext"
 import { logg, request } from "$shared"
 
 enzyme.configure({ adapter: new Adapter() })
@@ -59,7 +59,6 @@ describe("JwtContextProvider", () => {
 })
 
 describe("LoginWithPassword", () => {
-
   beforeEach(() => {
     jest.spyOn(mockApi, 'getMyAccount' ).mockResolvedValue({ data: { email: 'dataz-1@gmail.com' } })
     jest.spyOn(mockApi, 'postLoginWithPassword').mockResolvedValue({ data: { email: 'dataz-2@gmail.com' } })

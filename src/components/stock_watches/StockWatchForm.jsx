@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState, } from 'react'
 import styled from 'styled-components'
 
-import { jwtManager } from 'ishlibjs'
+import { jwtManager } from '../../'
 
 import { logg, } from '$shared'
 

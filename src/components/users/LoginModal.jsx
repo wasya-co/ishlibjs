@@ -34,7 +34,7 @@ const LoginModal = (props) => {
     loginModalOpen, setLoginModalOpen,
     useApi,
   } = useContext(AuthContext)
-  // logg(useContext(AuthContext), 'LoginModalUsedAuthContext2')
+  logg(useContext(AuthContext), 'LoginModalUsedAuthContext')
 
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
@@ -45,11 +45,13 @@ const LoginModal = (props) => {
       setLoginModalOpen(false)
       toast('Login Successful.')
     }).catch((err) => {
-      logg(err, 'e323')
-      toast("Login failed")
+      logg(err, 'e323 - cannot postLogin()')
       setCurrentUser(C.anonUser)
+      toast("Login failed")
     })
   }
+
+  logg(loginModalOpen, 'about to render!')
 
   return <Modal
     className={`LoginModal ${styles.LoginModal}`}

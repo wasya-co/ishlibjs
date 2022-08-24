@@ -120,7 +120,7 @@ var C$1 = {
   vertical: 'vertical'
 };
 
-var styles = {"LoginModal":"_1M_bQ","LoginModalOverlay":"_1AJ7r"};
+var LoginModal = {"LoginModal":"_1M_bQ","LoginModalOverlay":"_1AJ7r"};
 
 var RegisterWithEmailBtn = function RegisterWithEmailBtn(props) {
   return /*#__PURE__*/React__default.createElement(Btn, props, "Register with Email");
@@ -155,17 +155,19 @@ var AuthWidget = function AuthWidget(props) {
     onClick: function onClick() {
       setLoginModalOpen(true);
     }
-  })), /*#__PURE__*/React__default.createElement(RegisterModal, null), /*#__PURE__*/React__default.createElement(LoginModal, null));
+  })), /*#__PURE__*/React__default.createElement(RegisterModal, null), /*#__PURE__*/React__default.createElement(LoginModal$1, null));
 };
 
 AuthWidget.propTypes = {};
 
-var LoginModal = function LoginModal(props) {
+var LoginModal$1 = function LoginModal(props) {
   var _useContext = React.useContext(AuthContext),
       setCurrentUser = _useContext.setCurrentUser,
       loginModalOpen = _useContext.loginModalOpen,
       setLoginModalOpen = _useContext.setLoginModalOpen,
       useApi = _useContext.useApi;
+
+  logg(React.useContext(AuthContext), 'LoginModalUsedAuthContext');
 
   var _useState = React.useState(''),
       email = _useState[0],
@@ -186,9 +188,9 @@ var LoginModal = function LoginModal(props) {
         setLoginModalOpen(false);
         reactToastify.toast('Login Successful.');
       })["catch"](function (err) {
-        logg(err, 'e323');
-        reactToastify.toast("Login failed");
+        logg(err, 'e323 - cannot postLogin()');
         setCurrentUser(C$1.anonUser);
+        reactToastify.toast("Login failed");
       });
       return Promise.resolve();
     } catch (e) {
@@ -196,10 +198,9 @@ var LoginModal = function LoginModal(props) {
     }
   };
 
+  logg(loginModalOpen, 'about to render!');
   return /*#__PURE__*/React__default.createElement(Modal, {
-    className: "LoginModal " + styles.LoginModal,
-    isOpen: loginModalOpen,
-    overlayClassName: styles.LoginModalOverlay
+    isOpen: loginModalOpen
   }, /*#__PURE__*/React__default.createElement(FlexRow, {
     style: {
       flexDirection: 'row-reverse'
@@ -344,7 +345,9 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
       props = _objectWithoutPropertiesLoose(_ref, _excluded);
 
   var currentUser = props.currentUser,
-      setCurrentUser = props.setCurrentUser;
+      setCurrentUser = props.setCurrentUser,
+      loginModalOpen = props.loginModalOpen,
+      setLoginModalOpen = props.setLoginModalOpen;
   var defaultUser = localStorage.getItem(C$1.current_user);
   defaultUser = defaultUser ? JSON.parse(defaultUser) : C$1.anonUser;
 
@@ -359,14 +362,19 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
     _setCurrentUser(user);
   };
 
-  if (!currentUser) {
+  if (!setCurrentUser) {
     currentUser = localCurrentUser;
     setCurrentUser = setLocalCurrentUser;
   }
 
-  var _useState2 = React.useState(false),
-      loginModalOpen = _useState2[0],
-      setLoginModalOpen = _useState2[1];
+  if (typeof loginModalOpen === 'undefined') {
+    var _useState2 = React.useState(false),
+        _loginModalOpen = _useState2[0],
+        _setLoginModalOpen = _useState2[1];
+
+    loginModalOpen = _loginModalOpen;
+    setLoginModalOpen = _setLoginModalOpen;
+  }
 
   var _useState3 = React.useState(false),
       registerModalOpen = _useState3[0],
@@ -850,12 +858,12 @@ exports.AuthWidget = AuthWidget;
 exports.CloseBtn = CloseBtn;
 exports.FlexCol = FlexCol;
 exports.FlexRow = FlexRow;
-exports.LoginModal = LoginModal;
+exports.LoginModal = LoginModal$1;
 exports.PasswordLogin = PasswordLogin;
 exports.RegisterModal = RegisterModal;
 exports.Scratchpad = Scratchpad;
 exports.SideMenu = SideMenu;
 exports.jwtManager = JwtContext$1;
 exports.logg = logg;
-exports.loginModalStyles = styles;
+exports.loginModalStyles = LoginModal;
 //# sourceMappingURL=index.js.map

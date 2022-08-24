@@ -54,9 +54,9 @@ const LoginModal = (props) => {
   logg(loginModalOpen, 'about to render!')
 
   return <Modal
-    className={`LoginModal ${styles.LoginModal}`}
+    // className={`LoginModal ${styles.LoginModal}`}
     isOpen={loginModalOpen}
-    overlayClassName={styles.LoginModalOverlay}
+    // overlayClassName={styles.LoginModalOverlay}
     // portalClassName={'LoginModalPortal'}
   >
     <FlexRow style={{ flexDirection: 'row-reverse' }} >

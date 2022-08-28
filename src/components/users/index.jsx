@@ -8,7 +8,7 @@ import {
   logg,
 } from '$shared'
 
-export { default as loginModalStyles } from './LoginModal.scss'
+// export { default as loginModalStyles } from './LoginModal.scss'
 
 /* A */
 const AuthContext = createContext({})
@@ -58,7 +58,6 @@ export {
   AuthContext, AuthContextProvider,
 }
 export { default as AuthWidget } from './AuthWidget'
-
 
 /* F */
 const { FacebookLogin: _FacebookLogin } = Plugins

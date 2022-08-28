@@ -18,9 +18,9 @@ import {
 import styled from 'styled-components'
 
 import C from './C'
-import { AuthContext, AuthContextProvider, } from '$components/users'
 
 /* A */
+
 const Actions = styled.div`
 
   // @TODO: this should use variables, for Modal inner size.
@@ -32,7 +32,7 @@ const Actions = styled.div`
   display: flex;
   flex-direction: row-reverse;
 `;
-export { Actions, AuthContext, AuthContextProvider, }
+export { Actions }
 
 /* B */
 

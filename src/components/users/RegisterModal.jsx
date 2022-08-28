@@ -3,11 +3,13 @@ import React, { useContext, useState, } from 'react'
 import Modal from "react-modal"
 
 import {
-  AuthContext,
   Btn,
   FlexCol, FlexRow,
   logg,
 } from '$shared'
+import {
+  AuthContext,
+} from '$components/users'
 
 /**
  * RegisterModal

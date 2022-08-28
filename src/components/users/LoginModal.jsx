@@ -21,7 +21,7 @@ import {
 
 // @TODO: do I even need to re-add this? ishlibjs is *always* used from elsewhere.
 // import 'react-toastify/dist/ReactToastify.css'
-import styles from './LoginModal.scss'
+import styles from './LoginModal.module.scss'
 
 /**
  * LoginModal
@@ -51,13 +51,11 @@ const LoginModal = (props) => {
     })
   }
 
-  logg(loginModalOpen, 'about to render!')
-
   return <Modal
-    // className={`LoginModal ${styles.LoginModal}`}
+    className={`LoginModal ${styles.LoginModal}`}
     isOpen={loginModalOpen}
-    // overlayClassName={styles.LoginModalOverlay}
-    // portalClassName={'LoginModalPortal'}
+    overlayClassName={styles.LoginModalOverlay}
+    portalClassName={styles.LoginModalPortal}
   >
     <FlexRow style={{ flexDirection: 'row-reverse' }} >
       <CloseBtn onClick={() => setLoginModalOpen(false)} />

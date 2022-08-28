@@ -54,7 +54,7 @@ const AuthWidget = (props) => {
 
   return <F>
     <FlexCol>
-      <FacebookLogin />
+      {/* <FacebookLogin /> */}
       <RegisterWithEmailBtn onClick={() => { setRegisterModalOpen(true) }} />
       <LoginWithEmailBtn    onClick={() => { setLoginModalOpen(true) }} />
     </FlexCol>

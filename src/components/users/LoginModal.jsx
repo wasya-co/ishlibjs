@@ -1,9 +1,8 @@
 
-/*
- * components / users / PasswordLoginModal.jsx
-**/
 import React, { Fragment as F, useContext, useState, } from 'react'
 import Modal from "react-modal"
+// @TODO: do I even need to re-add this? ishlibjs is *always* used from elsewhere.
+// import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast } from 'react-toastify'
 
 import styled from 'styled-components'
@@ -19,9 +18,14 @@ import {
   AuthContext, AuthContextProvider,
 } from './'
 
-// @TODO: do I even need to re-add this? ishlibjs is *always* used from elsewhere.
-// import 'react-toastify/dist/ReactToastify.css'
+
 import styles from './LoginModal.module.scss'
+
+const Header = styled.div`
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.2rem;
+`;
 
 /**
  * LoginModal
@@ -51,15 +55,20 @@ const LoginModal = (props) => {
     })
   }
 
+  Modal.setAppElement('body')
   return <Modal
     className={`LoginModal ${styles.LoginModal}`}
-    isOpen={loginModalOpen}
+    isOpen={!!loginModalOpen}
     overlayClassName={styles.LoginModalOverlay}
     portalClassName={styles.LoginModalPortal}
   >
-    <FlexRow style={{ flexDirection: 'row-reverse' }} >
+    <FlexRow >
+      <Header>Login</Header>
       <CloseBtn onClick={() => setLoginModalOpen(false)} />
     </FlexRow>
+    { 'string' === typeof loginModalOpen && <FlexRow>
+      <div className={styles.Notice} >{ loginModalOpen }</div>
+    </FlexRow> }
     <FlexCol>
       <label htmlFor='email'>Email</label>
       <input name='email' type='email' value={email} onChange={(e) => setEmail(e.target.value)    } />
@@ -72,10 +81,14 @@ const LoginModal = (props) => {
         justifyContent: 'space-between',
         marginTop: '0.4em',
       }} >
-        <span>Forgot?</span>
-        <Btn onClick={() => doPasswordLogin(email, password)}>Password Login</Btn>
+        <a href='#'>Reset</a>
+        <Btn onClick={() => doPasswordLogin(email, password)}>Login</Btn>
       </FlexRow>
     </FlexCol>
+    <hr style={{ margin: '2rem 0', borderWidth: '1px' }} />
+    <FlexRow style={{ justifyContent: 'center' }} >
+      <a href='#'>Register Instead</a>
+    </FlexRow>
   </Modal>
 }
 

@@ -1,27 +1,35 @@
 
 .LoginModal {
   background-color: papayawhip;
-  // background-color: #dedede;
 
-  opacity: 1;
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  bottom: 40px;
+  max-width: 500px;
+  min-width: 300px;
 
   margin: auto;
-  max-width: 500px;
+
+  inset: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
 }
 
 .LoginModalOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
+  inset: 0px;
   background-color: rgba(125,125,125, 0.3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .LoginModalPortal {}
+
+.Notice {
+  border: 1px solid green;
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
+}

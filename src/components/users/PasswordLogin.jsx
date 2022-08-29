@@ -43,7 +43,7 @@ const PasswordLogin = (props) => {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
     useApi,
-  } = useContext(SimpleContext)
+  } = useContext(AuthContext)
   // logg(useContext(SimpleContext), 'PasswordLoginUsedContext')
 
   const [ email, setEmail ] = useState('')

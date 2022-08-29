@@ -88,10 +88,10 @@ export const Card = styled(_Box)`
  * CloseBtn
 **/
 export const CloseBtn = ({ children, ...props }) => {
-  return <_Close {...props} />
+  return <_Close style={{ cursor: 'pointer', ...props.style }} {...props} />
 };
 CloseBtn.propTypes = {
-  onClick: PropTypes.func.isRequred,
+  onClick: PropTypes.func.isRequired,
 }
 
 /* D */
@@ -172,7 +172,7 @@ export const Loading = (p) => <_Circle><_CircularProgress /></_Circle>
  */
 const logg = (a, b="", c=null) => {
   c = "string" === typeof c ? c : b.replace(/\W/g, "");
-  if (c.length > 0) {
+  if (c.length > 0 && typeof window !== "undefined") {
     window[c] = a;
   }
 
@@ -309,12 +309,11 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     theme, toggleTheme,
   }} >{ children }</TwofoldContext.Provider>
 }
-TwofoldContextProvider.PropTypes = {
-
+TwofoldContextProvider.propTypes = {
   currentUser: PropTypes.object.isRequired,
   setCurrentUser: PropTypes.func.isRequired,
 
-  useApi: PropTypes.func.isRequred,
+  useApi: PropTypes.func.isRequired,
 }
 
 /* U */

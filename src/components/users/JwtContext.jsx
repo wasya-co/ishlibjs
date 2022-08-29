@@ -118,7 +118,7 @@ export const LoginWithPassword = (props) => {
       setLoginModalOpen(false)
     }).catch((e) => {
       logg(e, 'e322')
-      toast("Login failed")
+      // toast("Login failed")
       setCurrentUser(C.anonUser)
     })
   }

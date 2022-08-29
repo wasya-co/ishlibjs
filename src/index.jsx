@@ -1,8 +1,13 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import {
   logg,
 } from "./shared"
+import App from './TestApp'
+
+// @TODO: rename
+import * as jwtManager from './components/users/JwtContext' // this syntax is correct
 
 /* A */
 export { Actions, } from './shared'
@@ -16,8 +21,6 @@ export { CloseBtn } from './shared'
 export { FlexCol, FlexRow } from "./shared"
 
 /* J */
-// @TODO: rename
-import * as jwtManager from './components/users/JwtContext' // this syntax is correct
 export { jwtManager }
 
 /* L */
@@ -35,3 +38,6 @@ export { RegisterModal } from './components/users'
 export { default as Scratchpad } from "./components/users/Scratchpad"
 export { default as SideMenu } from './components/SideMenu'
 
+if (process.env.REACT_APP_SERVE) {
+  ReactDOM.render(<App />, document.getElementById('root'))
+}

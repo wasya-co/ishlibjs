@@ -4,6 +4,7 @@ import Modal from "react-modal"
 
 import {
   Btn,
+  C,
   FlexCol, FlexRow,
   logg,
 } from '$shared'
@@ -31,7 +32,9 @@ const RegisterModal = (props) => {
 
   const doRegister = async (email, password, password2) => {
     if (password !== password2) {
-      return toast('Passwords do not match')
+      // toast('Passwords do not match')
+      logg('Passwords do not match')
+      return
     }
     api.doRegister({ email, password }).then((r) => {
       logg(r, 'registered')
@@ -41,20 +44,20 @@ const RegisterModal = (props) => {
       setRegisterModalOpen(false)
     }).catch((e) => {
       logg(e, 'e322')
-      toast("Registration failed")
+      // toast("Registration failed")
     })
   }
 
   return <Modal style={{ zIndex: 3 }} isOpen={registerModalOpen} >
     <div onClick={() => setRegisterModalOpen(false)}>[x]</div>
     <FlexCol>
-      <label for='email'>Email</label>
+      <label htmlFor='email'>Email</label>
       <input type='email'    name='email'     value={email}    onChange={(e) => setEmail(e.target.value)    } />
 
-      <label for='password'>Password</label>
+      <label htmlFor='password'>Password</label>
       <input type='password' name='password'  value={password} onChange={(e) => setPassword(e.target.value) } />
 
-      <label for='password2'>Confirm Password</label>
+      <label htmlFor='password2'>Confirm Password</label>
       <input type='password' name='password2' value={password2} onChange={(e) => setPassword2(e.target.value) } />
 
       <FlexRow>

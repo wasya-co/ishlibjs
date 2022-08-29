@@ -33,9 +33,8 @@ const AuthContextProvider = ({children, ...props }) => {
     setCurrentUser = setLocalCurrentUser
   }
 
-
+  const [ _loginModalOpen, _setLoginModalOpen ] = useState(false)
   if (typeof loginModalOpen === 'undefined') {
-    const [ _loginModalOpen, _setLoginModalOpen ] = useState(false)
     loginModalOpen = _loginModalOpen
     setLoginModalOpen = _setLoginModalOpen
   }
@@ -67,35 +66,6 @@ const FACEBOOK_PERMISSIONS = ['email']
 /* J */
 
 
-/**
- * FacebookLogin
-**/
-export const FacebookLogin = (props) => {
-
-  const {
-    currentUser, setCurrentUser,
-    useApi,
-  } = useContext(AuthContext)
-
-  const api = useApi()
-
-  const doFbLogin = async () => {
-    const result = await _FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
-    if (result.accessToken) {
-      request.post(`${config.apiOrigin}${api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
-        localStorage.setItem(C.jwt_token, resp.data.jwt_token)
-        localStorage.setItem(C.current_user, JSON.stringify(resp.data) )
-        setCurrentUser(resp.data)
-      }).catch((err) => {
-        logg(err, `Could not post request to ${config.apiOrigin}${api.longTermTokenPath}`)
-      })
-    } else {
-      // Canceled by user.
-      logg('canceled')
-    }
-  }
-  return <Btn onClick={doFbLogin}>Login or Register with Facebook</Btn>
-}
 
 /* L */
 export { default as LoginModal } from "./LoginModal"

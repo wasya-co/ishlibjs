@@ -12,28 +12,41 @@ import { RegisterModal } from "./"
 
 configure({ adapter: new Adapter() })
 
-const C = { // @TODO: this is not the place for C.
+const C = {
   anonUser: null,
 }
 
 let currentUser = C.anonUser
 const setCurrentUser = (props) => currentUser = props
 
-const mockPostLogin = jest.fn(() => new Promise(() => true, () => true) )
+const mockDoRegister = jest.fn(() => {
+  return new Promise(() =>{}, () => {})
+})
+
 const useApi = () => ({
-  // postLogin: () => new Promise((r, rr) => r()),
-  postLogin: mockPostLogin
+  doRegister: mockDoRegister,
 })
 
 describe("RegisterModal", () => {
 
-  it("renders - ", async () => {
+  it("renders -  ", async () => {
     const w = mount(<AuthContextProvider {...{
       currentUser, setCurrentUser,
-      loginModalOpen: true, setLoginModalOpen: () => {},
+      registerModalOpen: true, setRegisterModalOpen: () => {},
       useApi,
     }} ><RegisterModal /></AuthContextProvider>)
     expect(w).toBeTruthy()
+    await act(() => new Promise(setImmediate))
+  })
+
+  it('calls api#doRegister -  ', async () => {
+    const w = mount(<AuthContextProvider {...{
+      currentUser, setCurrentUser,
+      registerModalOpen: true, setRegisterModalOpen: () => {},
+      useApi,
+    }} ><RegisterModal /></AuthContextProvider>)
+    w.find('.Submit').at(1).simulate('click')
+    exoect(mockDoRegister).toHaveBeenCalled()
     await act(() => new Promise(setImmediate))
   })
 

@@ -16,6 +16,7 @@ const AuthContextProvider = ({children, ...props }) => {
   let {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
+    registerModalOpen: _registerModalOpen, setRegisterModalOpen: _setRegisterModalOpen,
   } = props
   // logg(props, 'AuthContextProvider')
 
@@ -40,8 +41,11 @@ const AuthContextProvider = ({children, ...props }) => {
   }
 
 
-  // @TODO: make these also cascading from the props
-  const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
+  let [ registerModalOpen, setRegisterModalOpen ] = useState(false)
+  if (_registerModalOpen) {
+    registerModalOpen = _registerModalOpen
+    setRegisterModalOpen = _setRegisterModalOpen
+  }
   const moreProps = {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,

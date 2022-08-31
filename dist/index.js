@@ -11,9 +11,10 @@ var PropTypes = _interopDefault(require('prop-types'));
 var reactRouterDom = require('react-router-dom');
 var styled = _interopDefault(require('styled-components'));
 var axios = _interopDefault(require('axios'));
+var reactToastify = require('react-toastify');
+require('react-toastify/dist/ReactToastify.css');
 require('@capacitor/core');
 var Modal = _interopDefault(require('react-modal'));
-var reactToastify = require('react-toastify');
 require('@ionic/react');
 var Drawer = _interopDefault(require('@material-ui/core/Drawer'));
 var Fab = _interopDefault(require('@material-ui/core/Fab'));
@@ -23,7 +24,7 @@ var ListItem = _interopDefault(require('@material-ui/core/ListItem'));
 require('@material-ui/core/ListItemIcon');
 
 function _extends() {
-  _extends = Object.assign || function (target) {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
 
@@ -36,7 +37,6 @@ function _extends() {
 
     return target;
   };
-
   return _extends.apply(this, arguments);
 }
 
@@ -121,7 +121,7 @@ const C = {
   vertical: 'vertical'
 };
 
-axios.create({});
+var request = axios.create({});
 
 var _excluded = ["children"],
     _excluded2 = ["children"];
@@ -254,9 +254,8 @@ var LoginModal = function LoginModal(props) {
       setCurrentUser = _useContext.setCurrentUser,
       loginModalOpen = _useContext.loginModalOpen,
       setLoginModalOpen = _useContext.setLoginModalOpen,
+      setRegisterModalOpen = _useContext.setRegisterModalOpen,
       useApi = _useContext.useApi;
-
-  logg(React.useContext(AuthContext), 'LoginModalUsedAuthContext');
 
   var _useState = React.useState(''),
       email = _useState[0],
@@ -324,12 +323,11 @@ var LoginModal = function LoginModal(props) {
     }
   }), /*#__PURE__*/React__default.createElement(FlexRow, {
     style: {
+      flexDirection: 'row-reverse',
       justifyContent: 'space-between',
       marginTop: '0.4em'
     }
-  }, /*#__PURE__*/React__default.createElement("a", {
-    href: "#"
-  }, "Reset"), /*#__PURE__*/React__default.createElement(Btn, {
+  }, /*#__PURE__*/React__default.createElement(Btn, {
     onClick: function onClick() {
       return doPasswordLogin(email, password);
     }
@@ -343,7 +341,10 @@ var LoginModal = function LoginModal(props) {
       justifyContent: 'center'
     }
   }, /*#__PURE__*/React__default.createElement("a", {
-    href: "#"
+    href: "#",
+    onClick: function onClick() {
+      return setLoginModalOpen(false) || setRegisterModalOpen(true);
+    }
   }, "Register Instead")));
 };
 
@@ -351,6 +352,8 @@ const RegisterModal = props => {
   const {
     currentUser,
     setCurrentUser,
+    loginModalOpen,
+    setLoginModalOpen,
     registerModalOpen,
     setRegisterModalOpen,
     useApi
@@ -363,21 +366,23 @@ const RegisterModal = props => {
   const doRegister = function (email, password, password2) {
     try {
       if (password !== password2) {
-        logg('Passwords do not match');
+        reactToastify.toast('Passwords do not match');
         return Promise.resolve();
       }
 
-      api.doRegister({
+      const out = api.doRegister({
         email,
         password
-      }).then(r => {
+      });
+      logg(out, '#doRegister');
+      out.then(r => {
         logg(r, 'registered');
-        localStorage.setItem(C.jwt_token, r.jwt_token);
-        localStorage.setItem(C.current_user, JSON.stringify(r));
-        setCurrentUser(r);
         setRegisterModalOpen(false);
+        setLoginModalOpen(r.message);
+        reactToastify.toast('success (remove)');
       }).catch(e => {
         logg(e, 'e322');
+        reactToastify.toast("Registration failed");
       });
       return Promise.resolve();
     } catch (e) {
@@ -386,13 +391,13 @@ const RegisterModal = props => {
   };
 
   return /*#__PURE__*/React__default.createElement(Modal, {
-    style: {
-      zIndex: 3
-    },
-    isOpen: registerModalOpen
-  }, /*#__PURE__*/React__default.createElement("div", {
+    className: `LoginModal ${styles.LoginModal}`,
+    isOpen: registerModalOpen,
+    overlayClassName: styles.LoginModalOverlay,
+    portalClassName: styles.LoginModalPortal
+  }, /*#__PURE__*/React__default.createElement(FlexRow, null, /*#__PURE__*/React__default.createElement(Header, null, "Register"), /*#__PURE__*/React__default.createElement(CloseBtn, {
     onClick: () => setRegisterModalOpen(false)
-  }, "[x]"), /*#__PURE__*/React__default.createElement(FlexCol, null, /*#__PURE__*/React__default.createElement("label", {
+  })), /*#__PURE__*/React__default.createElement(FlexCol, null, /*#__PURE__*/React__default.createElement("label", {
     htmlFor: "email"
   }, "Email"), /*#__PURE__*/React__default.createElement("input", {
     type: "email",
@@ -413,12 +418,31 @@ const RegisterModal = props => {
     name: "password2",
     value: password2,
     onChange: e => setPassword2(e.target.value)
-  }), /*#__PURE__*/React__default.createElement(FlexRow, null, /*#__PURE__*/React__default.createElement(Btn, {
+  }), /*#__PURE__*/React__default.createElement(FlexRow, {
+    style: {
+      flexDirection: 'row-reverse',
+      justifyContent: 'space-between',
+      marginTop: '0.4em'
+    }
+  }, /*#__PURE__*/React__default.createElement(Btn, {
+    className: "Submit",
     onClick: () => doRegister(email, password, password2)
-  }, "Register"), /*#__PURE__*/React__default.createElement(Btn, {
-    onClick: () => setRegisterModalOpen(false)
-  }, "Cancel"))));
+  }, "Register")), /*#__PURE__*/React__default.createElement("hr", {
+    style: {
+      margin: '2rem 0',
+      borderWidth: '1px'
+    }
+  }), /*#__PURE__*/React__default.createElement(FlexRow, {
+    style: {
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React__default.createElement("a", {
+    href: "#",
+    onClick: () => setLoginModalOpen(true) || setRegisterModalOpen(false)
+  }, "Login Instead"))));
 };
+
+RegisterModal.propTypes = {};
 
 var _excluded$1 = ["children"];
 var AuthContext = React.createContext({});
@@ -430,7 +454,9 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
   var currentUser = props.currentUser,
       setCurrentUser = props.setCurrentUser,
       loginModalOpen = props.loginModalOpen,
-      setLoginModalOpen = props.setLoginModalOpen;
+      setLoginModalOpen = props.setLoginModalOpen,
+      _registerModalOpen = props.registerModalOpen,
+      _setRegisterModalOpen = props.setRegisterModalOpen;
   var defaultUser = localStorage.getItem(C.current_user);
   defaultUser = defaultUser ? JSON.parse(defaultUser) : C.anonUser;
 
@@ -463,6 +489,11 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
       registerModalOpen = _useState3[0],
       setRegisterModalOpen = _useState3[1];
 
+  if (_registerModalOpen) {
+    registerModalOpen = _registerModalOpen;
+    setRegisterModalOpen = _setRegisterModalOpen;
+  }
+
   var moreProps = {
     currentUser: currentUser,
     setCurrentUser: setCurrentUser,
@@ -476,18 +507,46 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
   }, children);
 };
 
-var TestApp = function TestApp() {
-  var useApi = function useApi() {};
+var config = {
+  apiOrigin: 'http://localhost:3001'
+};
 
-  var _useState = React.useState("Please login!"),
+var TestApp = function TestApp() {
+  var useApi = function useApi() {
+    return {
+      doRegister: function doRegister(_ref) {
+        var email = _ref.email,
+            password = _ref.password;
+        return request.post(config.apiOrigin + "/api/users", {
+          email: email,
+          password: password
+        }).then(function (r) {
+          return r.data;
+        }).then(function (r) {
+          logg(r, 'done registered');
+          return r;
+        });
+      }
+    };
+  };
+
+  var _useState = React.useState(false),
       loginModalOpen = _useState[0],
       setLoginModalOpen = _useState[1];
+
+  var _useState2 = React.useState(true),
+      registerModalOpen = _useState2[0],
+      setRegisterModalOpen = _useState2[1];
 
   return /*#__PURE__*/React__default.createElement(AuthContextProvider, {
     loginModalOpen: loginModalOpen,
     setLoginModalOpen: setLoginModalOpen,
+    registerModalOpen: registerModalOpen,
+    setRegisterModalOpen: setRegisterModalOpen,
     useApi: useApi
-  }, /*#__PURE__*/React__default.createElement(AuthWidget, null));
+  }, /*#__PURE__*/React__default.createElement(AuthWidget, null), /*#__PURE__*/React__default.createElement(reactToastify.ToastContainer, {
+    position: "bottom-left"
+  }));
 };
 
 var _templateObject$2, _templateObject2$1, _templateObject3$1, _templateObject4$1;

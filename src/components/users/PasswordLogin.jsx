@@ -75,7 +75,7 @@ const PasswordLogin = (props) => {
   </_W>
 }
 PasswordLogin.propTypes = {
-  // none so far
+  // None so far
 }
 
 export default PasswordLogin

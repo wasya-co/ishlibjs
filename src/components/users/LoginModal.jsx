@@ -21,7 +21,8 @@ import {
 
 import styles from './LoginModal.module.scss'
 
-const Header = styled.div`
+// copy-pasted in RegisterModal
+export const Header = styled.div`
   flex-grow: 1;
   text-align: center;
   font-size: 1.2rem;
@@ -36,9 +37,10 @@ const LoginModal = (props) => {
   const {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
+    registerModalOpen, setRegisterModalOpen,
     useApi,
   } = useContext(AuthContext)
-  logg(useContext(AuthContext), 'LoginModalUsedAuthContext')
+  // logg(useContext(AuthContext), 'LoginModalUsedAuthContext')
 
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
@@ -78,16 +80,16 @@ const LoginModal = (props) => {
         onKeyDown={(e) => { if (e.key === 'Enter') { doPasswordLogin(email, password) } }}
       />
       <FlexRow style={{
+        flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         marginTop: '0.4em',
       }} >
-        <a href='#'>Reset</a>
         <Btn onClick={() => doPasswordLogin(email, password)}>Login</Btn>
       </FlexRow>
     </FlexCol>
     <hr style={{ margin: '2rem 0', borderWidth: '1px' }} />
     <FlexRow style={{ justifyContent: 'center' }} >
-      <a href='#'>Register Instead</a>
+      <a href='#' onClick={() => setLoginModalOpen(false) || setRegisterModalOpen(true) }>Register Instead</a>
     </FlexRow>
   </Modal>
 }

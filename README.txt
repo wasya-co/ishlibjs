@@ -18,8 +18,10 @@ npm install --save ishjs
 = Test =
 
   yarn run test -- <the-file>
+  yarn run jest -- <the-file>
 
 For iron_warbler env development_web:
 
   yarn run build2 # obsolete?
+
 

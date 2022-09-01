@@ -35,8 +35,6 @@ const RegisterModal = (props) => {
   // logg(useContext(AuthContext), 'registerModalUsedContext')
 
   const api = useApi()
-  logg(api, 'zeApi')
-  logg(api.doRegister(), 'zeApiValue1')
 
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
@@ -48,13 +46,11 @@ const RegisterModal = (props) => {
       return
     }
     const out = api.doRegister({ email, password })
-    logg(out, 'zeOut')
 
     out.then((r) => {
       setRegisterModalOpen(false)
       setLoginModalOpen(r.message)
     }).catch((e) => {
-      logg(e, 'e322')
       toast("Registration failed")
     })
   }

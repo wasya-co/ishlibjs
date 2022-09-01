@@ -203,12 +203,36 @@ var WBorderedItem = styled.div(_templateObject12 || (_templateObject12 = _tagged
 var Wrapper = styled.div(_templateObject13 || (_templateObject13 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
 var ZoomContext = React.createContext({});
 
+var _excluded$1 = ["fill", "w", "h"];
+
 var RegisterWithEmailBtn = function RegisterWithEmailBtn(props) {
   return /*#__PURE__*/React.createElement(Btn, props, "Register with Email");
 };
 
 var LoginWithEmailBtn = function LoginWithEmailBtn(props) {
   return /*#__PURE__*/React.createElement(Btn, props, "Login with Email");
+};
+
+var IconLogout = function IconLogout(_ref) {
+  var w = _ref.w,
+      h = _ref.h,
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$1);
+
+  w = w ? w : '12px';
+  h = h ? h : '12px';
+  return /*#__PURE__*/React.createElement("span", props, /*#__PURE__*/React.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: w,
+    height: h,
+    viewBox: "0 0 96.943 96.943",
+    style: {
+      enableBackground: 'new 0 0 96.943 96.943'
+    }
+  }, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
+    d: "M61.168,83.92H11.364V13.025H61.17c1.104,0,2-0.896,2-2V3.66c0-1.104-0.896-2-2-2H2c-1.104,0-2,0.896-2,2v89.623 c0,1.104,0.896,2,2,2h59.168c1.105,0,2-0.896,2-2V85.92C63.168,84.814,62.274,83.92,61.168,83.92z"
+  }), " ", /*#__PURE__*/React.createElement("path", {
+    d: "M96.355,47.058l-26.922-26.92c-0.75-0.751-2.078-0.75-2.828,0l-6.387,6.388c-0.781,0.781-0.781,2.047,0,2.828 l12.16,12.162H19.737c-1.104,0-2,0.896-2,2v9.912c0,1.104,0.896,2,2,2h52.644L60.221,67.59c-0.781,0.781-0.781,2.047,0,2.828 l6.387,6.389c0.375,0.375,0.885,0.586,1.414,0.586c0.531,0,1.039-0.211,1.414-0.586l26.922-26.92 c0.375-0.375,0.586-0.885,0.586-1.414C96.943,47.941,96.73,47.433,96.355,47.058z"
+  }), " "), " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null, " "), " ", /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null)));
 };
 
 var AuthWidget = function AuthWidget(props) {
@@ -223,9 +247,9 @@ var AuthWidget = function AuthWidget(props) {
   };
 
   if (currentUser !== null && currentUser !== void 0 && currentUser.email) {
-    return /*#__PURE__*/React.createElement(FlexRow, null, "[", currentUser.email, " ", /*#__PURE__*/React.createElement(Btn, {
+    return /*#__PURE__*/React.createElement(FlexRow, null, "[\xA0", currentUser.email, "\xA0", /*#__PURE__*/React.createElement(IconLogout, {
       onClick: doLogout
-    }, "Logout"), " ]");
+    }, "Logout"), "\xA0]");
   }
 
   return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement(RegisterWithEmailBtn, {
@@ -338,7 +362,6 @@ var LoginModal = function LoginModal(props) {
       justifyContent: 'center'
     }
   }, /*#__PURE__*/React.createElement("a", {
-    href: "#",
     onClick: function onClick() {
       return setLoginModalOpen(false) || setRegisterModalOpen(true);
     }
@@ -371,14 +394,10 @@ const RegisterModal = props => {
         email,
         password
       });
-      logg(out, '#doRegister');
       out.then(r => {
-        logg(r, 'registered');
         setRegisterModalOpen(false);
         setLoginModalOpen(r.message);
-        toast('success (remove)');
       }).catch(e => {
-        logg(e, 'e322');
         toast("Registration failed");
       });
       return Promise.resolve();
@@ -434,19 +453,18 @@ const RegisterModal = props => {
       justifyContent: 'center'
     }
   }, /*#__PURE__*/React.createElement("a", {
-    href: "#",
     onClick: () => setLoginModalOpen(true) || setRegisterModalOpen(false)
   }, "Login Instead"))));
 };
 
 RegisterModal.propTypes = {};
 
-var _excluded$1 = ["children"];
+var _excluded$2 = ["children"];
 var AuthContext = createContext({});
 
 var AuthContextProvider = function AuthContextProvider(_ref) {
   var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$1);
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$2);
 
   var currentUser = props.currentUser,
       setCurrentUser = props.setCurrentUser,
@@ -548,14 +566,13 @@ var TestApp = function TestApp() {
 
 var _templateObject$2, _templateObject2$1, _templateObject3$1, _templateObject4$1;
 
-var _excluded$2 = ["children"];
+var _excluded$3 = ["children"];
 var JwtContext = React.createContext({});
 
 var JwtContextProvider = function JwtContextProvider(_ref) {
   var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$2);
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
 
-  logg(props, 'JwtContextProvider');
   var api = props.api;
   var maybeUser = JSON.parse(localStorage.getItem(C.current_user)) || C.anonUser;
 
@@ -599,7 +616,6 @@ var SimpleJwtRow = function SimpleJwtRow() {
   var _useContext = useContext(JwtContext),
       currentUser = _useContext.currentUser;
 
-  logg(useContext(JwtContext), 'SimpleJwtRowUsedJwtContext');
   return /*#__PURE__*/React.createElement(W1, null, /*#__PURE__*/React.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React.createElement(W2, null, /*#__PURE__*/React.createElement("i", null, currentUser.email), /*#__PURE__*/React.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React.createElement(LoginWithPassword, null)));
 };
 
@@ -625,7 +641,6 @@ var LoginWithPassword = function LoginWithPassword(props) {
         email: email,
         password: password
       }).then(function (resp) {
-        logg(resp, 'ze resp');
         localStorage.setItem(C.jwt_token, resp.jwt_token);
         localStorage.setItem(C.current_user, JSON.stringify(resp));
         setCurrentUser(resp);
@@ -788,14 +803,14 @@ var Scratchpad = function Scratchpad(props) {
 
 Scratchpad.propTypes = {};
 
-var _excluded$3 = ["children"];
+var _excluded$4 = ["children"];
 
 var _templateObject$5;
 var W0$1 = styled.div(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
 
 var SideMenu = function SideMenu(_ref) {
   var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$4);
 
   var listItems = props.listItems;
 

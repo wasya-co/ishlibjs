@@ -19,17 +19,17 @@ const C = {
 let currentUser = C.anonUser
 const setCurrentUser = (props) => currentUser = props
 
-const mockDoRegister = jest.fn(() => {
-  return new Promise(() =>{}, () => {})
-})
-
-const useApi = () => ({
-  doRegister: mockDoRegister,
-})
 
 describe("RegisterModal", () => {
 
   it("renders -  ", async () => {
+
+    // Somehow it gotta be insite it() scope?! _vp_ 2022-09-01
+    const mockDoRegister = jest.fn(() => new Promise(() => {}, () => {}))
+    const useApi = () => ({
+      doRegister: mockDoRegister,
+    })
+
     const w = mount(<AuthContextProvider {...{
       currentUser, setCurrentUser,
       registerModalOpen: true, setRegisterModalOpen: () => {},
@@ -40,13 +40,20 @@ describe("RegisterModal", () => {
   })
 
   it('calls api#doRegister -  ', async () => {
+
+    // Somehow it gotta be insite it() scope?! _vp_ 2022-09-01
+    const mockDoRegister = jest.fn(() => new Promise(() => {}, () => {}))
+    const useApi = () => ({
+      doRegister: mockDoRegister,
+    })
+
     const w = mount(<AuthContextProvider {...{
       currentUser, setCurrentUser,
       registerModalOpen: true, setRegisterModalOpen: () => {},
       useApi,
     }} ><RegisterModal /></AuthContextProvider>)
     w.find('.Submit').at(1).simulate('click')
-    exoect(mockDoRegister).toHaveBeenCalled()
+    expect(mockDoRegister).toHaveBeenCalled()
     await act(() => new Promise(setImmediate))
   })
 

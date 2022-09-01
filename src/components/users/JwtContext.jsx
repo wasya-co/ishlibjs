@@ -14,7 +14,7 @@ import { Btn, C, logg, request } from "$shared" // @TODO: alias $shared
 // @TODO: replace TwofoldContext in guydme with the one from ishjs.
 export const JwtContext = React.createContext({})
 const JwtContextProvider = ({ children, ...props }) => {
-  logg(props, 'JwtContextProvider')
+  // logg(props, 'JwtContextProvider')
   const {
     api,
   } = props
@@ -72,7 +72,7 @@ export const SimpleJwtRow = () => {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
   } = useContext(JwtContext)
-  logg(useContext(JwtContext), 'SimpleJwtRowUsedJwtContext')
+  // logg(useContext(JwtContext), 'SimpleJwtRowUsedJwtContext')
 
   return <W1>
     <FlexRow>
@@ -96,6 +96,8 @@ const _W = styled.div`
   }
 `;
 
+// @TODO: is this obsolete and unused?
+// _vp_ 2022-09-01
 export const LoginWithPassword = (props) => {
   // logg(useContext(JwtContext), 'useContext(JwtContext)')
   const {
@@ -110,8 +112,6 @@ export const LoginWithPassword = (props) => {
     // logg(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, 'doPasswordLogin')
     // request.post(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, { email, password }).then((r) => r.data
     api.postLoginWithPassword({ email, password }).then((resp) => {
-      logg(resp, 'ze resp')
-
       localStorage.setItem(C.jwt_token, resp.jwt_token)
       localStorage.setItem(C.current_user, JSON.stringify(resp))
       setCurrentUser(resp) // must be done *after* setting C.jwt_token

@@ -89,7 +89,7 @@ const LoginModal = (props) => {
     </FlexCol>
     <hr style={{ margin: '2rem 0', borderWidth: '1px' }} />
     <FlexRow style={{ justifyContent: 'center' }} >
-      <a href='#' onClick={() => setLoginModalOpen(false) || setRegisterModalOpen(true) }>Register Instead</a>
+      <a onClick={() => setLoginModalOpen(false) || setRegisterModalOpen(true) }>Register Instead</a>
     </FlexRow>
   </Modal>
 }

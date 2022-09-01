@@ -45,15 +45,9 @@ const RegisterModal = (props) => {
       return
     }
     const out = api.doRegister({ email, password })
-    logg(out, '#doRegister')
     out.then((r) => {
-      logg(r, 'registered')
-      // localStorage.setItem(C.jwt_token, r.jwt_token)
-      // localStorage.setItem(C.current_user, JSON.stringify(r))
-      // setCurrentUser(r)
       setRegisterModalOpen(false)
       setLoginModalOpen(r.message)
-      toast('success (remove)')
     }).catch((e) => {
       logg(e, 'e322')
       toast("Registration failed")
@@ -89,7 +83,7 @@ const RegisterModal = (props) => {
       </FlexRow>
       <hr style={{ margin: '2rem 0', borderWidth: '1px' }} />
       <FlexRow style={{ justifyContent: 'center' }} >
-        <a href='#' onClick={() => setLoginModalOpen(true) || setRegisterModalOpen(false) }>Login Instead</a>
+        <a onClick={() => setLoginModalOpen(true) || setRegisterModalOpen(false) }>Login Instead</a>
       </FlexRow>
     </FlexCol>
   </Modal>

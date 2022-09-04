@@ -159,6 +159,8 @@ var darkTheme = _extends({}, S, {
   }
 });
 
+var TwofoldContext = React__default.createContext({});
+
 var _excluded = ["children"],
     _excluded2 = ["children"],
     _excluded3 = ["children", "onClose"];
@@ -238,7 +240,6 @@ var ModalHeader = function ModalHeader(_ref3) {
 ModalHeader.propTypes = {
   onClose: PropTypes.func.isRequired
 };
-var TwofoldContext = React__default.createContext({});
 var WBordered = styled.div(_templateObject12 || (_templateObject12 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  padding: .5em;\n\n  margin-bottom: 1em;\n"])), function (p) {
   return p.theme.thinBorder;
 }, function (p) {
@@ -534,8 +535,6 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
   var children = _ref.children,
       props = _objectWithoutPropertiesLoose(_ref, _excluded$2);
 
-  logg(props, 'AuthContextProvider');
-
   var _props$currentUser = props.currentUser,
       _currentUser = _props$currentUser === void 0 ? C.anonUser : _props$currentUser,
       _setCurrentUser = props.setCurrentUser,
@@ -820,6 +819,7 @@ exports.CloseBtn = CloseBtn;
 exports.FlexCol = FlexCol;
 exports.FlexRow = FlexRow;
 exports.LoginModal = LoginModal;
+exports.ModalHeader = ModalHeader;
 exports.RegisterModal = RegisterModal;
 exports.Scratchpad = Scratchpad;
 exports.SideMenu = SideMenu;

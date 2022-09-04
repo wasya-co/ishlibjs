@@ -27,6 +27,9 @@ export { jwtManager }
 export { logg }
 export { LoginModal } from './components/users'
 
+/* M */
+export { ModalHeader } from './shared'
+
 /* P */
 
 /* R */

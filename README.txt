@@ -11,6 +11,7 @@ npm install --save ishjs
 
 = Build =
 
+ yarn run build
  ./scripts/version_bump
  npm publish --access public
 

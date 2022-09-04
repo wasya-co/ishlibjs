@@ -24,8 +24,7 @@ describe("AuthWidget", () => {
     })
 
     const theseProps = {
-      loginModalOpen: false,
-      setLoginModalOpen: () => {},
+      loginModalOpen: false, setLoginModalOpen: () => {},
       useApi: useApi,
     }
     let wrapper = mount(<AuthContextProvider {...theseProps} >

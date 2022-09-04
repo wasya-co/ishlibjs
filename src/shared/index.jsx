@@ -189,6 +189,22 @@ export const MenuIcon = styled(_MenuIcon)`
   color: ${(p) => p.theme.colors.text}
 `;
 
+
+const _Header = styled.div`
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.2rem;
+`;
+export const ModalHeader = ({ children, onClose, ...props }) => {
+  return <FlexRow >
+    <_Header>{children}</_Header>
+    <CloseBtn onClick={onClose} />
+  </FlexRow>
+}
+ModalHeader.propTypes = {
+  onClose: PropTypes.func.isRequired,
+}
+
 /* P */
 
 /**

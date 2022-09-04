@@ -1,6 +1,7 @@
 
 import { Plugins } from '@capacitor/core'
 import React, { createContext, useContext, useState } from 'react'
+import PropTypes from 'prop-types'
 
 import {
   Btn,
@@ -8,53 +9,49 @@ import {
   logg,
 } from '$shared'
 
-// export { default as loginModalStyles } from './LoginModal.scss'
-
 /* A */
 const AuthContext = createContext({})
 const AuthContextProvider = ({children, ...props }) => {
+  logg(props, 'AuthContextProvider')
   let {
-    currentUser, setCurrentUser,
-    loginModalOpen, setLoginModalOpen,
-    registerModalOpen: _registerModalOpen, setRegisterModalOpen: _setRegisterModalOpen,
+    currentUser: _currentUser = C.anonUser, setCurrentUser: _setCurrentUser,
+    loginModalOpen: _loginModalOpen = false, setLoginModalOpen: _setLoginModalOpen,
+    registerModalOpen: _registerModalOpen = false, setRegisterModalOpen: _setRegisterModalOpen,
   } = props
-  // logg(props, 'AuthContextProvider')
 
-  let defaultUser = localStorage.getItem(C.current_user)
-  defaultUser = defaultUser ? JSON.parse(defaultUser) : C.anonUser
-
-  const [ localCurrentUser, _setCurrentUser ] = useState(defaultUser)
-  const setLocalCurrentUser = (user) => {
-    localStorage.setItem(C.jwt_token, user.jwt_token)
-    localStorage.setItem(C.current_user, JSON.stringify(user))
-    _setCurrentUser(user)
-  }
-  if (!setCurrentUser) {
-    currentUser = localCurrentUser
-    setCurrentUser = setLocalCurrentUser
+  let [ currentUser, setCurrentUser ] = useState(_currentUser)
+  if (_setCurrentUser) {
+    currentUser = _currentUser
+    setCurrentUser = _setCurrentUser
   }
 
-  const [ _loginModalOpen, _setLoginModalOpen ] = useState(false)
-  if (typeof loginModalOpen === 'undefined') {
+  let [ loginModalOpen, setLoginModalOpen ] = useState(_loginModalOpen)
+  if (_setLoginModalOpen) {
     loginModalOpen = _loginModalOpen
     setLoginModalOpen = _setLoginModalOpen
   }
 
-
-  let [ registerModalOpen, setRegisterModalOpen ] = useState(false)
-  if (_registerModalOpen) {
+  let [ registerModalOpen, setRegisterModalOpen ] = useState(_registerModalOpen)
+  if (_setRegisterModalOpen) {
     registerModalOpen = _registerModalOpen
     setRegisterModalOpen = _setRegisterModalOpen
   }
+
   const moreProps = {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
     registerModalOpen, setRegisterModalOpen,
   }
 
+  //
+  // props.useApi isRequired
+  //
   return <AuthContext.Provider value={{ ...props, ...moreProps }} >
     { children }
   </AuthContext.Provider>
+}
+AuthContextProvider.propTypes = {
+  useApi: PropTypes.func.isRequired,
 }
 
 export {

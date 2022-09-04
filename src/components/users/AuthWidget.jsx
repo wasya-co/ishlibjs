@@ -45,20 +45,24 @@ const IconLogout = ({ fill, w, h, ...props }) => {
 /**
  * If user is logged in, display the email/handle and allow logout.
  * If user is not logged in, allow registration and login via Fb, and email+passwd.
+ *
+ * @TODO: doesn't seem like this belongs in ishlibjs _vp_ 2022-09-04
 **/
 const AuthWidget = (props) => {
   // logg(props, 'AuthWidget')
 
   const {
     currentUser, setCurrentUser,
+    doLogout: _doLogout,
     setLoginModalOpen,
     setRegisterModalOpen,
   } = useContext(AuthContext)
   // logg(useContext(AuthContext), 'AuthWidgetUsedAuthContext')
 
-  // @TODO: does this belong here?
+  // @TODO: doesn't belong here. Should be injected from the host. _vp_ 2022-09-04
   const doLogout = () => {
-    setCurrentUser(JSON.stringify(C.anonUser))
+    setCurrentUser(C.anonUser)
+    localStorage.removeItem('jwt_token')
   }
 
   if (currentUser?.email) {
@@ -78,9 +82,7 @@ const AuthWidget = (props) => {
     <LoginModal />
 
   </F>
-};
-AuthWidget.propTypes = {
-  // none so far
 }
+AuthWidget.propTypes = {} // none so far
 
 export default AuthWidget

@@ -1,6 +1,6 @@
 {
   "name": "ishlibjs",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "ishlibjs",
   "author": "piousbox",
   "license": "A Proprietary License",
@@ -160,7 +160,9 @@
       "/node_modules/(?!(@ionic|@stencil|ionicons))",
       "\\.pnp\\.[^\\/]+$"
     ],
-    "modulePaths": [],
+    "modulePaths": [
+
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",

@@ -8,13 +8,13 @@ import {
   Btn,
   C, CloseBtn,
   FlexCol, FlexRow,
+  ModalHeader,
   logg,
 } from '$shared'
 import {
   AuthContext,
 } from '$components/users'
 
-import { Header } from './LoginModal'
 import styles from './LoginModal.module.scss'
 
 
@@ -61,10 +61,7 @@ const RegisterModal = (props) => {
     overlayClassName={styles.LoginModalOverlay}
     portalClassName={styles.LoginModalPortal}
   >
-    <FlexRow >
-      <Header>Register</Header>
-      <CloseBtn onClick={() => setRegisterModalOpen(false)} />
-    </FlexRow>
+    <ModalHeader onClose={() => setRegisterModalOpen(false)} >Register</ModalHeader>
     <FlexCol>
       <label htmlFor='email'>Email</label>
       <input type='email'    name='email'     value={email}    onChange={(e) => setEmail(e.target.value)    } />

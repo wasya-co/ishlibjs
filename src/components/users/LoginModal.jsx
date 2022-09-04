@@ -1,8 +1,6 @@
 
 import React, { Fragment as F, useContext, useState, } from 'react'
 import Modal from "react-modal"
-// @TODO: do I even need to re-add this? ishlibjs is *always* used from elsewhere.
-// import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast } from 'react-toastify'
 
 import styled from 'styled-components'
@@ -12,21 +10,14 @@ import {
   C, CloseBtn,
   FlexCol, FlexRow,
   logg,
+  ModalHeader,
   request,
 } from "$shared"
 import {
   AuthContext, AuthContextProvider,
 } from './'
 
-
 import styles from './LoginModal.module.scss'
-
-// copy-pasted in RegisterModal
-export const Header = styled.div`
-  flex-grow: 1;
-  text-align: center;
-  font-size: 1.2rem;
-`;
 
 /**
  * LoginModal
@@ -46,28 +37,26 @@ const LoginModal = (props) => {
   const [ password, setPassword ] = useState('')
   const api = useApi()
 
+  // @TODO: this should be injected, right? _vp_ 2022-09-04
   const doPasswordLogin = async (email, password) => {
     api.postLogin({ email, password }).then((r) => {
       setLoginModalOpen(false)
-      toast('Login Successful.')
     }).catch((err) => {
       logg(err, 'e323 - cannot postLogin()')
-      setCurrentUser(C.anonUser)
-      toast("Login failed")
+      // setCurrentUser(C.anonUser)
+      toast("Could not login.")
     })
   }
 
   Modal.setAppElement('body')
+
   return <Modal
     className={`LoginModal ${styles.LoginModal}`}
     isOpen={!!loginModalOpen}
     overlayClassName={styles.LoginModalOverlay}
     portalClassName={styles.LoginModalPortal}
   >
-    <FlexRow >
-      <Header>Login</Header>
-      <CloseBtn onClick={() => setLoginModalOpen(false)} />
-    </FlexRow>
+    <ModalHeader onClose={() => setLoginModalOpen(false)} >Login</ModalHeader>
     { 'string' === typeof loginModalOpen && <FlexRow>
       <div className={styles.Notice} >{ loginModalOpen }</div>
     </FlexRow> }

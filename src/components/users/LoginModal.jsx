@@ -41,6 +41,7 @@ const LoginModal = (props) => {
   const doPasswordLogin = async (email, password) => {
     api.postLogin({ email, password }).then((r) => {
       setLoginModalOpen(false)
+      window.location.reload(false)
     }).catch((err) => {
       logg(err, 'e323 - cannot postLogin()')
       // setCurrentUser(C.anonUser)

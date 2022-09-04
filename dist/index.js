@@ -301,6 +301,7 @@ var AuthWidget = function AuthWidget(props) {
   var doLogout = function doLogout() {
     setCurrentUser(C.anonUser);
     localStorage.removeItem('jwt_token');
+    window.location.reload(false);
   };
 
   if (currentUser !== null && currentUser !== void 0 && currentUser.email) {
@@ -348,6 +349,7 @@ var LoginModal = function LoginModal(props) {
         password: password
       }).then(function (r) {
         setLoginModalOpen(false);
+        window.location.reload(false);
       }).catch(function (err) {
         logg(err, 'e323 - cannot postLogin()');
         reactToastify.toast("Could not login.");

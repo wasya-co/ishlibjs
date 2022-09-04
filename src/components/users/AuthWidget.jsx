@@ -63,6 +63,7 @@ const AuthWidget = (props) => {
   const doLogout = () => {
     setCurrentUser(C.anonUser)
     localStorage.removeItem('jwt_token')
+    window.location.reload(false)
   }
 
   if (currentUser?.email) {

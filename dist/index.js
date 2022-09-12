@@ -304,6 +304,16 @@ var AuthWidget = function AuthWidget(props) {
     window.location.reload(false);
   };
 
+  var onError = function onError(inn) {
+    logg(inn, 'cannot login!');
+    toast('cannot login!');
+  };
+
+  var onSuccess = function onSuccess(inn) {
+    logg('Logged in successfully.');
+    setCurrentUser(inn);
+  };
+
   if (currentUser !== null && currentUser !== void 0 && currentUser.email) {
     return /*#__PURE__*/React__default.createElement(FlexRow, null, "[\xA0", currentUser.email, "\xA0", /*#__PURE__*/React__default.createElement(IconLogout, {
       onClick: doLogout
@@ -318,7 +328,10 @@ var AuthWidget = function AuthWidget(props) {
     onClick: function onClick() {
       setLoginModalOpen(true);
     }
-  })), /*#__PURE__*/React__default.createElement(RegisterModal, null), /*#__PURE__*/React__default.createElement(LoginModal, null));
+  })), /*#__PURE__*/React__default.createElement(RegisterModal, null), /*#__PURE__*/React__default.createElement(LoginModal, {
+    onError: onError,
+    onSuccess: onSuccess
+  }));
 };
 
 AuthWidget.propTypes = {};
@@ -326,6 +339,9 @@ AuthWidget.propTypes = {};
 var styles = {"LoginModal":"_2YolN","LoginModalOverlay":"_3hqvY","Notice":"_2ifwF"};
 
 var LoginModal = function LoginModal(props) {
+  var onError = props.onError,
+      onSuccess = props.onSuccess;
+
   var _useContext = React.useContext(AuthContext),
       loginModalOpen = _useContext.loginModalOpen,
       setLoginModalOpen = _useContext.setLoginModalOpen,
@@ -349,10 +365,11 @@ var LoginModal = function LoginModal(props) {
         password: password
       }).then(function (r) {
         setLoginModalOpen(false);
-        window.location.reload(false);
+        onSuccess(r);
       }).catch(function (err) {
         logg(err, 'e323 - cannot postLogin()');
         reactToastify.toast("Could not login.");
+        onError(err);
       });
       return Promise.resolve();
     } catch (e) {
@@ -419,6 +436,11 @@ var LoginModal = function LoginModal(props) {
       return setLoginModalOpen(false) || setRegisterModalOpen(true);
     }
   }, "Register Instead")));
+};
+
+LoginModal.propTypes = {
+  onError: PropTypes.func,
+  onSuccess: PropTypes.func
 };
 
 var RegisterModal = function RegisterModal(props) {

@@ -6,3 +6,4 @@
 0.2.x - 2022-04-27 - automatic builds will use the patch number.
 0.3.0 - 2022-08-23 - styling of the LoginModal
 0.4.0 - 2022-08-28 - wiring TestApp (create-react-app) in there. Testing LoginModal styling.
+        2022-09-12 - deployed (tentatively) to staging of ISh.

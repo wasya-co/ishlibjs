@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast as toast$1, ToastContainer } from 'react-toastify';
 import '@capacitor/core';
 import Modal from 'react-modal';
 import '@ionic/react';
@@ -301,6 +301,16 @@ var AuthWidget = function AuthWidget(props) {
     window.location.reload(false);
   };
 
+  var onError = function onError(inn) {
+    logg(inn, 'cannot login!');
+    toast('cannot login!');
+  };
+
+  var onSuccess = function onSuccess(inn) {
+    logg('Logged in successfully.');
+    setCurrentUser(inn);
+  };
+
   if (currentUser !== null && currentUser !== void 0 && currentUser.email) {
     return /*#__PURE__*/React.createElement(FlexRow, null, "[\xA0", currentUser.email, "\xA0", /*#__PURE__*/React.createElement(IconLogout, {
       onClick: doLogout
@@ -315,7 +325,10 @@ var AuthWidget = function AuthWidget(props) {
     onClick: function onClick() {
       setLoginModalOpen(true);
     }
-  })), /*#__PURE__*/React.createElement(RegisterModal, null), /*#__PURE__*/React.createElement(LoginModal, null));
+  })), /*#__PURE__*/React.createElement(RegisterModal, null), /*#__PURE__*/React.createElement(LoginModal, {
+    onError: onError,
+    onSuccess: onSuccess
+  }));
 };
 
 AuthWidget.propTypes = {};
@@ -323,6 +336,9 @@ AuthWidget.propTypes = {};
 var styles = {"LoginModal":"_2YolN","LoginModalOverlay":"_3hqvY","Notice":"_2ifwF"};
 
 var LoginModal = function LoginModal(props) {
+  var onError = props.onError,
+      onSuccess = props.onSuccess;
+
   var _useContext = useContext(AuthContext),
       loginModalOpen = _useContext.loginModalOpen,
       setLoginModalOpen = _useContext.setLoginModalOpen,
@@ -346,10 +362,11 @@ var LoginModal = function LoginModal(props) {
         password: password
       }).then(function (r) {
         setLoginModalOpen(false);
-        window.location.reload(false);
+        onSuccess(r);
       }).catch(function (err) {
         logg(err, 'e323 - cannot postLogin()');
-        toast("Could not login.");
+        toast$1("Could not login.");
+        onError(err);
       });
       return Promise.resolve();
     } catch (e) {
@@ -418,6 +435,11 @@ var LoginModal = function LoginModal(props) {
   }, "Register Instead")));
 };
 
+LoginModal.propTypes = {
+  onError: PropTypes.func,
+  onSuccess: PropTypes.func
+};
+
 var RegisterModal = function RegisterModal(props) {
   var _useContext = useContext(AuthContext),
       setLoginModalOpen = _useContext.setLoginModalOpen,
@@ -442,7 +464,7 @@ var RegisterModal = function RegisterModal(props) {
   var doRegister = function doRegister(email, password, password2) {
     try {
       if (password !== password2) {
-        toast('Passwords do not match');
+        toast$1('Passwords do not match');
         return Promise.resolve();
       }
 
@@ -454,7 +476,7 @@ var RegisterModal = function RegisterModal(props) {
         setRegisterModalOpen(false);
         setLoginModalOpen(r.message);
       }).catch(function (e) {
-        toast("Registration failed");
+        toast$1("Registration failed");
       });
       return Promise.resolve();
     } catch (e) {
@@ -657,7 +679,7 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
       setCurrentUser(resp);
     }).catch(function (e) {
       logg(e, 'e322');
-      toast("Login failed: " + e);
+      toast$1("Login failed: " + e);
       setCurrentUser(C.anonUser);
     });
   }, []);

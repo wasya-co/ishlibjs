@@ -113,6 +113,8 @@ export const FlexCol = ({ children, ...props }) => <_FlexCol className="FlexCol"
 
 /**
  * FlexRow
+ *
+ * @TODO: Remove. Where is this used?! This is silly.
 **/
 export const FlexRow = styled.div`
   display: flex;

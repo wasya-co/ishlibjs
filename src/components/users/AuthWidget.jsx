@@ -66,6 +66,15 @@ const AuthWidget = (props) => {
     window.location.reload(false)
   }
 
+  const onError = (inn) => {
+    logg(inn, 'cannot login!')
+    toast('cannot login!')
+  }
+  const onSuccess = (inn) => {
+    logg('Logged in successfully.')
+    setCurrentUser(inn)
+  }
+
   if (currentUser?.email) {
     return <FlexRow>
       [&nbsp;{currentUser.email}&nbsp;<IconLogout onClick={doLogout} >Logout</IconLogout>&nbsp;]
@@ -80,7 +89,7 @@ const AuthWidget = (props) => {
     </FlexCol>
 
     <RegisterModal />
-    <LoginModal />
+    <LoginModal {...{ onError, onSuccess }} />
 
   </F>
 }

@@ -1,8 +1,8 @@
 
+import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useState, } from 'react'
 import Modal from "react-modal"
 import { ToastContainer, toast } from 'react-toastify'
-
 import styled from 'styled-components'
 
 import {
@@ -11,10 +11,9 @@ import {
   FlexCol, FlexRow,
   logg,
   ModalHeader,
-  request,
 } from "$shared"
 import {
-  AuthContext, AuthContextProvider,
+  AuthContext,
 } from './'
 
 import styles from './LoginModal.module.scss'
@@ -24,6 +23,9 @@ import styles from './LoginModal.module.scss'
 **/
 const LoginModal = (props) => {
   // logg(props, 'LoginModal, ishlibjs')
+  const {
+    onError, onSuccess,
+  } = props
 
   const {
     currentUser, setCurrentUser,
@@ -37,15 +39,15 @@ const LoginModal = (props) => {
   const [ password, setPassword ] = useState('')
   const api = useApi()
 
-  // @TODO: this should be injected, right? _vp_ 2022-09-04
   const doPasswordLogin = async (email, password) => {
     api.postLogin({ email, password }).then((r) => {
       setLoginModalOpen(false)
-      window.location.reload(false)
+      onSuccess(r)
     }).catch((err) => {
       logg(err, 'e323 - cannot postLogin()')
       // setCurrentUser(C.anonUser)
       toast("Could not login.")
+      onError(err)
     })
   }
 
@@ -83,5 +85,8 @@ const LoginModal = (props) => {
     </FlexRow>
   </Modal>
 }
-
+LoginModal.propTypes = {
+  onError: PropTypes.func,
+  onSuccess: PropTypes.func,
+}
 export default LoginModal

@@ -62,6 +62,7 @@ export const Btn = styled.div`
 
 
 /* C */
+export { default as C } from './C'
 
 export const ChevronLeft = styled(_ChevronLeft)`
   color: ${(p) => p.theme.colors.text}

@@ -76,9 +76,6 @@ var C = {
   },
   collapsibles: 'collapsibles',
   current_user: 'current_user',
-  foldedCenter: 'folded-center',
-  foldedLeft: 'folded-left',
-  foldedRight: 'folded-right',
   horizontal: 'horizontal',
   item_types: {
     gallery: 'Gallery',
@@ -121,45 +118,6 @@ var C = {
 };
 
 var request = axios.create({});
-
-var S = {
-  borderWidth: '10px',
-  bottomDrawerClosedHeight: '20px',
-  bottomDrawerOpenHeight: '115px',
-  breadcrumbsHeight: '30px',
-  thinBorderWidth: '2px',
-  thinBorderRadius: '5px'
-};
-
-var lightTheme = _extends({}, S, {
-  thinBorder: '2px solid black',
-  colors: {
-    text: 'black',
-    background: '#dedede',
-    blue: '#6aa3e9',
-    darkGrey: '#605d5d',
-    lightGrey: '#988b8b',
-    red: 'red',
-    border: 'black',
-    cardBackground: 'white'
-  }
-});
-
-var darkTheme = _extends({}, S, {
-  thinBorder: '2px solid white',
-  colors: {
-    text: 'white',
-    background: '#292929',
-    blue: '#73b0fa',
-    darkGrey: '#b3afaf',
-    lightGrey: '#4a4343',
-    red: '#eb83a8',
-    border: 'white',
-    cardBackground: '#1a1a1a'
-  }
-});
-
-var TwofoldContext = React__default.createContext({});
 
 var _excluded = ["children"],
     _excluded2 = ["children"],
@@ -589,7 +547,7 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
   logg(props, 'JwtContextProvider 222');
   var api = props.api;
 
-  var _useState = React.useState(C.anonUser),
+  var _useState = React.useState({}),
       currentUser = _useState[0],
       setCurrentUser = _useState[1];
 
@@ -605,7 +563,7 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
     }).catch(function (e) {
       logg(e, 'e322');
       reactToastify.toast("Login failed: " + e);
-      setCurrentUser(C.anonUser);
+      setCurrentUser({});
     });
   }, []);
   return /*#__PURE__*/React__default.createElement(JwtContext.Provider, {
@@ -639,7 +597,7 @@ var Logout = function Logout() {
       setCurrentUser = _useContext2.setCurrentUser;
 
   var doLogout = function doLogout() {
-    localStorage.removeItem(C.jwt_token);
+    localStorage.removeItem('jwt_token');
     setCurrentUser({});
   };
 

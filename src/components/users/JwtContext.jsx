@@ -6,7 +6,6 @@ import { toast } from 'react-toastify'
 
 import {
   Btn,
-  C,
   logg,
 } from "$shared"
 
@@ -21,8 +20,7 @@ const JwtContextProvider = ({ children, ...props }) => {
     api,
   } = props
 
-  // const maybeUser = JSON.parse(localStorage.getItem(C.current_user)) || C.anonUser
-  const [ currentUser, setCurrentUser ] = useState(C.anonUser)
+  const [ currentUser, setCurrentUser ] = useState({})
   const [ loginModalOpen, setLoginModalOpen ] = useState({})
 
   // call to verify creds
@@ -33,14 +31,11 @@ const JwtContextProvider = ({ children, ...props }) => {
     api.getMyAccount().then((resp) => {
       logg(resp, 'got this resp')
 
-      // localStorage.setItem(C.current_user, JSON.stringify(resp))
-      setCurrentUser(resp) // must be done *after* setting C.jwt_token
+      setCurrentUser(resp) // must be done *after* setting localStorage.jwt_token
     }).catch((e) => {
       logg(e, 'e322')
       toast(`Login failed: ${e}`)
-      setCurrentUser(C.anonUser)
-      // localStorage.removeItem(C.current_user)
-      // localStorage.removeItem(C.jwt_token)
+      setCurrentUser({})
     })
   }, [])
 
@@ -102,48 +97,11 @@ const _W = styled.div`
   }
 `;
 
-// // @TODO: is this obsolete and unused?
-// // _vp_ 2022-09-01
-// export const LoginWithPassword = (props) => {
-//   // logg(useContext(JwtContext), 'useContext(JwtContext)')
-//   const {
-//     api,
-//     currentUser, setCurrentUser,
-//     loginModalOpen, setLoginModalOpen,
-//   } = useContext(JwtContext)
-//   const [ email, setEmail ] = useState('')
-//   const [ password, setPassword ] = useState('')
-//   const doPasswordLogin = async (email, password) => {
-//     // logg(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, 'doPasswordLogin')
-//     // request.post(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, { email, password }).then((r) => r.data
-//     api.postLoginWithPassword({ email, password }).then((resp) => {
-//       localStorage.setItem(C.jwt_token, resp.jwt_token)
-//       // localStorage.setItem(C.current_user, JSON.stringify(resp))
-//       setCurrentUser(resp) // must be done *after* setting C.jwt_token
-//       setLoginModalOpen(false)
-//     }).catch((e) => {
-//       logg(e, 'e322')
-//       // toast("Login failed")
-//       setCurrentUser(C.anonUser)
-//     })
-//   }
-//   return <_W>
-//     <input type='email' value={email} onChange={(e) => setEmail(e.target.value) } /><br />
-//     <input type='password' value={password} onChange={(e) => setPassword(e.target.value) }
-//       onKeyDown={(e) => {
-//         if (e.key === 'Enter') { doPasswordLogin(email, password) }
-//       }}
-//     />
-//     <Btn onClick={() => doPasswordLogin(email, password)}>Login</Btn>
-//   </_W>
-// }
-
 
 export const Logout = () => {
   const { currentUser, setCurrentUser } = useContext(JwtContext)
   const doLogout = () => {
-    localStorage.removeItem(C.jwt_token)
-    // localStorage.removeItem(C.current_user)
+    localStorage.removeItem('jwt_token') // this is not constantized b/c I removed $shared.C from this repo.
     setCurrentUser({})
   }
   return <Btn onClick={doLogout}>Logout</Btn>

@@ -17,7 +17,6 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-import C from './C'
 
 /* A */
 
@@ -63,7 +62,7 @@ export const Btn = styled.div`
 
 
 /* C */
-export { default as C } from './C'
+
 export const ChevronLeft = styled(_ChevronLeft)`
   color: ${(p) => p.theme.colors.text}
 `;
@@ -219,11 +218,8 @@ export const pp_date = (d) => (d || "" ).substring(0, 10)
 export { default as request } from "./request"
 
 /* S */
-export { default as S } from "./S"
 
 /* T */
-
-export { TwofoldContext, TwofoldContextProvider } from './TwofoldContext'
 
 /* U */
 export { default as useWindowSize } from './useWindowSize'

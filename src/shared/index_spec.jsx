@@ -41,11 +41,6 @@ describe('ModalHeader - current2 ', () => {
   })
 })
 
-describe('TwofoldContext', () => {
-  it.skip('gets bottomDrawerOpen from localStorage', () => {
-    throw 'not implemented'
-  })
-})
 
 it('WBordered', () => {
   const w = <WBordered />

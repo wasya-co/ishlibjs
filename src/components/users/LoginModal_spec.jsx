@@ -9,7 +9,6 @@ import {
   LoginModal,
 } from "$components/users"
 import {
-  C,
   logg,
 } from "$shared"
 import request from "$shared/request"
@@ -34,17 +33,11 @@ const useApi = () => ({
   postLogin: mockPostLogin
 })
 
-const MockTwofoldContextProvider = ({ children, ...props }) => {
-  return <TwofoldContext.Provider value={{
-    loginModalOpen: true,
-    setLoginModalOpen: () => {},
-  }} >{ children }</TwofoldContext.Provider>
-}
 
 describe("LoginModal", () => {
 
   it("renders", async () => {
-    let currentUser = C.anonUser
+    let currentUser = {}
     const setCurrentUser = (props) => currentUser = props
 
 
@@ -59,7 +52,7 @@ describe("LoginModal", () => {
 
   // @TODO: re-add
   it.skip("submits on Enter - current2 ", async () => {
-    let currentUser = C.anonUser
+    let currentUser = {}
     const setCurrentUser = (props) => currentUser = props
 
 

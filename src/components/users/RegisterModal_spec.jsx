@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
 import { act } from '@testing-library/react'
 
-import { AuthContextProvider, MyAccountWidget } from "$components/users"
+import { AuthContextProvider } from "$components/users"
 import { AppMock, logg } from "$shared"
 
 

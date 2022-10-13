@@ -9,7 +9,6 @@ import {
   request,
 } from "$shared"
 import {
-  AuthWidget,
   AuthContextProvider,
   LoginModal,
  } from './components/users'
@@ -38,8 +37,8 @@ const TestApp = () => {
     useApi,
   }} >
 
-    {/* <LoginModal /> */}
-    <AuthWidget />
+    <LoginModal />
+
 
     <ToastContainer position="bottom-left" />
   </AuthContextProvider>

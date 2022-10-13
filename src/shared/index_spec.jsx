@@ -5,12 +5,25 @@ import React from 'react'
 
 import {
   Box,
+  FlexCol, FlexRow,
   inflector,
   ModalHeader,
   WBordered,
 } from './'
 
 configure({ adapter: new Adapter() })
+
+
+test('FlexCol', () => {
+  const w = mount(<FlexCol />)
+  expect(w).toBeTruthy()
+})
+
+test('FlexRow', () => {
+  const w = mount(<FlexRow />)
+  expect(w).toBeTruthy()
+})
+
 
 describe('inflector', () => {
 

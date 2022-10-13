@@ -2,12 +2,10 @@
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useState, } from 'react'
 import Modal from "react-modal"
-import { ToastContainer, toast } from 'react-toastify'
 import styled from 'styled-components'
 
 import {
   Btn,
-  C, CloseBtn,
   FlexCol, FlexRow,
   logg,
   ModalHeader,
@@ -44,9 +42,6 @@ const LoginModal = (props) => {
       setLoginModalOpen(false)
       onSuccess(r)
     }).catch((err) => {
-      logg(err, 'e323 - cannot postLogin()')
-      // setCurrentUser(C.anonUser)
-      toast("Could not login.")
       onError(err)
     })
   }
@@ -81,7 +76,7 @@ const LoginModal = (props) => {
     </FlexCol>
     <hr style={{ margin: '2rem 0', borderWidth: '1px' }} />
     <FlexRow style={{ justifyContent: 'center' }} >
-      <a onClick={() => setLoginModalOpen(false) || setRegisterModalOpen(true) }>Register Instead</a>
+      <a onClick={() => { setLoginModalOpen(false) ; setRegisterModalOpen(true) }}>Register Instead</a>
     </FlexRow>
   </Modal>
 }

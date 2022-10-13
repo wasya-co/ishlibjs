@@ -57,7 +57,6 @@ AuthContextProvider.propTypes = {
 export {
   AuthContext, AuthContextProvider,
 }
-export { default as AuthWidget } from './AuthWidget'
 
 /* F */
 const { FacebookLogin: _FacebookLogin } = Plugins

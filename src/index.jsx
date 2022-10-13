@@ -12,7 +12,6 @@ import * as jwtManager from './components/users/JwtContext' // this syntax is co
 /* A */
 export { Actions, } from './shared'
 export { AuthContext, AuthContextProvider, } from './components/users'
-export { default as AuthWidget } from "./components/users/AuthWidget"
 
 /* C */
 export { CloseBtn } from './shared'

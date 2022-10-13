@@ -4,7 +4,7 @@ import { mount, shallow } from "enzyme"
 import React, { useState } from "react"
 import { act } from '@testing-library/react'
 
-import { JwtContextProvider, LoginWithPassword } from "."
+import { JwtContextProvider, LoginWithPassword } from "./JwtContext"
 import { logg, request } from "$shared"
 
 enzyme.configure({ adapter: new Adapter() })
@@ -38,14 +38,14 @@ global.localStorage = new LocalStorageMock
 
 const mockApi = {
   getMyAccount: () => {},
-  postLoginWithPassword: () => {},
+
 }
 
 
 describe("JwtContextProvider", () => {
   beforeEach(() => {
     jest.spyOn(mockApi, 'getMyAccount' ).mockRejectedValue({})
-    // jest.spyOn(mockApi, 'postLoginWithPassword').mockResolvedValue({ data: { email: 'dataz-2@gmail.com' } })
+
   })
 
   it("checks if the user is logged in, every time", async () => {
@@ -58,23 +58,22 @@ describe("JwtContextProvider", () => {
   })
 })
 
-describe("LoginWithPassword", () => {
+// describe("LoginWithPassword", () => {
+//   beforeEach(() => {
+//     jest.spyOn(mockApi, 'getMyAccount' ).mockResolvedValue({ data: { email: 'dataz-1@gmail.com' } })
+//     jest.spyOn(mockApi, 'postLoginWithPassword').mockResolvedValue({ data: { email: 'dataz-2@gmail.com' } })
+//   })
 
-  beforeEach(() => {
-    jest.spyOn(mockApi, 'getMyAccount' ).mockResolvedValue({ data: { email: 'dataz-1@gmail.com' } })
-    jest.spyOn(mockApi, 'postLoginWithPassword').mockResolvedValue({ data: { email: 'dataz-2@gmail.com' } })
-  })
+//   it("submits on Enter", async () => {
+//     let component = mount(<JwtContextProvider api={mockApi} >
+//       <LoginWithPassword />
+//     </JwtContextProvider>)
+//     expect(component.find('input[type="password"]').length).toEqual(1)
 
-  it("submits on Enter", async () => {
-    let component = mount(<JwtContextProvider api={mockApi} >
-      <LoginWithPassword />
-    </JwtContextProvider>)
-    expect(component.find('input[type="password"]').length).toEqual(1)
+//     component.find('input[type="password"]').simulate('keydown', { key: 'Enter' })
+//     await act(() => new Promise(setImmediate))
 
-    component.find('input[type="password"]').simulate('keydown', { key: 'Enter' })
-    await act(() => new Promise(setImmediate))
+//     expect(mockApi.postLoginWithPassword).toHaveBeenCalled()
+//   })
 
-    expect(mockApi.postLoginWithPassword).toHaveBeenCalled()
-  })
-
-})
+// })

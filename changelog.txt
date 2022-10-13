@@ -1,3 +1,10 @@
 0.0.0 - 2022-03-01 - it works somewhat
 0.1.0 - 2022-03-05 - wiring in PasswordLogin, storybookjs
-
+0.1.2 - 2022-04-14 - scratchpad, authWidget
+                     sideMenu, option_price_items, stock_watches
+0.1.3 - 2022-04-21 - css -> module.css and not importing ReactToastify.css locally, expecting the host to import styles.
+0.2.x - 2022-04-27 - automatic builds will use the patch number.
+0.3.0 - 2022-08-23 - styling of the LoginModal
+0.4.0 - 2022-08-28 - wiring TestApp (create-react-app) in there. Testing LoginModal styling.
+        2022-09-12 - deployed (tentatively) to staging of ISh.
+0.5.0 - 2022-10-13 - removed AuthWidget from this repo

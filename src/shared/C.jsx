@@ -2,6 +2,8 @@
 /**
  * Constants
  *
+ * @deprecated, I doubt I'll use it here.
+ *
  * * C.anonUser
  * * C.current_user
  * * C.jwt_token
@@ -28,10 +30,6 @@ const C = {
   collapsibles: 'collapsibles', // localStorage
   current_user: 'current_user',
 
-  // F
-  foldedCenter: 'folded-center',
-  foldedLeft: 'folded-left', // twofoldContext
-  foldedRight: 'folded-right',
 
   // H
   horizontal: 'horizontal',

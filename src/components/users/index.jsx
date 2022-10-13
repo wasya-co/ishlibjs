@@ -1,6 +1,7 @@
 
 import { Plugins } from '@capacitor/core'
 import React, { createContext, useContext, useState } from 'react'
+import PropTypes from 'prop-types'
 
 import {
   Btn,
@@ -11,81 +12,60 @@ import {
 /* A */
 const AuthContext = createContext({})
 const AuthContextProvider = ({children, ...props }) => {
-  let { currentUser, setCurrentUser } = props
   // logg(props, 'AuthContextProvider')
+  let {
+    currentUser: _currentUser = C.anonUser, setCurrentUser: _setCurrentUser,
+    loginModalOpen: _loginModalOpen = false, setLoginModalOpen: _setLoginModalOpen,
+    registerModalOpen: _registerModalOpen = false, setRegisterModalOpen: _setRegisterModalOpen,
+  } = props
 
-  let defaultUser = localStorage.getItem(C.current_user)
-  logg(defaultUser, 'defaultUser')
-  defaultUser = defaultUser ? JSON.parse(defaultUser) : C.anonUser
-  logg(defaultUser, 'defaultUser')
-
-  const [ localCurrentUser, _setCurrentUser ] = useState(defaultUser)
-  const setLocalCurrentUser = (user) => {
-    localStorage.setItem(C.jwt_token, user.jwt_token)
-    localStorage.setItem(C.current_user, JSON.stringify(user))
-    _setCurrentUser(user)
+  let [ currentUser, setCurrentUser ] = useState(_currentUser)
+  if (_setCurrentUser) {
+    currentUser = _currentUser
+    setCurrentUser = _setCurrentUser
   }
-  if (!currentUser) {
-    currentUser = localCurrentUser
-    setCurrentUser = setLocalCurrentUser
-  }
-  logg(currentUser, 'currentUser III')
 
-  // @TODO: make these also cascading from the props
-  const [ loginModalOpen, setLoginModalOpen ] = useState(false)
-  const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
+  let [ loginModalOpen, setLoginModalOpen ] = useState(_loginModalOpen)
+  if (_setLoginModalOpen) {
+    loginModalOpen = _loginModalOpen
+    setLoginModalOpen = _setLoginModalOpen
+  }
+
+  let [ registerModalOpen, setRegisterModalOpen ] = useState(_registerModalOpen)
+  if (_setRegisterModalOpen) {
+    registerModalOpen = _registerModalOpen
+    setRegisterModalOpen = _setRegisterModalOpen
+  }
+
   const moreProps = {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
     registerModalOpen, setRegisterModalOpen,
   }
 
+  //
+  // props.useApi isRequired
+  //
   return <AuthContext.Provider value={{ ...props, ...moreProps }} >
     { children }
   </AuthContext.Provider>
+}
+AuthContextProvider.propTypes = {
+  useApi: PropTypes.func.isRequired,
 }
 
 export {
   AuthContext, AuthContextProvider,
 }
-export { default as AuthWidget } from './AuthWidget'
-
 
 /* F */
 const { FacebookLogin: _FacebookLogin } = Plugins
 
 const FACEBOOK_PERMISSIONS = ['email']
 
+/* J */
 
-/**
- * FacebookLogin
-**/
-export const FacebookLogin = (props) => {
 
-  const {
-    currentUser, setCurrentUser,
-    useApi,
-  } = useContext(AuthContext)
-
-  const api = useApi()
-
-  const doFbLogin = async () => {
-    const result = await _FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
-    if (result.accessToken) {
-      request.post(`${config.apiOrigin}${api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
-        localStorage.setItem(C.jwt_token, resp.data.jwt_token)
-        localStorage.setItem(C.current_user, JSON.stringify(resp.data) )
-        setCurrentUser(resp.data)
-      }).catch((err) => {
-        logg(err, `Could not post request to ${config.apiOrigin}${api.longTermTokenPath}`)
-      })
-    } else {
-      // Canceled by user.
-      logg('canceled')
-    }
-  }
-  return <Btn onClick={doFbLogin}>Login or Register with Facebook</Btn>
-}
 
 /* L */
 export { default as LoginModal } from "./LoginModal"

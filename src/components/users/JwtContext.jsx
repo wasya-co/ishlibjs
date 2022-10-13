@@ -1,40 +1,41 @@
-/**
- * ishjs / jwt_manager
- */
 
 import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { toast } from 'react-toastify'
 
-import { Btn, C, logg, request } from "$shared" // @TODO: alias $shared
+import {
+  Btn,
+  logg,
+} from "$shared"
 
-
-
-// @TODO: testdrive this context,
-// @TODO: replace TwofoldContext in guydme with the one from ishjs.
 export const JwtContext = React.createContext({})
+
+/**
+ * JwtContextProvider
+**/
 const JwtContextProvider = ({ children, ...props }) => {
-  logg(props, 'JwtContextProvider')
+  logg(props, 'JwtContextProvider 222')
   const {
     api,
   } = props
 
-  const maybeUser = JSON.parse(localStorage.getItem(C.current_user)) || C.anonUser
-  const [ currentUser, setCurrentUser ] = useState(maybeUser)
+  const [ currentUser, setCurrentUser ] = useState({})
   const [ loginModalOpen, setLoginModalOpen ] = useState({})
 
   // call to verify creds
   useEffect(() => {
+    logg('setting currentUser...')
+
     // request.get(`${config.apiOrigin}${config.routes.myAccountPath}`).then((r) => r.data).then((resp) => {
     api.getMyAccount().then((resp) => {
-      localStorage.setItem(C.current_user, JSON.stringify(resp))
-      setCurrentUser(resp) // must be done *after* setting C.jwt_token
+      logg(resp, 'got this resp')
+
+      setCurrentUser(resp) // must be done *after* setting localStorage.jwt_token
     }).catch((e) => {
       logg(e, 'e322')
-      // toast("Login failed") // @TODO: re-add toast
-      setCurrentUser(C.anonUser)
-      localStorage.removeItem(C.current_user)
-      localStorage.removeItem(C.jwt_token)
+      toast(`Login failed: ${e}`)
+      setCurrentUser({})
     })
   }, [])
 
@@ -72,7 +73,7 @@ export const SimpleJwtRow = () => {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
   } = useContext(JwtContext)
-  logg(useContext(JwtContext), 'SimpleJwtRowUsedJwtContext')
+  // logg(useContext(JwtContext), 'SimpleJwtRowUsedJwtContext')
 
   return <W1>
     <FlexRow>
@@ -96,50 +97,11 @@ const _W = styled.div`
   }
 `;
 
-export const LoginWithPassword = (props) => {
-  // logg(useContext(JwtContext), 'useContext(JwtContext)')
-  const {
-    api,
-    currentUser, setCurrentUser,
-    loginModalOpen, setLoginModalOpen,
-  } = useContext(JwtContext)
-  const [ email, setEmail ] = useState('')
-  const [ password, setPassword ] = useState('')
-
-  const doPasswordLogin = async (email, password) => {
-    // logg(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, 'doPasswordLogin')
-    // request.post(`${config.apiOrigin}${config.routes.loginWithPasswordPath}`, { email, password }).then((r) => r.data
-    api.postLoginWithPassword({ email, password }).then((resp) => {
-      logg(resp, 'ze resp')
-
-      localStorage.setItem(C.jwt_token, resp.jwt_token)
-      localStorage.setItem(C.current_user, JSON.stringify(resp))
-      setCurrentUser(resp) // must be done *after* setting C.jwt_token
-      setLoginModalOpen(false)
-    }).catch((e) => {
-      logg(e, 'e322')
-      toast("Login failed")
-      setCurrentUser(C.anonUser)
-    })
-  }
-
-  return <_W>
-    <input type='email' value={email} onChange={(e) => setEmail(e.target.value) } /><br />
-    <input type='password' value={password} onChange={(e) => setPassword(e.target.value) }
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') { doPasswordLogin(email, password) }
-      }}
-    />
-    <Btn onClick={() => doPasswordLogin(email, password)}>Login</Btn>
-  </_W>
-}
-
 
 export const Logout = () => {
   const { currentUser, setCurrentUser } = useContext(JwtContext)
   const doLogout = () => {
-    localStorage.removeItem(C.jwt_token)
-    localStorage.removeItem(C.current_user)
+    localStorage.removeItem('jwt_token') // this is not constantized b/c I removed $shared.C from this repo.
     setCurrentUser({})
   }
   return <Btn onClick={doLogout}>Logout</Btn>

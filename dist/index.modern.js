@@ -1,19 +1,26 @@
-import React, { useContext, Fragment, useState, createContext, useEffect } from 'react';
+import React, { useContext, useState, createContext, useEffect, Fragment } from 'react';
+import ReactDOM from 'react-dom';
 import 'ionicons/icons';
 import '@material-ui/core';
 import _Box from '@material-ui/core/Box';
-import { ChevronLeft as ChevronLeft$1, ChevronRight as ChevronRight$1, Menu } from '@material-ui/icons';
+import { ChevronLeft as ChevronLeft$1, ChevronRight as ChevronRight$1, Close, Menu } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Plugins } from '@capacitor/core';
-import Modal from 'react-modal';
-import { toast as toast$1 } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import '@capacitor/core';
+import Modal from 'react-modal';
+import '@ionic/react';
+import Drawer from '@material-ui/core/Drawer';
+import Fab from '@material-ui/core/Fab';
+import '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import '@material-ui/core/ListItemIcon';
 
 function _extends() {
-  _extends = Object.assign || function (target) {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
 
@@ -26,7 +33,6 @@ function _extends() {
 
     return target;
   };
-
   return _extends.apply(this, arguments);
 }
 
@@ -54,7 +60,7 @@ function _taggedTemplateLiteralLoose(strings, raw) {
   return strings;
 }
 
-var C$1 = {
+var C = {
   anonUser: {},
   bottomDrawerOpen: 'bottom-drawer-open',
   collapsible: {
@@ -67,9 +73,6 @@ var C$1 = {
   },
   collapsibles: 'collapsibles',
   current_user: 'current_user',
-  foldedCenter: 'folded-center',
-  foldedLeft: 'folded-left',
-  foldedRight: 'folded-right',
   horizontal: 'horizontal',
   item_types: {
     gallery: 'Gallery',
@@ -111,53 +114,116 @@ var C$1 = {
   vertical: 'vertical'
 };
 
-var RegisterWithEmailBtn = function RegisterWithEmailBtn(props) {
-  return /*#__PURE__*/React.createElement(Btn, props, "Register with Email");
+var request = axios.create({});
+
+var _excluded = ["children"],
+    _excluded2 = ["children"],
+    _excluded3 = ["children", "onClose"];
+
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14;
+var Actions = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n\n  // @TODO: this should use variables, for Modal inner size.\n  // I'd need to do dependency injection of the variable, from infiniteshelterjs into ishlibjs.\n  position: fixed; // for GalleriesShow\n  top: 60px;\n  right: 60px;\n\n  display: flex;\n  flex-direction: row-reverse;\n"])));
+var BackIcon = styled.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteralLoose(["\n  margin-right: 5px;\n  cursor: pointer;\n"])));
+var Btn = styled.div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteralLoose(["\n  border: 1px solid gray;\n  border-radius: 5px;\n  cursor: pointer;\n  display: inline-block;\n  padding: .3em 1em;\n"])));
+var ChevronLeft = styled(ChevronLeft$1)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+  return p.theme.colors.text;
+});
+var ChevronRight = styled(ChevronRight$1)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+  return p.theme.colors.text;
+});
+var Card = styled(_Box)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteralLoose(["\n  margin-bottom: 1em;\n  padding: 1em;\n  background: white;\n  cursor: ", ";\n\n  display: flex;\n  flex-direction: column;\n"])), function (p) {
+  return p.cursor ? p.cursor : 'auto';
+});
+var CloseBtn = function CloseBtn(_ref) {
+  var props = _objectWithoutPropertiesLoose(_ref, _excluded);
+
+  return /*#__PURE__*/React.createElement(Close, _extends({
+    style: _extends({
+      cursor: 'pointer'
+    }, props.style)
+  }, props));
+};
+CloseBtn.propTypes = {
+  onClick: PropTypes.func.isRequired
 };
 
-var LoginWithEmailBtn = function LoginWithEmailBtn(props) {
-  return /*#__PURE__*/React.createElement(Btn, props, "Login with Email");
+var _FlexCol = styled.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: column;\n\n  > * {\n    margin: auto .4em; // @TODO: standardize this size!\n  }\n"])));
+
+var FlexCol = function FlexCol(_ref2) {
+  var children = _ref2.children,
+      props = _objectWithoutPropertiesLoose(_ref2, _excluded2);
+
+  return /*#__PURE__*/React.createElement(_FlexCol, _extends({
+    className: "FlexCol"
+  }, props), children);
 };
+var FlexRow = styled.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!\n  }\n"])));
 
-var AuthWidget = function AuthWidget(props) {
-  logg(props, 'AuthWidget');
+var _Circle = styled.div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteralLoose(["\n  position: fixed;\n  z-index: 999;\n  overflow: show;\n  margin: auto;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  width: 50px;\n  height: 50px;\n"])));
 
-  var _useContext = useContext(AuthContext),
-      currentUser = _useContext.currentUser,
-      setCurrentUser = _useContext.setCurrentUser,
-      setLoginModalOpen = _useContext.setLoginModalOpen,
-      setRegisterModalOpen = _useContext.setRegisterModalOpen;
-
-  logg(useContext(AuthContext), 'AuthWidgetUsedContext');
-
-  var doLogout = function doLogout() {
-    setCurrentUser(JSON.stringify(C$1.anonUser));
-  };
-
-  if (currentUser !== null && currentUser !== void 0 && currentUser.email) {
-    return /*#__PURE__*/React.createElement(FlexRow, null, "[", currentUser.email, " ", /*#__PURE__*/React.createElement(Btn, {
-      onClick: doLogout
-    }, "Logout"), " ]");
+var logg = function logg(a, b, c) {
+  if (b === void 0) {
+    b = "";
   }
 
-  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement(FacebookLogin, null), /*#__PURE__*/React.createElement(RegisterWithEmailBtn, {
-    onClick: function onClick() {
-      setRegisterModalOpen(true);
-    }
-  }), /*#__PURE__*/React.createElement(LoginWithEmailBtn, {
-    onClick: function onClick() {
-      setLoginModalOpen(true);
-    }
-  })), /*#__PURE__*/React.createElement(RegisterModal, null), /*#__PURE__*/React.createElement(LoginModal, null));
-};
+  if (c === void 0) {
+    c = null;
+  }
 
-AuthWidget.propTypes = {};
+  c = "string" === typeof c ? c : b.replace(/\W/g, "");
+
+  if (c.length > 0 && typeof window !== "undefined") {
+    window[c] = a;
+  }
+
+  console.log("+++ " + b + ":", a);
+};
+var MenuIcon = styled(Menu)(_templateObject10 || (_templateObject10 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+  return p.theme.colors.text;
+});
+
+var _Header = styled.div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteralLoose(["\n  flex-grow: 1;\n  text-align: center;\n  font-size: 1.2rem;\n"])));
+
+var ModalHeader = function ModalHeader(_ref3) {
+  var children = _ref3.children,
+      onClose = _ref3.onClose,
+      props = _objectWithoutPropertiesLoose(_ref3, _excluded3);
+
+  return /*#__PURE__*/React.createElement(FlexRow, null, /*#__PURE__*/React.createElement(_Header, null, children), /*#__PURE__*/React.createElement(CloseBtn, {
+    onClick: onClose
+  }));
+};
+ModalHeader.propTypes = {
+  onClose: PropTypes.func.isRequired
+};
+var WBordered = styled.div(_templateObject12 || (_templateObject12 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  padding: .5em;\n\n  margin-bottom: 1em;\n"])), function (p) {
+  return p.theme.thinBorder;
+}, function (p) {
+  return p.theme.thinBorderRadius;
+}, function (p) {
+  return p.theme.colors.cardBackground;
+});
+var WBorderedItem = styled.div(_templateObject13 || (_templateObject13 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  color: ", ";\n\n  margin: 0 .5em .5em 0;\n  padding: .5em;\n\n  text-align: center;\n\n  width: 18%;\n  max-width: 140px;\n  min-width: 120px;\n"])), function (p) {
+  return p.theme.thinBorder;
+}, function (p) {
+  return p.theme.thinBorderRadius;
+}, function (p) {
+  return p.theme.colors.cardBackground;
+}, function (p) {
+  return p.theme.colors.text;
+});
+var Wrapper = styled.div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
+var ZoomContext = React.createContext({});
+
+var styles = {"LoginModal":"_2YolN","LoginModalOverlay":"_3hqvY","Notice":"_2ifwF"};
 
 var LoginModal = function LoginModal(props) {
+  var onError = props.onError,
+      onSuccess = props.onSuccess;
+
   var _useContext = useContext(AuthContext),
-      setCurrentUser = _useContext.setCurrentUser,
       loginModalOpen = _useContext.loginModalOpen,
       setLoginModalOpen = _useContext.setLoginModalOpen,
+      setRegisterModalOpen = _useContext.setRegisterModalOpen,
       useApi = _useContext.useApi;
 
   var _useState = useState(''),
@@ -177,11 +243,9 @@ var LoginModal = function LoginModal(props) {
         password: password
       }).then(function (r) {
         setLoginModalOpen(false);
-        toast$1('Login Successful.');
-      })["catch"](function (err) {
-        logg(e, 'e323');
-        toast$1("Login failed");
-        setCurrentUser(C$1.anonUser);
+        onSuccess(r);
+      }).catch(function (err) {
+        onError(err);
       });
       return Promise.resolve();
     } catch (e) {
@@ -189,19 +253,31 @@ var LoginModal = function LoginModal(props) {
     }
   };
 
+  Modal.setAppElement('body');
   return /*#__PURE__*/React.createElement(Modal, {
-    isOpen: loginModalOpen
-  }, /*#__PURE__*/React.createElement("div", {
-    onClick: function onClick() {
+    className: "LoginModal " + styles.LoginModal,
+    isOpen: !!loginModalOpen,
+    overlayClassName: styles.LoginModalOverlay,
+    portalClassName: styles.LoginModalPortal
+  }, /*#__PURE__*/React.createElement(ModalHeader, {
+    onClose: function onClose() {
       return setLoginModalOpen(false);
     }
-  }, "[x]"), /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement("input", {
+  }, "Login"), 'string' === typeof loginModalOpen && /*#__PURE__*/React.createElement(FlexRow, null, /*#__PURE__*/React.createElement("div", {
+    className: styles.Notice
+  }, loginModalOpen)), /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "email"
+  }, "Email"), /*#__PURE__*/React.createElement("input", {
+    name: "email",
     type: "email",
     value: email,
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     }
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "password"
+  }, "Password"), /*#__PURE__*/React.createElement("input", {
+    name: "password",
     type: "password",
     value: password,
     onChange: function onChange(e) {
@@ -212,16 +288,41 @@ var LoginModal = function LoginModal(props) {
         doPasswordLogin(email, password);
       }
     }
-  }), /*#__PURE__*/React.createElement(Btn, {
+  }), /*#__PURE__*/React.createElement(FlexRow, {
+    style: {
+      flexDirection: 'row-reverse',
+      justifyContent: 'space-between',
+      marginTop: '0.4em'
+    }
+  }, /*#__PURE__*/React.createElement(Btn, {
     onClick: function onClick() {
       return doPasswordLogin(email, password);
     }
-  }, "Password Login")));
+  }, "Login"))), /*#__PURE__*/React.createElement("hr", {
+    style: {
+      margin: '2rem 0',
+      borderWidth: '1px'
+    }
+  }), /*#__PURE__*/React.createElement(FlexRow, {
+    style: {
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    onClick: function onClick() {
+      setLoginModalOpen(false);
+      setRegisterModalOpen(true);
+    }
+  }, "Register Instead")));
+};
+
+LoginModal.propTypes = {
+  onError: PropTypes.func,
+  onSuccess: PropTypes.func
 };
 
 var RegisterModal = function RegisterModal(props) {
   var _useContext = useContext(AuthContext),
-      setCurrentUser = _useContext.setCurrentUser,
+      setLoginModalOpen = _useContext.setLoginModalOpen,
       registerModalOpen = _useContext.registerModalOpen,
       setRegisterModalOpen = _useContext.setRegisterModalOpen,
       useApi = _useContext.useApi;
@@ -243,20 +344,18 @@ var RegisterModal = function RegisterModal(props) {
   var doRegister = function doRegister(email, password, password2) {
     try {
       if (password !== password2) {
-        return Promise.resolve(toast('Passwords do not match'));
+        toast('Passwords do not match');
+        return Promise.resolve();
       }
 
-      api.doRegister({
+      var out = api.doRegister({
         email: email,
         password: password
-      }).then(function (r) {
-        logg(r, 'registered');
-        localStorage.setItem(C.jwt_token, r.jwt_token);
-        localStorage.setItem(C.current_user, JSON.stringify(r));
-        setCurrentUser(r);
+      });
+      out.then(function (r) {
         setRegisterModalOpen(false);
-      })["catch"](function (e) {
-        logg(e, 'e322');
+        setLoginModalOpen(r.message);
+      }).catch(function (e) {
         toast("Registration failed");
       });
       return Promise.resolve();
@@ -266,16 +365,16 @@ var RegisterModal = function RegisterModal(props) {
   };
 
   return /*#__PURE__*/React.createElement(Modal, {
-    style: {
-      zIndex: 3
-    },
-    isOpen: registerModalOpen
-  }, /*#__PURE__*/React.createElement("div", {
-    onClick: function onClick() {
+    className: "LoginModal " + styles.LoginModal,
+    isOpen: registerModalOpen,
+    overlayClassName: styles.LoginModalOverlay,
+    portalClassName: styles.LoginModalPortal
+  }, /*#__PURE__*/React.createElement(ModalHeader, {
+    onClose: function onClose() {
       return setRegisterModalOpen(false);
     }
-  }, "[x]"), /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement("label", {
-    "for": "email"
+  }, "Register"), /*#__PURE__*/React.createElement(FlexCol, null, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "email"
   }, "Email"), /*#__PURE__*/React.createElement("input", {
     type: "email",
     name: "email",
@@ -284,7 +383,7 @@ var RegisterModal = function RegisterModal(props) {
       return setEmail(e.target.value);
     }
   }), /*#__PURE__*/React.createElement("label", {
-    "for": "password"
+    htmlFor: "password"
   }, "Password"), /*#__PURE__*/React.createElement("input", {
     type: "password",
     name: "password",
@@ -293,7 +392,7 @@ var RegisterModal = function RegisterModal(props) {
       return setPassword(e.target.value);
     }
   }), /*#__PURE__*/React.createElement("label", {
-    "for": "password2"
+    htmlFor: "password2"
   }, "Confirm Password"), /*#__PURE__*/React.createElement("input", {
     type: "password",
     name: "password2",
@@ -301,56 +400,78 @@ var RegisterModal = function RegisterModal(props) {
     onChange: function onChange(e) {
       return setPassword2(e.target.value);
     }
-  }), /*#__PURE__*/React.createElement(FlexRow, null, /*#__PURE__*/React.createElement(Btn, {
+  }), /*#__PURE__*/React.createElement(FlexRow, {
+    style: {
+      flexDirection: 'row-reverse',
+      justifyContent: 'space-between',
+      marginTop: '0.4em'
+    }
+  }, /*#__PURE__*/React.createElement(Btn, {
+    className: "Submit",
     onClick: function onClick() {
       return doRegister(email, password, password2);
     }
-  }, "Register"), /*#__PURE__*/React.createElement(Btn, {
-    onClick: function onClick() {
-      return setRegisterModalOpen(false);
+  }, "Register")), /*#__PURE__*/React.createElement("hr", {
+    style: {
+      margin: '2rem 0',
+      borderWidth: '1px'
     }
-  }, "Cancel"))));
+  }), /*#__PURE__*/React.createElement(FlexRow, {
+    style: {
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    onClick: function onClick() {
+      return setLoginModalOpen(true) || setRegisterModalOpen(false);
+    }
+  }, "Login Instead"))));
 };
 
-var _excluded = ["children"];
+RegisterModal.propTypes = {};
+
+var _excluded$1 = ["children"];
 var AuthContext = createContext({});
 
 var AuthContextProvider = function AuthContextProvider(_ref) {
   var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded);
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$1);
 
-  var currentUser = props.currentUser,
-      setCurrentUser = props.setCurrentUser;
-  var defaultUser = localStorage.getItem(C$1.current_user);
-  logg(defaultUser, 'defaultUser');
-  defaultUser = defaultUser ? JSON.parse(defaultUser) : C$1.anonUser;
-  logg(defaultUser, 'defaultUser');
+  var _props$currentUser = props.currentUser,
+      _currentUser = _props$currentUser === void 0 ? C.anonUser : _props$currentUser,
+      _setCurrentUser = props.setCurrentUser,
+      _props$loginModalOpen = props.loginModalOpen,
+      _loginModalOpen = _props$loginModalOpen === void 0 ? false : _props$loginModalOpen,
+      _setLoginModalOpen = props.setLoginModalOpen,
+      _props$registerModalO = props.registerModalOpen,
+      _registerModalOpen = _props$registerModalO === void 0 ? false : _props$registerModalO,
+      _setRegisterModalOpen = props.setRegisterModalOpen;
 
-  var _useState = useState(defaultUser),
-      localCurrentUser = _useState[0],
-      _setCurrentUser = _useState[1];
+  var _useState = useState(_currentUser),
+      currentUser = _useState[0],
+      setCurrentUser = _useState[1];
 
-  var setLocalCurrentUser = function setLocalCurrentUser(user) {
-    localStorage.setItem(C$1.jwt_token, user.jwt_token);
-    localStorage.setItem(C$1.current_user, JSON.stringify(user));
-
-    _setCurrentUser(user);
-  };
-
-  if (!currentUser) {
-    currentUser = localCurrentUser;
-    setCurrentUser = setLocalCurrentUser;
+  if (_setCurrentUser) {
+    currentUser = _currentUser;
+    setCurrentUser = _setCurrentUser;
   }
 
-  logg(currentUser, 'currentUser III');
-
-  var _useState2 = useState(false),
+  var _useState2 = useState(_loginModalOpen),
       loginModalOpen = _useState2[0],
       setLoginModalOpen = _useState2[1];
 
-  var _useState3 = useState(false),
+  if (_setLoginModalOpen) {
+    loginModalOpen = _loginModalOpen;
+    setLoginModalOpen = _setLoginModalOpen;
+  }
+
+  var _useState3 = useState(_registerModalOpen),
       registerModalOpen = _useState3[0],
       setRegisterModalOpen = _useState3[1];
+
+  if (_setRegisterModalOpen) {
+    registerModalOpen = _registerModalOpen;
+    setRegisterModalOpen = _setRegisterModalOpen;
+  }
 
   var moreProps = {
     currentUser: currentUser,
@@ -364,151 +485,52 @@ var AuthContextProvider = function AuthContextProvider(_ref) {
     value: _extends({}, props, moreProps)
   }, children);
 };
-var _FacebookLogin = Plugins.FacebookLogin;
-var FACEBOOK_PERMISSIONS = ['email'];
-var FacebookLogin = function FacebookLogin(props) {
-  var _useContext = useContext(AuthContext),
-      setCurrentUser = _useContext.setCurrentUser,
-      useApi = _useContext.useApi;
 
-  var api = useApi();
+AuthContextProvider.propTypes = {
+  useApi: PropTypes.func.isRequired
+};
 
-  var doFbLogin = function doFbLogin() {
-    try {
-      return Promise.resolve(_FacebookLogin.login({
-        permissions: FACEBOOK_PERMISSIONS
-      })).then(function (result) {
-        if (result.accessToken) {
-          request.post("" + config.apiOrigin + api.longTermTokenPath, {
-            accessToken: result.accessToken.token
-          }).then(function (resp) {
-            localStorage.setItem(C$1.jwt_token, resp.data.jwt_token);
-            localStorage.setItem(C$1.current_user, JSON.stringify(resp.data));
-            setCurrentUser(resp.data);
-          })["catch"](function (err) {
-            logg(err, "Could not post request to " + config.apiOrigin + api.longTermTokenPath);
-          });
-        } else {
-          logg('canceled');
-        }
-      });
-    } catch (e) {
-      return Promise.reject(e);
-    }
+var config = {
+  apiOrigin: 'http://localhost:3001'
+};
+
+var TestApp = function TestApp() {
+  var useApi = function useApi() {
+    return {
+      doRegister: function doRegister(_ref) {
+        var email = _ref.email,
+            password = _ref.password;
+        return request.post(config.apiOrigin + "/api/users", {
+          email: email,
+          password: password
+        }).then(function (r) {
+          return r.data;
+        }).then(function (r) {
+          logg(r, 'done registered');
+          return r;
+        });
+      }
+    };
   };
 
-  return /*#__PURE__*/React.createElement(Btn, {
-    onClick: doFbLogin
-  }, "Login or Register with Facebook");
+  var _useState = useState(false),
+      loginModalOpen = _useState[0],
+      setLoginModalOpen = _useState[1];
+
+  var _useState2 = useState(true),
+      registerModalOpen = _useState2[0],
+      setRegisterModalOpen = _useState2[1];
+
+  return /*#__PURE__*/React.createElement(AuthContextProvider, {
+    loginModalOpen: loginModalOpen,
+    setLoginModalOpen: setLoginModalOpen,
+    registerModalOpen: registerModalOpen,
+    setRegisterModalOpen: setRegisterModalOpen,
+    useApi: useApi
+  }, /*#__PURE__*/React.createElement(LoginModal, null), /*#__PURE__*/React.createElement(ToastContainer, {
+    position: "bottom-left"
+  }));
 };
-
-axios.create({});
-
-var S = {
-  borderWidth: '10px',
-  bottomDrawerClosedHeight: '20px',
-  bottomDrawerOpenHeight: '115px',
-  breadcrumbsHeight: '30px',
-  thinBorderWidth: '2px',
-  thinBorderRadius: '5px'
-};
-
-var lightTheme = _extends({}, S, {
-  thinBorder: '2px solid black',
-  colors: {
-    text: 'black',
-    background: '#dedede',
-    blue: '#6aa3e9',
-    darkGrey: '#605d5d',
-    lightGrey: '#988b8b',
-    red: 'red',
-    border: 'black',
-    cardBackground: 'white'
-  }
-});
-
-var darkTheme = _extends({}, S, {
-  thinBorder: '2px solid white',
-  colors: {
-    text: 'white',
-    background: '#292929',
-    blue: '#73b0fa',
-    darkGrey: '#b3afaf',
-    lightGrey: '#4a4343',
-    red: '#eb83a8',
-    border: 'white',
-    cardBackground: '#1a1a1a'
-  }
-});
-
-var _excluded$1 = ["children"];
-
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12;
-var BackIcon = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n  margin-right: 5px;\n  cursor: pointer;\n"])));
-var Btn = styled.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteralLoose(["\n  border: 1px solid gray;\n  border-radius: 5px;\n  cursor: pointer;\n  display: inline-block;\n  padding: .3em 1em;\n"])));
-var ChevronLeft = styled(ChevronLeft$1)(_templateObject3 || (_templateObject3 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
-  return p.theme.colors.text;
-});
-var ChevronRight = styled(ChevronRight$1)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
-  return p.theme.colors.text;
-});
-var Card = styled(_Box)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteralLoose(["\n  margin-bottom: 1em;\n  padding: 1em;\n  background: white;\n  cursor: ", ";\n\n  display: flex;\n  flex-direction: column;\n"])), function (p) {
-  return p.cursor ? p.cursor : 'auto';
-});
-
-var _FlexCol = styled.div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: column;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
-
-var FlexCol = function FlexCol(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$1);
-
-  return /*#__PURE__*/React.createElement(_FlexCol, _extends({
-    className: "FlexCol"
-  }, props), children);
-};
-var FlexRow = styled.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
-
-var _Circle = styled.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteralLoose(["\n  position: fixed;\n  z-index: 999;\n  overflow: show;\n  margin: auto;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  width: 50px;\n  height: 50px;\n"])));
-
-var logg = function logg(a, b, c) {
-  if (b === void 0) {
-    b = "";
-  }
-
-  if (c === void 0) {
-    c = null;
-  }
-
-  c = "string" === typeof c ? c : b.replace(/\W/g, "");
-
-  if (c.length > 0) {
-    window[c] = a;
-  }
-
-  console.log("+++ " + b + ":", a);
-};
-var MenuIcon = styled(Menu)(_templateObject9 || (_templateObject9 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
-  return p.theme.colors.text;
-});
-var TwofoldContext = React.createContext({});
-var WBordered = styled.div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  padding: .5em;\n\n  margin-bottom: 1em;\n"])), function (p) {
-  return p.theme.thinBorder;
-}, function (p) {
-  return p.theme.thinBorderRadius;
-}, function (p) {
-  return p.theme.colors.cardBackground;
-});
-var WBorderedItem = styled.div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  color: ", ";\n\n  margin: 0 .5em .5em 0;\n  padding: .5em;\n\n  text-align: center;\n\n  width: 18%;\n  max-width: 140px;\n  min-width: 120px;\n"])), function (p) {
-  return p.theme.thinBorder;
-}, function (p) {
-  return p.theme.thinBorderRadius;
-}, function (p) {
-  return p.theme.colors.cardBackground;
-}, function (p) {
-  return p.theme.colors.text;
-});
-var Wrapper = styled.div(_templateObject12 || (_templateObject12 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
-var ZoomContext = React.createContext({});
 
 var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
 
@@ -519,11 +541,10 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
   var children = _ref.children,
       props = _objectWithoutPropertiesLoose(_ref, _excluded$2);
 
-  logg(props, 'JwtContextProvider');
+  logg(props, 'JwtContextProvider 222');
   var api = props.api;
-  var maybeUser = JSON.parse(localStorage.getItem(C$1.current_user)) || C$1.anonUser;
 
-  var _useState = useState(maybeUser),
+  var _useState = useState({}),
       currentUser = _useState[0],
       setCurrentUser = _useState[1];
 
@@ -532,14 +553,14 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
       setLoginModalOpen = _useState2[1];
 
   useEffect(function () {
+    logg('setting currentUser...');
     api.getMyAccount().then(function (resp) {
-      localStorage.setItem(C$1.current_user, JSON.stringify(resp));
+      logg(resp, 'got this resp');
       setCurrentUser(resp);
-    })["catch"](function (e) {
+    }).catch(function (e) {
       logg(e, 'e322');
-      setCurrentUser(C$1.anonUser);
-      localStorage.removeItem(C$1.current_user);
-      localStorage.removeItem(C$1.jwt_token);
+      toast("Login failed: " + e);
+      setCurrentUser({});
     });
   }, []);
   return /*#__PURE__*/React.createElement(JwtContext.Provider, {
@@ -563,78 +584,17 @@ var SimpleJwtRow = function SimpleJwtRow() {
   var _useContext = useContext(JwtContext),
       currentUser = _useContext.currentUser;
 
-  logg(useContext(JwtContext), 'SimpleJwtRowUsedJwtContext');
   return /*#__PURE__*/React.createElement(W1, null, /*#__PURE__*/React.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React.createElement(W2, null, /*#__PURE__*/React.createElement("i", null, currentUser.email), /*#__PURE__*/React.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React.createElement(LoginWithPassword, null)));
 };
 
 var _W = styled.div(_templateObject4$1 || (_templateObject4$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
 
-var LoginWithPassword = function LoginWithPassword(props) {
-  var _useContext2 = useContext(JwtContext),
-      api = _useContext2.api,
-      setCurrentUser = _useContext2.setCurrentUser,
-      setLoginModalOpen = _useContext2.setLoginModalOpen;
-
-  var _useState3 = useState(''),
-      email = _useState3[0],
-      setEmail = _useState3[1];
-
-  var _useState4 = useState(''),
-      password = _useState4[0],
-      setPassword = _useState4[1];
-
-  var doPasswordLogin = function doPasswordLogin(email, password) {
-    try {
-      api.postLoginWithPassword({
-        email: email,
-        password: password
-      }).then(function (resp) {
-        logg(resp, 'ze resp');
-        localStorage.setItem(C$1.jwt_token, resp.jwt_token);
-        localStorage.setItem(C$1.current_user, JSON.stringify(resp));
-        setCurrentUser(resp);
-        setLoginModalOpen(false);
-      })["catch"](function (e) {
-        logg(e, 'e322');
-        toast("Login failed");
-        setCurrentUser(C$1.anonUser);
-      });
-      return Promise.resolve();
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  };
-
-  return /*#__PURE__*/React.createElement(_W, null, /*#__PURE__*/React.createElement("input", {
-    type: "email",
-    value: email,
-    onChange: function onChange(e) {
-      return setEmail(e.target.value);
-    }
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
-    type: "password",
-    value: password,
-    onChange: function onChange(e) {
-      return setPassword(e.target.value);
-    },
-    onKeyDown: function onKeyDown(e) {
-      if (e.key === 'Enter') {
-        doPasswordLogin(email, password);
-      }
-    }
-  }), /*#__PURE__*/React.createElement(Btn, {
-    onClick: function onClick() {
-      return doPasswordLogin(email, password);
-    }
-  }, "Login"));
-};
 var Logout = function Logout() {
-  var _useContext3 = useContext(JwtContext),
-      setCurrentUser = _useContext3.setCurrentUser;
+  var _useContext2 = useContext(JwtContext),
+      setCurrentUser = _useContext2.setCurrentUser;
 
   var doLogout = function doLogout() {
-    localStorage.removeItem(C$1.jwt_token);
-    localStorage.removeItem(C$1.current_user);
+    localStorage.removeItem('jwt_token');
     setCurrentUser({});
   };
 
@@ -648,77 +608,11 @@ var JwtContext$1 = {
   JwtContext: JwtContext,
   JwtContextProvider: JwtContextProvider,
   SimpleJwtRow: SimpleJwtRow,
-  LoginWithPassword: LoginWithPassword,
   Logout: Logout
 };
 
 var _templateObject$2;
-
-var _W$1 = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
-
-var PasswordLogin = function PasswordLogin(props) {
-  var _useContext = useContext(SimpleContext),
-      setCurrentUser = _useContext.setCurrentUser,
-      setLoginModalOpen = _useContext.setLoginModalOpen,
-      useApi = _useContext.useApi;
-
-  var _useState = useState(''),
-      email = _useState[0],
-      setEmail = _useState[1];
-
-  var _useState2 = useState(''),
-      password = _useState2[0],
-      setPassword = _useState2[1];
-
-  var api = useApi();
-
-  var doPasswordLogin = function doPasswordLogin(email, password) {
-    try {
-      api.postLogin({
-        email: email,
-        password: password
-      }).then(function (resp) {
-        setLoginModalOpen(false);
-      })["catch"](function (e) {
-        logg(e, 'e322');
-        toast$1("Login failed");
-        setCurrentUser(C$1.anonUser);
-      });
-      return Promise.resolve();
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  };
-
-  return /*#__PURE__*/React.createElement(_W$1, null, /*#__PURE__*/React.createElement("input", {
-    type: "email",
-    value: email,
-    onChange: function onChange(e) {
-      return setEmail(e.target.value);
-    }
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
-    type: "password",
-    value: password,
-    onChange: function onChange(e) {
-      return setPassword(e.target.value);
-    },
-    onKeyDown: function onKeyDown(e) {
-      if (e.key === 'Enter') {
-        doPasswordLogin(email, password);
-      }
-    }
-  }), /*#__PURE__*/React.createElement(Btn, {
-    onClick: function onClick() {
-      return doPasswordLogin(email, password);
-    }
-  }, "Password Login"));
-};
-
-PasswordLogin.propTypes = {};
-
-var _templateObject$3, _templateObject2$2;
-var W0 = styled.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n"])));
-var Actions = styled.div(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: row-reverse;\n"])));
+var W0 = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n"])));
 
 var Scratchpad = function Scratchpad(props) {
   var _useContext = useContext(AuthContext),
@@ -726,15 +620,15 @@ var Scratchpad = function Scratchpad(props) {
 
   var api = useApi();
 
-  var _useState = useState(localStorage.getItem(C$1.names.scratchpad) || ''),
+  var _useState = useState(localStorage.getItem(C.names.scratchpad) || ''),
       txt = _useState[0],
       setTxt = _useState[1];
 
   var doSave = function doSave() {
-    localStorage.setItem(C$1.names.scratchpad, txt);
+    localStorage.setItem(C.names.scratchpad, txt);
     api.postProfile({
       scratchpad: txt
-    }).then(function (data) {})["catch"](function (err) {
+    }).then(function (data) {}).catch(function (err) {
       logg('Cannot update profile:', err);
     });
   };
@@ -754,5 +648,69 @@ var Scratchpad = function Scratchpad(props) {
 
 Scratchpad.propTypes = {};
 
-export { AuthContext, AuthContextProvider, AuthWidget, PasswordLogin, Scratchpad, JwtContext$1 as jwtManager, logg };
+var _excluded$3 = ["children"];
+
+var _templateObject$3;
+var W0$1 = styled.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
+
+var SideMenu = function SideMenu(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
+
+  var listItems = props.listItems;
+
+  var _React$useState = React.useState(false),
+      drawerOpen = _React$useState[0],
+      setDrawerOpen = _React$useState[1];
+
+  var _useState = useState(false);
+
+  var history = useHistory();
+  return /*#__PURE__*/React.createElement(Fragment, null, props.variant === C.variants.floating ? /*#__PURE__*/React.createElement(Fab, {
+    onClick: function onClick() {
+      return setDrawerOpen(true);
+    },
+    style: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      margin: '.5em',
+      zIndex: 1
+    },
+    "aria-label": "main menu"
+  }, /*#__PURE__*/React.createElement(MenuIcon, null)) : /*#__PURE__*/React.createElement(MenuIcon, {
+    onClick: function onClick() {
+      return setDrawerOpen(true);
+    }
+  }), /*#__PURE__*/React.createElement(Drawer, {
+    anchor: "left",
+    open: drawerOpen,
+    onClose: function onClose() {
+      return setDrawerOpen(false);
+    }
+  }, /*#__PURE__*/React.createElement(W0$1, null, /*#__PURE__*/React.createElement(List, null, listItems.map(function (_ref2) {
+    var label = _ref2.label,
+        key = _ref2.key,
+        path = _ref2.path;
+    return /*#__PURE__*/React.createElement(ListItem, {
+      button: true,
+      key: key,
+      onClick: function onClick() {
+        setDrawerOpen(false);
+        history.push(path());
+      }
+    }, label);
+  })), children)));
+};
+
+SideMenu.propTypes = {
+  listItems: PropTypes.array.isRequired,
+  variant: PropTypes.string
+};
+
+if (process.env.REACT_APP_SERVE) {
+  ReactDOM.render( /*#__PURE__*/React.createElement(TestApp, null), document.getElementById('root'));
+}
+
+export { Actions, AuthContext, AuthContextProvider, CloseBtn, FlexCol, FlexRow, LoginModal, ModalHeader, RegisterModal, Scratchpad, SideMenu, JwtContext$1 as jwtManager, logg };
 //# sourceMappingURL=index.modern.js.map

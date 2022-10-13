@@ -1,24 +1,37 @@
 /*
  *  $shared / index
  */
-// alphabetized
-import { arrowBack } from 'ionicons/icons'
-// import { IonIcon } from '@ionic/react'
+import { arrowBack, closeOutline, } from 'ionicons/icons'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
-import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
+import {
+  ChevronLeft as _ChevronLeft,
+  ChevronRight as _ChevronRight,
+  Close as _Close,
+  Menu as _MenuIcon,
+} from '@material-ui/icons'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
+  Route as _Route, useHistory,
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-import C from './C'
-import { AuthContext, AuthContextProvider, } from '$components/users'
 
 /* A */
-export { AuthContext, AuthContextProvider, }
+
+const Actions = styled.div`
+
+  // @TODO: this should use variables, for Modal inner size.
+  // I'd need to do dependency injection of the variable, from infiniteshelterjs into ishlibjs.
+  position: fixed; // for GalleriesShow
+  top: 60px;
+  right: 60px;
+
+  display: flex;
+  flex-direction: row-reverse;
+`;
+export { Actions }
 
 /* B */
 
@@ -50,6 +63,7 @@ export const Btn = styled.div`
 
 /* C */
 export { default as C } from './C'
+
 export const ChevronLeft = styled(_ChevronLeft)`
   color: ${(p) => p.theme.colors.text}
 `;
@@ -58,7 +72,7 @@ export const ChevronRight = styled(_ChevronRight)`
 `;
 
 /**
- * A Card
+ * Card
  */
 export const Card = styled(_Box)`
   margin-bottom: 1em;
@@ -70,33 +84,43 @@ export const Card = styled(_Box)`
   flex-direction: column;
 `;
 
+/**
+ * CloseBtn
+**/
+export const CloseBtn = ({ children, ...props }) => {
+  return <_Close style={{ cursor: 'pointer', ...props.style }} {...props} />
+};
+CloseBtn.propTypes = {
+  onClick: PropTypes.func.isRequired,
+}
 
 /* D */
 
 /* F */
 
+/**
+ * FlexCol
+**/
 const _FlexCol = styled.div`
   display: flex;
   flex-direction: column;
 
   > * {
-    margin: auto .4em;
+    margin: auto .4em; // @TODO: standardize this size!
   }
 `;
-
-/**
- * FlexCol
-**/
 export const FlexCol = ({ children, ...props }) => <_FlexCol className="FlexCol" {...props} >{children}</_FlexCol>
 
 /**
  * FlexRow
+ *
+ * @TODO: Remove. Where is this used?! This is silly.
 **/
 export const FlexRow = styled.div`
   display: flex;
 
   > * {
-    margin: auto .4em;
+    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!
   }
 `;
 
@@ -150,7 +174,7 @@ export const Loading = (p) => <_Circle><_CircularProgress /></_Circle>
  */
 const logg = (a, b="", c=null) => {
   c = "string" === typeof c ? c : b.replace(/\W/g, "");
-  if (c.length > 0) {
+  if (c.length > 0 && typeof window !== "undefined") {
     window[c] = a;
   }
 
@@ -167,6 +191,22 @@ export const MenuIcon = styled(_MenuIcon)`
   color: ${(p) => p.theme.colors.text}
 `;
 
+
+const _Header = styled.div`
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.2rem;
+`;
+export const ModalHeader = ({ children, onClose, ...props }) => {
+  return <FlexRow >
+    <_Header>{children}</_Header>
+    <CloseBtn onClick={onClose} />
+  </FlexRow>
+}
+ModalHeader.propTypes = {
+  onClose: PropTypes.func.isRequired,
+}
+
 /* P */
 
 /**
@@ -179,121 +219,8 @@ export const pp_date = (d) => (d || "" ).substring(0, 10)
 export { default as request } from "./request"
 
 /* S */
-export { default as S } from "./S"
 
 /* T */
-
-export const TwofoldContext = React.createContext({})
-export const TwofoldContextProvider = ({ children, ...props }) => {
-  // logg(props, 'TwofoldContextProvider')
-  const {
-    currentUser, setCurrentUser,
-    layout, setLayout,
-    loginModalOpen, setLoginModalOpen,
-    theme, toggleTheme,
-    useApi,
-  } = props
-
-  const api = useApi()
-
-  useEffect(() => {
-    let closure = setTimeout(async () => {
-      const result = await api.getMyAccount()
-      setCurrentUser(result)
-    }, 1 * 1000)
-    return () => clearTimeout(closure)
-  }, [currentUser.is_purchasing])
-
-  /* B */
-  // @TODO: does localStorage work like this on mobile?
-  // @TODO: try and catch
-  const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(JSON.parse(localStorage.getItem(C.bottomDrawerOpen)))
-  const setBottomDrawerOpen = (m) => {
-    localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
-    _setBottomDrawerOpen(m)
-  }
-
-  /* F */
-  const [ folded, setFolded ] = useState()
-
-  /* I */
-  const [ itemToUnlock, _setItemToUnlock ] = useState({})
-  const setItemToUnlock = (item) => {
-    if (itemToUnlock.id !== item.id && !loginModalOpen) {
-      _setItemToUnlock(item)
-    }
-  }
-
-  /* M */
-  const [ mapPanelWidth, setMapPanelWidth ] = useState(null)
-  const [ mapPanelHeight, setMapPanelHeight ] = useState(null)
-
-  /* P */
-  const [ purchaseModalIsOpen, setPurchaseModalIsOpen ] = useState(false)
-
-  /* R */
-  const [ ratedConfirmation, _setRatedConfirmation ] = useState(JSON.parse(localStorage.getItem(C.ratedConfirmation)))
-  const setRatedConfirmation = (which) => {
-    localStorage.setItem(C.ratedConfirmation, JSON.stringify(which))
-    _setRatedConfirmation(which)
-  }
-
-  /* S */
-  const [ showItem, setShowItem ] = useState(false)
-  const [ showUrl, setShowUrl ] = useState(false)
-
-  /* T */
-  let tmp, defaultTwofoldPercent = 0.5
-  if (tmp = localStorage.getItem(C.twofoldPercent)) {
-    try {
-      defaultTwofoldPercent = JSON.parse(tmp)
-    } catch (err) {
-      logg(err, 'cannot get twofoldPercent from localStorage')
-    }
-  }
-  const [ twofoldPercent, setTwofoldPercent ] = useState(0.5)
-
-  /* Z */
-  const [ zoom, setZoom ] = useState(1)
-
-  return <TwofoldContext.Provider value={{
-    bottomDrawerOpen, setBottomDrawerOpen,
-
-    currentUser, setCurrentUser, // @TODO: move this to an AppWrapper context
-
-    folded, setFolded,
-
-    itemToUnlock, setItemToUnlock,
-
-    layout, setLayout,
-    loginModalOpen, setLoginModalOpen,
-
-    mapPanelHeight, setMapPanelHeight,
-    mapPanelWidth, setMapPanelWidth,
-
-    purchaseModalIsOpen, setPurchaseModalIsOpen,
-
-    ratedConfirmation, setRatedConfirmation,
-
-    showItem, setShowItem,
-    showUrl, setShowUrl,
-
-    twofoldPercent, setTwofoldPercent,
-
-    useApi,
-
-    zoom, setZoom,
-
-    theme, toggleTheme,
-  }} >{ children }</TwofoldContext.Provider>
-}
-TwofoldContextProvider.PropTypes = {
-
-  currentUser: PropTypes.object.isRequired,
-  setCurrentUser: PropTypes.func.isRequired,
-
-  useApi: PropTypes.func.isRequred,
-}
 
 /* U */
 export { default as useWindowSize } from './useWindowSize'

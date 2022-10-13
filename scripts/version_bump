@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+v = File.read('VERSION').split('.').map( &:to_i )
+v[v.length-1] = v[v.length-1] + 1
+v = v.join '.'
+File.write('VERSION', v)
+
+pkg = File.read('./package.json')
+pkg = JSON.parse(pkg)
+pkg['version'] = v
+
+File.write('./package.json', JSON.pretty_generate(pkg))
+
+puts 'ok'

@@ -1,16 +1,29 @@
 
+import { configure, mount } from 'enzyme'
+import Adapter from "enzyme-adapter-react-16"
 import React from 'react'
 
 import {
   Box,
+  FlexCol, FlexRow,
   inflector,
+  ModalHeader,
   WBordered,
 } from './'
 
-test('Box', () => {
-  const box = <Box />
-  expect(box).toBeTruthy()
+configure({ adapter: new Adapter() })
+
+
+test('FlexCol', () => {
+  const w = mount(<FlexCol />)
+  expect(w).toBeTruthy()
 })
+
+test('FlexRow', () => {
+  const w = mount(<FlexRow />)
+  expect(w).toBeTruthy()
+})
+
 
 describe('inflector', () => {
 
@@ -21,15 +34,13 @@ describe('inflector', () => {
 
 })
 
-it.skip('useWindowSize', () => {
-  throw 'not implemented'
-})
-
-describe('TwofoldContext', () => {
-  it.skip('gets bottomDrawerOpen from localStorage', () => {
-    throw 'not implemented'
+describe('ModalHeader - current2 ', () => {
+  it('renders', () => {
+    const w = mount(<ModalHeader onClose={() => {}} />)
+    expect(w).toBeTruthy()
   })
 })
+
 
 it('WBordered', () => {
   const w = <WBordered />

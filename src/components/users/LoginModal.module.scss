@@ -1,8 +1,12 @@
-._2YolN {
+
+.LoginModal {
   background-color: papayawhip;
+
   max-width: 500px;
   min-width: 300px;
+
   margin: auto;
+
   inset: 40px;
   border: 1px solid rgb(204, 204, 204);
   overflow: auto;
@@ -11,16 +15,19 @@
   padding: 20px;
 }
 
-._3hqvY {
+.LoginModalOverlay {
   position: fixed;
   inset: 0px;
-  background-color: rgba(125, 125, 125, 0.3);
+  background-color: rgba(125,125,125, 0.3);
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-._2ifwF {
+.LoginModalPortal {}
+
+.Notice {
   border: 1px solid green;
   padding: 10px;
   margin: 10px;

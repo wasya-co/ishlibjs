@@ -9,12 +9,13 @@ var _Box = _interopDefault(require('@material-ui/core/Box'));
 var icons$1 = require('@material-ui/icons');
 var PropTypes = _interopDefault(require('prop-types'));
 var reactRouterDom = require('react-router-dom');
-var styled = _interopDefault(require('styled-components'));
+var styled = require('styled-components');
+var styled__default = _interopDefault(styled);
 var axios = _interopDefault(require('axios'));
+var react = require('@ionic/react');
 var reactToastify = require('react-toastify');
 require('@capacitor/core');
 var Modal = _interopDefault(require('react-modal'));
-require('@ionic/react');
 var Drawer = _interopDefault(require('@material-ui/core/Drawer'));
 var Fab = _interopDefault(require('@material-ui/core/Fab'));
 require('@material-ui/core/IconButton');
@@ -119,25 +120,119 @@ var C = {
 
 var request = axios.create({});
 
-var _excluded = ["children"],
+var S = {
+  borderWidth: '10px',
+  bottomDrawerClosedHeight: '24px',
+  bottomDrawerOpenHeight: '124px',
+  breadcrumbsHeight: '30px',
+  smallWidth: '10px',
+  mediumWidth: '20px',
+  thinBorderWidth: '2px'
+};
+
+var lightTheme = _extends({}, S, {
+  thinBorder: '2px solid black',
+  colors: {
+    text: 'black',
+    background: '#dedede',
+    border: 'black',
+    blue: '#6aa3e9',
+    cardBackground: 'white',
+    cyan: "#49bcc6",
+    darkGrey: '#605d5d',
+    gold: '#ffe100',
+    lightGrey: '#988b8b',
+    red: 'red'
+  }
+});
+
+var darkTheme = _extends({}, S, {
+  thinBorder: '2px solid white',
+  colors: {
+    text: 'white',
+    background: '#292929',
+    border: 'white',
+    blue: '#73b0fa',
+    cardBackground: '#1a1a1a',
+    cyan: "#49bcc6",
+    darkGrey: '#b3afaf',
+    gold: '#ffe100',
+    lightGrey: '#4a4343',
+    red: '#eb83a8'
+  }
+});
+
+var S$1 = {
+  lightTheme: lightTheme,
+  darkTheme: darkTheme
+};
+
+var _excluded = ["children"];
+var ThemeContext = React__default.createContext({});
+
+var ThemeProvider = function ThemeProvider(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutPropertiesLoose(_ref, _excluded);
+
+  var defaultTheme = 'undefined' === typeof window ? C.themes.light : window.localStorage.getItem(C.theme) || C.themes.light;
+
+  var _useState = React.useState(defaultTheme),
+      theme = _useState[0],
+      setTheme = _useState[1];
+
+  React.useEffect(function () {
+    var positive = theme === C.themes.light ? C.themes.light : C.themes.dark;
+    var negative = theme === C.themes.light ? C.themes.dark : C.themes.light;
+    document.body.classList.remove(negative);
+    document.body.classList.add(positive);
+  }, []);
+
+  var toggleTheme = function toggleTheme(e) {
+    e.preventDefault();
+
+    if (theme === C.themes.light) {
+      window.localStorage.setItem(C.theme, C.themes.dark);
+      setTheme(C.themes.dark);
+      document.body.classList.remove(C.themes.light);
+      document.body.classList.add(C.themes.dark);
+    } else {
+      window.localStorage.setItem(C.theme, C.themes.light);
+      setTheme(C.themes.light);
+      document.body.classList.add(C.themes.light);
+      document.body.classList.remove(C.themes.dark);
+    }
+  };
+
+  return /*#__PURE__*/React__default.createElement(ThemeContext.Provider, {
+    value: {
+      theme: theme,
+      setTheme: setTheme,
+      toggleTheme: toggleTheme
+    }
+  }, /*#__PURE__*/React__default.createElement(styled.ThemeProvider, {
+    theme: theme == C.themes.light ? S$1.lightTheme : S$1.darkTheme
+  }, children));
+};
+
+var _excluded$1 = ["children"],
     _excluded2 = ["children"],
     _excluded3 = ["children", "onClose"];
 
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14;
-var Actions = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n\n  // @TODO: this should use variables, for Modal inner size.\n  // I'd need to do dependency injection of the variable, from infiniteshelterjs into ishlibjs.\n  position: fixed; // for GalleriesShow\n  top: 60px;\n  right: 60px;\n\n  display: flex;\n  flex-direction: row-reverse;\n"])));
-var BackIcon = styled.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteralLoose(["\n  margin-right: 5px;\n  cursor: pointer;\n"])));
-var Btn = styled.div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteralLoose(["\n  border: 1px solid gray;\n  border-radius: 5px;\n  cursor: pointer;\n  display: inline-block;\n  padding: .3em 1em;\n"])));
-var ChevronLeft = styled(icons$1.ChevronLeft)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+var Actions = styled__default.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n\n  // @TODO: this should use variables, for Modal inner size.\n  // I'd need to do dependency injection of the variable, from infiniteshelterjs into ishlibjs.\n  position: fixed; // for GalleriesShow\n  top: 60px;\n  right: 60px;\n\n  display: flex;\n  flex-direction: row-reverse;\n"])));
+var BackIcon = styled__default.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteralLoose(["\n  margin-right: 5px;\n  cursor: pointer;\n"])));
+var Btn = styled__default.div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteralLoose(["\n  border: 1px solid gray;\n  border-radius: 5px;\n  cursor: pointer;\n  display: inline-block;\n  padding: .3em 1em;\n"])));
+var ChevronLeft = styled__default(icons$1.ChevronLeft)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
   return p.theme.colors.text;
 });
-var ChevronRight = styled(icons$1.ChevronRight)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+var ChevronRight = styled__default(icons$1.ChevronRight)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
   return p.theme.colors.text;
 });
-var Card = styled(_Box)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteralLoose(["\n  margin-bottom: 1em;\n  padding: 1em;\n  background: white;\n  cursor: ", ";\n\n  display: flex;\n  flex-direction: column;\n"])), function (p) {
+var Card = styled__default(_Box)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteralLoose(["\n  margin-bottom: 1em;\n  padding: 1em;\n  background: white;\n  cursor: ", ";\n\n  display: flex;\n  flex-direction: column;\n"])), function (p) {
   return p.cursor ? p.cursor : 'auto';
 });
 var CloseBtn = function CloseBtn(_ref) {
-  var props = _objectWithoutPropertiesLoose(_ref, _excluded);
+  var props = _objectWithoutPropertiesLoose(_ref, _excluded$1);
 
   return /*#__PURE__*/React__default.createElement(icons$1.Close, _extends({
     style: _extends({
@@ -149,7 +244,7 @@ CloseBtn.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-var _FlexCol = styled.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: column;\n\n  > * {\n    margin: auto .4em; // @TODO: standardize this size!\n  }\n"])));
+var _FlexCol = styled__default.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteralLoose(["\n  display: flex;\n  flex-direction: column;\n\n  > * {\n    margin: auto .4em; // @TODO: standardize this size!\n  }\n"])));
 
 var FlexCol = function FlexCol(_ref2) {
   var children = _ref2.children,
@@ -159,9 +254,9 @@ var FlexCol = function FlexCol(_ref2) {
     className: "FlexCol"
   }, props), children);
 };
-var FlexRow = styled.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!\n  }\n"])));
+var FlexRow = styled__default.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!\n  }\n"])));
 
-var _Circle = styled.div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteralLoose(["\n  position: fixed;\n  z-index: 999;\n  overflow: show;\n  margin: auto;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  width: 50px;\n  height: 50px;\n"])));
+var _Circle = styled__default.div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteralLoose(["\n  position: fixed;\n  z-index: 999;\n  overflow: show;\n  margin: auto;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  width: 50px;\n  height: 50px;\n"])));
 
 var logg = function logg(a, b, c) {
   if (b === void 0) {
@@ -180,11 +275,11 @@ var logg = function logg(a, b, c) {
 
   console.log("+++ " + b + ":", a);
 };
-var MenuIcon = styled(icons$1.Menu)(_templateObject10 || (_templateObject10 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
+var MenuIcon = styled__default(icons$1.Menu)(_templateObject10 || (_templateObject10 = _taggedTemplateLiteralLoose(["\n  color: ", "\n"])), function (p) {
   return p.theme.colors.text;
 });
 
-var _Header = styled.div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteralLoose(["\n  flex-grow: 1;\n  text-align: center;\n  font-size: 1.2rem;\n"])));
+var _Header = styled__default.div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteralLoose(["\n  flex-grow: 1;\n  text-align: center;\n  font-size: 1.2rem;\n"])));
 
 var ModalHeader = function ModalHeader(_ref3) {
   var children = _ref3.children,
@@ -198,14 +293,17 @@ var ModalHeader = function ModalHeader(_ref3) {
 ModalHeader.propTypes = {
   onClose: PropTypes.func.isRequired
 };
-var WBordered = styled.div(_templateObject12 || (_templateObject12 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  padding: .5em;\n\n  margin-bottom: 1em;\n"])), function (p) {
+var pp_date = function pp_date(d) {
+  return (d || "").substring(0, 10);
+};
+var WBordered = styled__default.div(_templateObject12 || (_templateObject12 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  padding: .5em;\n\n  margin-bottom: 1em;\n"])), function (p) {
   return p.theme.thinBorder;
 }, function (p) {
   return p.theme.thinBorderRadius;
 }, function (p) {
   return p.theme.colors.cardBackground;
 });
-var WBorderedItem = styled.div(_templateObject13 || (_templateObject13 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  color: ", ";\n\n  margin: 0 .5em .5em 0;\n  padding: .5em;\n\n  text-align: center;\n\n  width: 18%;\n  max-width: 140px;\n  min-width: 120px;\n"])), function (p) {
+var WBorderedItem = styled__default.div(_templateObject13 || (_templateObject13 = _taggedTemplateLiteralLoose(["\n  border: ", ";\n  border-radius: ", ";\n  background: ", ";\n  color: ", ";\n\n  margin: 0 .5em .5em 0;\n  padding: .5em;\n\n  text-align: center;\n\n  width: 18%;\n  max-width: 140px;\n  min-width: 120px;\n"])), function (p) {
   return p.theme.thinBorder;
 }, function (p) {
   return p.theme.thinBorderRadius;
@@ -214,10 +312,210 @@ var WBorderedItem = styled.div(_templateObject13 || (_templateObject13 = _tagged
 }, function (p) {
   return p.theme.colors.text;
 });
-var Wrapper = styled.div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
+var Wrapper = styled__default.div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
 var ZoomContext = React__default.createContext({});
 
-var styles = {"LoginModal":"_2YolN","LoginModalOverlay":"_3hqvY","Notice":"_2ifwF"};
+var styles = {"Metaline":"_19rQA","user":"_2n8g7","city":"_1rVav","tags":"_38yvm"};
+
+const W0 = styled__default.div`
+  margin: .5em 0;
+  color: ${p => p.theme.colors.text};
+`;
+
+const Metaline = props => {
+  const {
+    created_at,
+    city,
+    tags = [],
+    username
+  } = props;
+  return /*#__PURE__*/React__default.createElement(W0, {
+    className: styles.Metaline
+  }, created_at && /*#__PURE__*/React__default.createElement("span", {
+    className: "date"
+  }, "On ", pp_date(created_at), "\xA0"), username && /*#__PURE__*/React__default.createElement(Fragment, null, "by ", /*#__PURE__*/React__default.createElement("span", {
+    className: "user",
+    style: {
+      textDecoration: 'underline'
+    }
+  }, username), "\xA0"));
+};
+
+var styles$1 = {"GalleriesShow":"_u8uRZ","heading":"_1VkHq","title":"_13CIA","narrow":"_38Pco","thumbs":"_3dj2X","card":"_36lL4","full_img_section":"_327kj","item":"_1TYwn"};
+
+const W0$1 = styled__default.div`
+  // border: 1px solid blue;
+  height: auto;
+`;
+
+const GalleriesShow = props => {
+  logg(props, 'GalleriesShow');
+  const {
+    match,
+    useApi
+  } = props;
+  const [gallery, setGallery] = React.useState({});
+  const mountedRef = React.useRef('init');
+  const api = useApi();
+  logg(api, 'api');
+  React.useEffect(() => {
+    api.getGallery(match.params.slug).then(_gallery => {
+      if (!mountedRef.current) {
+        return;
+      }
+
+      setGallery(_gallery);
+    });
+    return () => {
+      mountedRef.current = null;
+    };
+  }, [gallery.id]);
+  return /*#__PURE__*/React__default.createElement(W0$1, {
+    className: styles$1.GalleriesShow
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: styles$1.narrow
+  }, /*#__PURE__*/React__default.createElement("h1", {
+    className: styles$1.heading
+  }, /*#__PURE__*/React__default.createElement("span", {
+    className: styles$1.title
+  }, gallery.name)), /*#__PURE__*/React__default.createElement(Metaline, gallery), /*#__PURE__*/React__default.createElement("div", {
+    className: styles$1.thumbs
+  }, gallery.photos && gallery.photos.map((ph, i) => /*#__PURE__*/React__default.createElement("div", {
+    className: styles$1.card,
+    key: i
+  }, /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(react.IonImg, {
+    src: ph.thumb_url
+  }))))), /*#__PURE__*/React__default.createElement("div", {
+    dangerouslySetInnerHTML: {
+      __html: gallery.description
+    }
+  })), /*#__PURE__*/React__default.createElement("div", {
+    className: styles$1.full_img_section
+  }, gallery.photos && gallery.photos.map((ph, i) => /*#__PURE__*/React__default.createElement("div", {
+    className: styles$1.item,
+    key: i
+  }, /*#__PURE__*/React__default.createElement("img", {
+    src: ph.large_url
+  })))), /*#__PURE__*/React__default.createElement("hr", null), /*#__PURE__*/React__default.createElement("footer", null, /*#__PURE__*/React__default.createElement("div", {
+    className: "maxWidth"
+  }, "ishlibjs v0.6.0 :: GalleriesShow v0.0.0")));
+};
+
+GalleriesShow.propsTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      slug: PropTypes.string
+    })
+  }),
+  useApi: PropTypes.function
+};
+
+var config = {
+  apiOrigin: 'http://localhost:3001'
+};
+
+var TestGallery = function TestGallery() {
+  var api = {
+    getGallery: function getGallery(slug) {
+      return request.get(config.apiOrigin + "/api/galleries/view/" + slug).then(function (r) {
+        return r.data.gallery;
+      });
+    }
+  };
+  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(ThemeProvider, null, /*#__PURE__*/React__default.createElement(GalleriesShow, {
+    match: {
+      params: {
+        slug: 'chicago-scenery-i'
+      }
+    },
+    useApi: function useApi() {
+      return api;
+    }
+  })));
+};
+
+var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
+
+var _excluded$2 = ["children"];
+var JwtContext = React__default.createContext({});
+
+var LoginWithPassword = function LoginWithPassword() {};
+
+var JwtContextProvider = function JwtContextProvider(_ref) {
+  var children = _ref.children,
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$2);
+
+  logg(props, 'JwtContextProvider 222');
+  var api = props.api;
+
+  var _useState = React.useState({}),
+      currentUser = _useState[0],
+      setCurrentUser = _useState[1];
+
+  var _useState2 = React.useState({}),
+      loginModalOpen = _useState2[0],
+      setLoginModalOpen = _useState2[1];
+
+  React.useEffect(function () {
+    logg('setting currentUser...');
+    api.getMyAccount().then(function (resp) {
+      logg(resp, 'got this resp');
+      setCurrentUser(resp);
+    }).catch(function (e) {
+      logg(e, 'e322');
+      reactToastify.toast("Login failed: " + e);
+      setCurrentUser({});
+    });
+  }, []);
+  return /*#__PURE__*/React__default.createElement(JwtContext.Provider, {
+    value: {
+      api: api,
+      currentUser: currentUser,
+      setCurrentUser: setCurrentUser,
+      loginModalOpen: loginModalOpen,
+      setLoginModalOpen: setLoginModalOpen
+    }
+  }, children);
+};
+
+JwtContextProvider.props = {
+  api: PropTypes.object
+};
+var FlexRow$1 = styled__default.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
+var W1 = styled__default.div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n  border: 1px solid red;\n"])));
+var W2 = styled__default.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n"])));
+var SimpleJwtRow = function SimpleJwtRow() {
+  var _useContext = React.useContext(JwtContext),
+      currentUser = _useContext.currentUser;
+
+  return /*#__PURE__*/React__default.createElement(W1, null, /*#__PURE__*/React__default.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React__default.createElement(W2, null, /*#__PURE__*/React__default.createElement("i", null, currentUser.email), /*#__PURE__*/React__default.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React__default.createElement(LoginWithPassword, null)));
+};
+
+var _W = styled__default.div(_templateObject4$1 || (_templateObject4$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
+
+var Logout = function Logout() {
+  var _useContext2 = React.useContext(JwtContext),
+      setCurrentUser = _useContext2.setCurrentUser;
+
+  var doLogout = function doLogout() {
+    localStorage.removeItem('jwt_token');
+    setCurrentUser({});
+  };
+
+  return /*#__PURE__*/React__default.createElement(Btn, {
+    onClick: doLogout
+  }, "Logout");
+};
+
+var JwtContext$1 = {
+  __proto__: null,
+  JwtContext: JwtContext,
+  JwtContextProvider: JwtContextProvider,
+  SimpleJwtRow: SimpleJwtRow,
+  Logout: Logout
+};
+
+var styles$2 = {"LoginModal":"_2YolN","LoginModalOverlay":"_3hqvY","Notice":"_2ifwF"};
 
 var LoginModal = function LoginModal(props) {
   var onError = props.onError,
@@ -258,16 +556,16 @@ var LoginModal = function LoginModal(props) {
 
   Modal.setAppElement('body');
   return /*#__PURE__*/React__default.createElement(Modal, {
-    className: "LoginModal " + styles.LoginModal,
+    className: "LoginModal " + styles$2.LoginModal,
     isOpen: !!loginModalOpen,
-    overlayClassName: styles.LoginModalOverlay,
-    portalClassName: styles.LoginModalPortal
+    overlayClassName: styles$2.LoginModalOverlay,
+    portalClassName: styles$2.LoginModalPortal
   }, /*#__PURE__*/React__default.createElement(ModalHeader, {
     onClose: function onClose() {
       return setLoginModalOpen(false);
     }
   }, "Login"), 'string' === typeof loginModalOpen && /*#__PURE__*/React__default.createElement(FlexRow, null, /*#__PURE__*/React__default.createElement("div", {
-    className: styles.Notice
+    className: styles$2.Notice
   }, loginModalOpen)), /*#__PURE__*/React__default.createElement(FlexCol, null, /*#__PURE__*/React__default.createElement("label", {
     htmlFor: "email"
   }, "Email"), /*#__PURE__*/React__default.createElement("input", {
@@ -368,10 +666,10 @@ var RegisterModal = function RegisterModal(props) {
   };
 
   return /*#__PURE__*/React__default.createElement(Modal, {
-    className: "LoginModal " + styles.LoginModal,
+    className: "LoginModal " + styles$2.LoginModal,
     isOpen: registerModalOpen,
-    overlayClassName: styles.LoginModalOverlay,
-    portalClassName: styles.LoginModalPortal
+    overlayClassName: styles$2.LoginModalOverlay,
+    portalClassName: styles$2.LoginModalPortal
   }, /*#__PURE__*/React__default.createElement(ModalHeader, {
     onClose: function onClose() {
       return setRegisterModalOpen(false);
@@ -432,12 +730,12 @@ var RegisterModal = function RegisterModal(props) {
 
 RegisterModal.propTypes = {};
 
-var _excluded$1 = ["children"];
+var _excluded$3 = ["children"];
 var AuthContext = React.createContext({});
 
 var AuthContextProvider = function AuthContextProvider(_ref) {
   var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$1);
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
 
   var _props$currentUser = props.currentUser,
       _currentUser = _props$currentUser === void 0 ? C.anonUser : _props$currentUser,
@@ -493,129 +791,8 @@ AuthContextProvider.propTypes = {
   useApi: PropTypes.func.isRequired
 };
 
-var config = {
-  apiOrigin: 'http://localhost:3001'
-};
-
-var TestApp = function TestApp() {
-  var useApi = function useApi() {
-    return {
-      doRegister: function doRegister(_ref) {
-        var email = _ref.email,
-            password = _ref.password;
-        return request.post(config.apiOrigin + "/api/users", {
-          email: email,
-          password: password
-        }).then(function (r) {
-          return r.data;
-        }).then(function (r) {
-          logg(r, 'done registered');
-          return r;
-        });
-      }
-    };
-  };
-
-  var _useState = React.useState(false),
-      loginModalOpen = _useState[0],
-      setLoginModalOpen = _useState[1];
-
-  var _useState2 = React.useState(true),
-      registerModalOpen = _useState2[0],
-      setRegisterModalOpen = _useState2[1];
-
-  return /*#__PURE__*/React__default.createElement(AuthContextProvider, {
-    loginModalOpen: loginModalOpen,
-    setLoginModalOpen: setLoginModalOpen,
-    registerModalOpen: registerModalOpen,
-    setRegisterModalOpen: setRegisterModalOpen,
-    useApi: useApi
-  }, /*#__PURE__*/React__default.createElement(LoginModal, null), /*#__PURE__*/React__default.createElement(reactToastify.ToastContainer, {
-    position: "bottom-left"
-  }));
-};
-
-var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
-
-var _excluded$2 = ["children"];
-var JwtContext = React__default.createContext({});
-
-var JwtContextProvider = function JwtContextProvider(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$2);
-
-  logg(props, 'JwtContextProvider 222');
-  var api = props.api;
-
-  var _useState = React.useState({}),
-      currentUser = _useState[0],
-      setCurrentUser = _useState[1];
-
-  var _useState2 = React.useState({}),
-      loginModalOpen = _useState2[0],
-      setLoginModalOpen = _useState2[1];
-
-  React.useEffect(function () {
-    logg('setting currentUser...');
-    api.getMyAccount().then(function (resp) {
-      logg(resp, 'got this resp');
-      setCurrentUser(resp);
-    }).catch(function (e) {
-      logg(e, 'e322');
-      reactToastify.toast("Login failed: " + e);
-      setCurrentUser({});
-    });
-  }, []);
-  return /*#__PURE__*/React__default.createElement(JwtContext.Provider, {
-    value: {
-      api: api,
-      currentUser: currentUser,
-      setCurrentUser: setCurrentUser,
-      loginModalOpen: loginModalOpen,
-      setLoginModalOpen: setLoginModalOpen
-    }
-  }, children);
-};
-
-JwtContextProvider.props = {
-  api: PropTypes.object
-};
-var FlexRow$1 = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
-var W1 = styled.div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n  border: 1px solid red;\n"])));
-var W2 = styled.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n"])));
-var SimpleJwtRow = function SimpleJwtRow() {
-  var _useContext = React.useContext(JwtContext),
-      currentUser = _useContext.currentUser;
-
-  return /*#__PURE__*/React__default.createElement(W1, null, /*#__PURE__*/React__default.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React__default.createElement(W2, null, /*#__PURE__*/React__default.createElement("i", null, currentUser.email), /*#__PURE__*/React__default.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React__default.createElement(LoginWithPassword, null)));
-};
-
-var _W = styled.div(_templateObject4$1 || (_templateObject4$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
-
-var Logout = function Logout() {
-  var _useContext2 = React.useContext(JwtContext),
-      setCurrentUser = _useContext2.setCurrentUser;
-
-  var doLogout = function doLogout() {
-    localStorage.removeItem('jwt_token');
-    setCurrentUser({});
-  };
-
-  return /*#__PURE__*/React__default.createElement(Btn, {
-    onClick: doLogout
-  }, "Logout");
-};
-
-var JwtContext$1 = {
-  __proto__: null,
-  JwtContext: JwtContext,
-  JwtContextProvider: JwtContextProvider,
-  SimpleJwtRow: SimpleJwtRow,
-  Logout: Logout
-};
-
 var _templateObject$2;
-var W0 = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n"])));
+var W0$2 = styled__default.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n"])));
 
 var Scratchpad = function Scratchpad(props) {
   var _useContext = React.useContext(AuthContext),
@@ -636,7 +813,7 @@ var Scratchpad = function Scratchpad(props) {
     });
   };
 
-  return /*#__PURE__*/React__default.createElement(W0, null, /*#__PURE__*/React__default.createElement("textarea", {
+  return /*#__PURE__*/React__default.createElement(W0$2, null, /*#__PURE__*/React__default.createElement("textarea", {
     name: "scratchpad",
     rows: "20",
     cols: "40",
@@ -651,14 +828,14 @@ var Scratchpad = function Scratchpad(props) {
 
 Scratchpad.propTypes = {};
 
-var _excluded$3 = ["children"];
+var _excluded$4 = ["children"];
 
 var _templateObject$3;
-var W0$1 = styled.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
+var W0$3 = styled__default.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
 
 var SideMenu = function SideMenu(_ref) {
   var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$4);
 
   var listItems = props.listItems;
 
@@ -691,7 +868,7 @@ var SideMenu = function SideMenu(_ref) {
     onClose: function onClose() {
       return setDrawerOpen(false);
     }
-  }, /*#__PURE__*/React__default.createElement(W0$1, null, /*#__PURE__*/React__default.createElement(List, null, listItems.map(function (_ref2) {
+  }, /*#__PURE__*/React__default.createElement(W0$3, null, /*#__PURE__*/React__default.createElement(List, null, listItems.map(function (_ref2) {
     var label = _ref2.label,
         key = _ref2.key,
         path = _ref2.path;
@@ -711,8 +888,32 @@ SideMenu.propTypes = {
   variant: PropTypes.string
 };
 
+var config$1 = {
+  apiOrigin: 'http://localhost:3001'
+};
+
+var Gallery20230112Chitown = function Gallery20230112Chitown() {
+  var api = {
+    getGallery: function getGallery(slug) {
+      return request.get(config$1.apiOrigin + "/api/galleries/view/" + slug).then(function (r) {
+        return r.data.gallery;
+      });
+    }
+  };
+  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(ThemeProvider, null, /*#__PURE__*/React__default.createElement(GalleriesShow, {
+    match: {
+      params: {
+        slug: 'chicago-scenery-i'
+      }
+    },
+    useApi: function useApi() {
+      return api;
+    }
+  })));
+};
+
 if (process.env.REACT_APP_SERVE) {
-  ReactDOM.render( /*#__PURE__*/React__default.createElement(TestApp, null), document.getElementById('root'));
+  ReactDOM.render( /*#__PURE__*/React__default.createElement(TestGallery, null), document.getElementById('root'));
 }
 
 exports.Actions = Actions;
@@ -726,6 +927,7 @@ exports.ModalHeader = ModalHeader;
 exports.RegisterModal = RegisterModal;
 exports.Scratchpad = Scratchpad;
 exports.SideMenu = SideMenu;
+exports.TestApp_Gallery20230112Chitown = Gallery20230112Chitown;
 exports.jwtManager = JwtContext$1;
 exports.logg = logg;
 //# sourceMappingURL=index.js.map

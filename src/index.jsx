@@ -38,6 +38,15 @@ export { RegisterModal } from './components/users'
 export { default as Scratchpad } from "./components/users/Scratchpad"
 export { default as SideMenu } from './components/SideMenu'
 
+/* T */
+export { default as TestApp_Gallery20230112Chitown } from './TestApp_Gallery20230112Chitown'
+
+
+
+/**
+ * main - run
+ *
+**/
 if (process.env.REACT_APP_SERVE) {
   ReactDOM.render(<TestApp />, document.getElementById('root'))
 }

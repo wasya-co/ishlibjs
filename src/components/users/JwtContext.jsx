@@ -11,6 +11,8 @@ import {
 
 export const JwtContext = React.createContext({})
 
+const LoginWithPassword = () => {};
+
 /**
  * JwtContextProvider
 **/

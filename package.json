@@ -1,6 +1,6 @@
 {
   "name": "ishlibjs",
-  "version": "0.6.0",
+  "version": "0.2.7",
   "description": "ishlibjs",
   "author": "piousbox",
   "license": "A Proprietary License",
@@ -217,4 +217,3 @@
     "deploy": "gh-pages -d example/build"
   }
 }
-

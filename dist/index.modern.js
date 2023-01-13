@@ -339,30 +339,30 @@ const Metaline = props => {
 
 var styles$1 = {"GalleriesShow":"_u8uRZ","heading":"_1VkHq","title":"_13CIA","narrow":"_38Pco","thumbs":"_3dj2X","card":"_36lL4","full_img_section":"_327kj","item":"_1TYwn"};
 
-const W0$1 = styled.div`
-  // border: 1px solid blue;
-  height: auto;
-`;
+var _templateObject$1;
+var W0$1 = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  // border: 1px solid blue;\n  height: auto;\n"])));
 
-const GalleriesShow = props => {
+var GalleriesShow = function GalleriesShow(props) {
   logg(props, 'GalleriesShow');
-  const {
-    match,
-    useApi
-  } = props;
-  const [gallery, setGallery] = useState({});
-  const mountedRef = useRef('init');
-  const api = useApi();
+  var match = props.match,
+      useApi = props.useApi;
+
+  var _useState = useState({}),
+      gallery = _useState[0],
+      setGallery = _useState[1];
+
+  var mountedRef = useRef('init');
+  var api = useApi();
   logg(api, 'api');
-  useEffect(() => {
-    api.getGallery(match.params.slug).then(_gallery => {
+  useEffect(function () {
+    api.getGallery(match.params.slug).then(function (_gallery) {
       if (!mountedRef.current) {
         return;
       }
 
       setGallery(_gallery);
     });
-    return () => {
+    return function () {
       mountedRef.current = null;
     };
   }, [gallery.id]);
@@ -376,25 +376,29 @@ const GalleriesShow = props => {
     className: styles$1.title
   }, gallery.name)), /*#__PURE__*/React.createElement(Metaline, gallery), /*#__PURE__*/React.createElement("div", {
     className: styles$1.thumbs
-  }, gallery.photos && gallery.photos.map((ph, i) => /*#__PURE__*/React.createElement("div", {
-    className: styles$1.card,
-    key: i
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(IonImg, {
-    src: ph.thumb_url
-  }))))), /*#__PURE__*/React.createElement("div", {
+  }, gallery.photos && gallery.photos.map(function (ph, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: styles$1.card,
+      key: i
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(IonImg, {
+      src: ph.thumb_url
+    })));
+  })), /*#__PURE__*/React.createElement("div", {
     dangerouslySetInnerHTML: {
       __html: gallery.description
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: styles$1.full_img_section
-  }, gallery.photos && gallery.photos.map((ph, i) => /*#__PURE__*/React.createElement("div", {
-    className: styles$1.item,
-    key: i
-  }, /*#__PURE__*/React.createElement("img", {
-    src: ph.large_url
-  })))), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("div", {
+  }, gallery.photos && gallery.photos.map(function (ph, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: styles$1.item,
+      key: i
+    }, /*#__PURE__*/React.createElement("img", {
+      src: ph.large_url
+    }));
+  })), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("div", {
     className: "maxWidth"
-  }, "ishlibjs v0.6.0 :: GalleriesShow v0.0.0")));
+  }, "ishlibjs v0.2.7 (branch 0.6.0) :: GalleriesShow v0.0.0")));
 };
 
 GalleriesShow.propsTypes = {
@@ -430,7 +434,7 @@ var TestGallery = function TestGallery() {
   })));
 };
 
-var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
+var _templateObject$2, _templateObject2$1, _templateObject3$1, _templateObject4$1;
 
 var _excluded$2 = ["children"];
 var JwtContext = React.createContext({});
@@ -477,7 +481,7 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
 JwtContextProvider.props = {
   api: PropTypes.object
 };
-var FlexRow$1 = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
+var FlexRow$1 = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
 var W1 = styled.div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n  border: 1px solid red;\n"])));
 var W2 = styled.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n"])));
 var SimpleJwtRow = function SimpleJwtRow() {
@@ -787,8 +791,8 @@ AuthContextProvider.propTypes = {
   useApi: PropTypes.func.isRequired
 };
 
-var _templateObject$2;
-var W0$2 = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n"])));
+var _templateObject$3;
+var W0$2 = styled.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n"])));
 
 var Scratchpad = function Scratchpad(props) {
   var _useContext = useContext(AuthContext),
@@ -826,8 +830,8 @@ Scratchpad.propTypes = {};
 
 var _excluded$4 = ["children"];
 
-var _templateObject$3;
-var W0$3 = styled.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
+var _templateObject$4;
+var W0$3 = styled.div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
 
 var SideMenu = function SideMenu(_ref) {
   var children = _ref.children,

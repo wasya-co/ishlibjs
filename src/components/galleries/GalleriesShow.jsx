@@ -86,7 +86,7 @@ const GalleriesShow = (props) => {
     <hr />
     <footer>
       <div className='maxWidth'>
-        ishlibjs v0.6.0 :: GalleriesShow v0.0.0
+        ishlibjs v0.2.7 (branch 0.6.0) :: GalleriesShow v0.0.0
       </div>
     </footer>
   </W0>

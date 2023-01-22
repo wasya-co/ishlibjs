@@ -315,7 +315,7 @@ var WBorderedItem = styled__default.div(_templateObject13 || (_templateObject13 
 var Wrapper = styled__default.div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
 var ZoomContext = React__default.createContext({});
 
-var styles = {"Metaline":"_19rQA","user":"_2n8g7","city":"_1rVav","tags":"_38yvm"};
+var styles = {"Metaline":"_Metaline-module__Metaline__19rQA","user":"_Metaline-module__user__2n8g7","city":"_Metaline-module__city__1rVav","tags":"_Metaline-module__tags__38yvm"};
 
 const W0 = styled__default.div`
   margin: .5em 0;
@@ -341,32 +341,32 @@ const Metaline = props => {
   }, username), "\xA0"));
 };
 
-var styles$1 = {"GalleriesShow":"_u8uRZ","heading":"_1VkHq","title":"_13CIA","narrow":"_38Pco","thumbs":"_3dj2X","card":"_36lL4","full_img_section":"_327kj","item":"_1TYwn"};
+var styles$1 = {"GalleriesShow":"_Galleries-module__GalleriesShow__u8uRZ","heading":"_Galleries-module__heading__1VkHq","title":"_Galleries-module__title__13CIA","narrow":"_Galleries-module__narrow__38Pco","thumbs":"_Galleries-module__thumbs__3dj2X","card":"_Galleries-module__card__36lL4","full_img_section":"_Galleries-module__full_img_section__327kj","item":"_Galleries-module__item__1TYwn"};
 
-var _templateObject$1;
-var W0$1 = styled__default.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  // border: 1px solid blue;\n  height: auto;\n"])));
+const W0$1 = styled__default.div`
+  // border: 1px solid blue;
+  height: auto;
+`;
 
-var GalleriesShow = function GalleriesShow(props) {
+const GalleriesShow = props => {
   logg(props, 'GalleriesShow');
-  var match = props.match,
-      useApi = props.useApi;
-
-  var _useState = React.useState({}),
-      gallery = _useState[0],
-      setGallery = _useState[1];
-
-  var mountedRef = React.useRef('init');
-  var api = useApi();
+  const {
+    match,
+    useApi
+  } = props;
+  const [gallery, setGallery] = React.useState({});
+  const mountedRef = React.useRef('init');
+  const api = useApi();
   logg(api, 'api');
-  React.useEffect(function () {
-    api.getGallery(match.params.slug).then(function (_gallery) {
+  React.useEffect(() => {
+    api.getGallery(match.params.slug).then(_gallery => {
       if (!mountedRef.current) {
         return;
       }
 
       setGallery(_gallery);
     });
-    return function () {
+    return () => {
       mountedRef.current = null;
     };
   }, [gallery.id]);
@@ -380,27 +380,23 @@ var GalleriesShow = function GalleriesShow(props) {
     className: styles$1.title
   }, gallery.name)), /*#__PURE__*/React__default.createElement(Metaline, gallery), /*#__PURE__*/React__default.createElement("div", {
     className: styles$1.thumbs
-  }, gallery.photos && gallery.photos.map(function (ph, i) {
-    return /*#__PURE__*/React__default.createElement("div", {
-      className: styles$1.card,
-      key: i
-    }, /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(react.IonImg, {
-      src: ph.thumb_url
-    })));
-  })), /*#__PURE__*/React__default.createElement("div", {
+  }, gallery.photos && gallery.photos.map((ph, i) => /*#__PURE__*/React__default.createElement("div", {
+    className: styles$1.card,
+    key: i
+  }, /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement(react.IonImg, {
+    src: ph.thumb_url
+  }))))), /*#__PURE__*/React__default.createElement("div", {
     dangerouslySetInnerHTML: {
       __html: gallery.description
     }
   })), /*#__PURE__*/React__default.createElement("div", {
     className: styles$1.full_img_section
-  }, gallery.photos && gallery.photos.map(function (ph, i) {
-    return /*#__PURE__*/React__default.createElement("div", {
-      className: styles$1.item,
-      key: i
-    }, /*#__PURE__*/React__default.createElement("img", {
-      src: ph.large_url
-    }));
-  })), /*#__PURE__*/React__default.createElement("hr", null), /*#__PURE__*/React__default.createElement("footer", null, /*#__PURE__*/React__default.createElement("div", {
+  }, gallery.photos && gallery.photos.map((ph, i) => /*#__PURE__*/React__default.createElement("div", {
+    className: styles$1.item,
+    key: i
+  }, /*#__PURE__*/React__default.createElement("img", {
+    src: ph.large_url
+  })))), /*#__PURE__*/React__default.createElement("hr", null), /*#__PURE__*/React__default.createElement("footer", null, /*#__PURE__*/React__default.createElement("div", {
     className: "maxWidth"
   }, "ishlibjs v0.2.7 (branch 0.6.0) :: GalleriesShow v0.0.0")));
 };
@@ -414,31 +410,11 @@ GalleriesShow.propsTypes = {
   useApi: PropTypes.function
 };
 
-var config = {
-  apiOrigin: 'http://localhost:3001'
+const TestApp_LeadsDataTable = () => {
+  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(ThemeProvider, null, /*#__PURE__*/React__default.createElement(Header, null, /*#__PURE__*/React__default.createElement(Search, null), /*#__PURE__*/React__default.createElement("a", null, "Leads"), /*#__PURE__*/React__default.createElement("a", null, "Leadsets")), /*#__PURE__*/React__default.createElement(DataTable, null), /*#__PURE__*/React__default.createElement("hr", null), /*#__PURE__*/React__default.createElement(Schedule, null)));
 };
 
-var TestGallery = function TestGallery() {
-  var api = {
-    getGallery: function getGallery(slug) {
-      return request.get(config.apiOrigin + "/api/galleries/view/" + slug).then(function (r) {
-        return r.data.gallery;
-      });
-    }
-  };
-  return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement(ThemeProvider, null, /*#__PURE__*/React__default.createElement(GalleriesShow, {
-    match: {
-      params: {
-        slug: 'chicago-scenery-i'
-      }
-    },
-    useApi: function useApi() {
-      return api;
-    }
-  })));
-};
-
-var _templateObject$2, _templateObject2$1, _templateObject3$1, _templateObject4$1;
+var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
 
 var _excluded$2 = ["children"];
 var JwtContext = React__default.createContext({});
@@ -485,7 +461,7 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
 JwtContextProvider.props = {
   api: PropTypes.object
 };
-var FlexRow$1 = styled__default.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
+var FlexRow$1 = styled__default.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
 var W1 = styled__default.div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n  border: 1px solid red;\n"])));
 var W2 = styled__default.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n"])));
 var SimpleJwtRow = function SimpleJwtRow() {
@@ -519,7 +495,7 @@ var JwtContext$1 = {
   Logout: Logout
 };
 
-var styles$2 = {"LoginModal":"_2YolN","LoginModalOverlay":"_3hqvY","Notice":"_2ifwF"};
+var styles$2 = {"LoginModal":"_LoginModal-module__LoginModal__2YolN","LoginModalOverlay":"_LoginModal-module__LoginModalOverlay__3hqvY","Notice":"_LoginModal-module__Notice__2ifwF"};
 
 var LoginModal = function LoginModal(props) {
   var onError = props.onError,
@@ -795,8 +771,8 @@ AuthContextProvider.propTypes = {
   useApi: PropTypes.func.isRequired
 };
 
-var _templateObject$3;
-var W0$2 = styled__default.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n"])));
+var _templateObject$2;
+var W0$2 = styled__default.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n"])));
 
 var Scratchpad = function Scratchpad(props) {
   var _useContext = React.useContext(AuthContext),
@@ -834,8 +810,8 @@ Scratchpad.propTypes = {};
 
 var _excluded$4 = ["children"];
 
-var _templateObject$4;
-var W0$3 = styled__default.div(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
+var _templateObject$3;
+var W0$3 = styled__default.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
 
 var SideMenu = function SideMenu(_ref) {
   var children = _ref.children,
@@ -892,14 +868,14 @@ SideMenu.propTypes = {
   variant: PropTypes.string
 };
 
-var config$1 = {
+var config = {
   apiOrigin: 'http://localhost:3001'
 };
 
 var Gallery20230112Chitown = function Gallery20230112Chitown() {
   var api = {
     getGallery: function getGallery(slug) {
-      return request.get(config$1.apiOrigin + "/api/galleries/view/" + slug).then(function (r) {
+      return request.get(config.apiOrigin + "/api/galleries/view/" + slug).then(function (r) {
         return r.data.gallery;
       });
     }
@@ -917,7 +893,7 @@ var Gallery20230112Chitown = function Gallery20230112Chitown() {
 };
 
 if (process.env.REACT_APP_SERVE) {
-  ReactDOM.render( /*#__PURE__*/React__default.createElement(TestGallery, null), document.getElementById('root'));
+  ReactDOM.render( /*#__PURE__*/React__default.createElement(TestApp_LeadsDataTable, null), document.getElementById('root'));
 }
 
 exports.Actions = Actions;

@@ -1,18 +1,18 @@
-._19rQA {
+._Metaline-module__Metaline__19rQA {
   font-size: 0.8em;
 }
-._19rQA ._2n8g7 {
+._Metaline-module__Metaline__19rQA ._Metaline-module__user__2n8g7 {
   color: #378ff9;
   font-weight: 600;
   font-style: italic;
 }
-._19rQA ._1rVav {
+._Metaline-module__Metaline__19rQA ._Metaline-module__city__1rVav {
   color: #378ff9;
   font-weight: 600;
   font-style: italic;
   cursor: pointer;
 }
-._19rQA ._38yvm {
+._Metaline-module__Metaline__19rQA ._Metaline-module__tags__38yvm {
   border: 0.1em solid #378ff9;
   border-radius: 1.5em;
   padding: 0.5em 1em;
@@ -20,38 +20,38 @@
   display: inline-block;
   margin: 1em 1em 0 0;
 }
-._u8uRZ ._1VkHq img {
+._Galleries-module__GalleriesShow__u8uRZ ._Galleries-module__heading__1VkHq img {
   width: 1.2em;
 }
-._u8uRZ ._1VkHq ._13CIA {
+._Galleries-module__GalleriesShow__u8uRZ ._Galleries-module__heading__1VkHq ._Galleries-module__title__13CIA {
   vertical-align: top;
   padding: 0.5em;
 }
-._u8uRZ ._38Pco {
+._Galleries-module__GalleriesShow__u8uRZ ._Galleries-module__narrow__38Pco {
   max-width: 44em;
   margin: auto;
   padding: 10px;
 }
-._u8uRZ ._3dj2X {
+._Galleries-module__GalleriesShow__u8uRZ ._Galleries-module__thumbs__3dj2X {
   display: flex;
   flex-wrap: wrap;
   margin: 1em 0;
 }
-._u8uRZ ._3dj2X ._36lL4 {
+._Galleries-module__GalleriesShow__u8uRZ ._Galleries-module__thumbs__3dj2X ._Galleries-module__card__36lL4 {
   margin: 0.1em 0.25em;
   width: 5em;
 }
-._u8uRZ ._327kj ._1TYwn {
+._Galleries-module__GalleriesShow__u8uRZ ._Galleries-module__full_img_section__327kj ._Galleries-module__item__1TYwn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-._u8uRZ ._327kj img {
+._Galleries-module__GalleriesShow__u8uRZ ._Galleries-module__full_img_section__327kj img {
   margin-bottom: 1em;
   max-width: 100vw;
   max-height: 100vh;
 }
-._2YolN {
+._LoginModal-module__LoginModal__2YolN {
   background-color: papayawhip;
   max-width: 500px;
   min-width: 300px;
@@ -64,7 +64,7 @@
   padding: 20px;
 }
 
-._3hqvY {
+._LoginModal-module__LoginModalOverlay__3hqvY {
   position: fixed;
   inset: 0px;
   background-color: rgba(125, 125, 125, 0.3);
@@ -73,7 +73,7 @@
   align-items: center;
 }
 
-._2ifwF {
+._LoginModal-module__Notice__2ifwF {
   border: 1px solid green;
   padding: 10px;
   margin: 10px;

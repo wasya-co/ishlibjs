@@ -12,7 +12,7 @@ import {
 /* A */
 const AuthContext = createContext({})
 const AuthContextProvider = ({children, ...props }) => {
-  // logg(props, 'AuthContextProvider')
+  logg(props, 'AuthContextProvider')
   let {
     currentUser: _currentUser = C.anonUser, setCurrentUser: _setCurrentUser,
     loginModalOpen: _loginModalOpen = false, setLoginModalOpen: _setLoginModalOpen,
@@ -43,9 +43,6 @@ const AuthContextProvider = ({children, ...props }) => {
     registerModalOpen, setRegisterModalOpen,
   }
 
-  //
-  // props.useApi isRequired
-  //
   return <AuthContext.Provider value={{ ...props, ...moreProps }} >
     { children }
   </AuthContext.Provider>

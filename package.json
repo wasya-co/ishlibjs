@@ -6,8 +6,14 @@
   "license": "A Proprietary License",
   "repository": "wasyaco/ishlibjs",
   "main": "dist/index.js",
-  "module": "dist/index.modern.js",
+  "module": "dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
   "source": "src/index.jsx",
+  "exports": {
+    "require_trash": "./dist/index.cjs",
+    "default": "./dist/index.modern.mjs",
+    ".": "./dist/index.modern.mjs"
+  },
   "engines": {
     "node": ">=16"
   },
@@ -202,19 +208,20 @@
     ]
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "build": "microbundle-crl --no-compress",
+    "build_marker": "microbundle-crl --no-compress src/Marker.jsx",
+    "deploy": "gh-pages -d example/build",
     "deploy-storybook": "storybook-to-ghpages",
-    "serve": "REACT_APP_SERVE=true PORT=3009 react-scripts start",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "prepare": "link-module-alias",
-    "test": "node scripts/test.js --env=jsdom --watchAll=false",
     "jest": "node scripts/test.js --env=jsdom -t current --colors --watchAll=false",
     "jest2": "node scripts/test.js --env=jsdom -t current2 --colors --watchAll=false",
+    "predeploy": "cd example && yarn install && yarn run build",
+    "prepare": "link-module-alias",
+    "serve": "REACT_APP_SERVE=true PORT=3009 react-scripts start",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "test": "node scripts/test.js --env=jsdom --watchAll=false",
     "test:build": "run-s build",
     "test:unit": "cross-env CI=1 node scripts/test.js --env=jsdom",
-    "test:watch": "node scripts/test.js --env=jsdom",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "test:watch": "node scripts/test.js --env=jsdom"
   }
 }
 

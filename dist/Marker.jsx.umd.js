@@ -1,0 +1,2 @@
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t(require("react")):"function"==typeof define&&define.amd?define(["react"],t):(e=e||self).ishlibjs=t(e.react)}(this,function(e){return e=e&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e,function(t){return e.createElement(Fragment,null,e.createElement("div",{className:"Card",style:{border:"1px solid red",borderRadius:"10x"}},"I am a marker!"))}});
+//# sourceMappingURL=Marker.jsx.umd.js.map

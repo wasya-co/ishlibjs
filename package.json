@@ -1,18 +1,20 @@
 {
   "name": "ishlibjs",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "ishlibjs",
   "author": "piousbox",
   "license": "A Proprietary License",
-  "repository": "wasyaco/ishlibjs",
+  "repository": "wasya-co/ishlibjs",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
   "unpkg": "./dist/index.umd.js",
   "source": "src/index.jsx",
+  "type": "module",
   "exports": {
-    "require_trash": "./dist/index.cjs",
-    "default": "./dist/index.modern.mjs",
-    ".": "./dist/index.modern.mjs"
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js",
+    ".": "./dist/index.modern.js",
+    "./Marker": "./dist/Marker.js"
   },
   "engines": {
     "node": ">=16"
@@ -209,7 +211,7 @@
   },
   "scripts": {
     "build": "microbundle-crl --no-compress",
-    "build_marker": "microbundle-crl --no-compress src/Marker.jsx",
+    "build_marker": "microbundle-crl src/*.jsx",
     "deploy": "gh-pages -d example/build",
     "deploy-storybook": "storybook-to-ghpages",
     "jest": "node scripts/test.js --env=jsdom -t current --colors --watchAll=false",

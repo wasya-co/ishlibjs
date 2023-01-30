@@ -8,6 +8,7 @@ npm install --save ishjs
 = Run =
 
   yarn run serve # port 3009
+  python3 -m http.server --directory public/
 
 = Build =
 

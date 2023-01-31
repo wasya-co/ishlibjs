@@ -8,3 +8,5 @@
 0.4.0 - 2022-08-28 - wiring TestApp (create-react-app) in there. Testing LoginModal styling.
         2022-09-12 - deployed (tentatively) to staging of ISh.
 0.5.0 - 2022-10-13 - removed AuthWidget from this repo
+0.6.0 - skip
+0.7.0 - iterate on using microbundle-crl (or anything) to publish tiny components to browser.

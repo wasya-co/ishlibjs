@@ -82,7 +82,7 @@ export const SimpleJwtRow = () => {
         <i>{currentUser.email}</i>
         <Logout />
       </W2>}
-      { !currentUser.email && <LoginWithPassword /> }
+      {/* { !currentUser.email && <LoginWithPassword /> } */}
     </FlexRow>
   </W1>
 }

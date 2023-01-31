@@ -5,6 +5,7 @@ import {
   logg,
 } from "./shared"
 import TestApp from './TestApp'
+import TestMarker from './TestMarker'
 
 // @TODO: rename
 import * as jwtManager from './components/users/JwtContext' // this syntax is correct
@@ -39,5 +40,5 @@ export { default as Scratchpad } from "./components/users/Scratchpad"
 export { default as SideMenu } from './components/SideMenu'
 
 if (process.env.REACT_APP_SERVE) {
-  ReactDOM.render(<TestApp />, document.getElementById('root'))
+  ReactDOM.render(<TestMarker />, document.getElementById('root'))
 }

@@ -1,109 +1,25 @@
-import e,{useContext as t,useState as r,createContext as o,useEffect as n,Fragment as a}from"react";import l from"react-dom";import"ionicons/icons";import"@material-ui/core";import i from"@material-ui/core/Box";import{ChevronLeft as s,ChevronRight as c,Close as m,Menu as p}from"@material-ui/icons";import d from"prop-types";import{useHistory as u}from"react-router-dom";import g from"styled-components";import h from"axios";import{toast as f,ToastContainer as v}from"react-toastify";import"@capacitor/core";import E from"react-modal";import"@ionic/react";import y from"@material-ui/core/Drawer";import w from"@material-ui/core/Fab";import"@material-ui/core/IconButton";import x from"@material-ui/core/List";import b from"@material-ui/core/ListItem";import"@material-ui/core/ListItemIcon";function C(){return(C=Object.assign?Object.assign.bind():function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var o in r)Object.prototype.hasOwnProperty.call(r,o)&&(e[o]=r[o])}return e}).apply(this,arguments)}const M={anonUser:{},bottomDrawerOpen:"bottom-drawer-open",collapsible:{description:"descr-sec",extra1:"extra1-sec",extra2:"extra2-sec",extra3:"extra3-sec",map:"map-sec",markers:"markers-sec"},collapsibles:"collapsibles",current_user:"current_user",horizontal:"horizontal",item_types:{gallery:"Gallery",report:"Report",video:"Video"},jwt_token:"jwt_token",layout_onecol:"onecol",layout_mapui:"mapui",locations:{earth:"earth"},map_panel_types:{Equirectangular:"Equirectangular",MapPanel:"MapPanel",MapPanelNoZoom:"MapPanelNoZoom",ThreePanelV1:"ThreePanelV1",ThreePanelV4:"ThreePanelV4"},names:{scratchpad:"Scratchpad"},rated:{nc17:"nc-17"},ratedConfirmation:"rated-confirmation",theme:"theme",themes:{dark:"dark",light:"light"},twofoldPercent:"twofold-percent",variants:{bordered:"bordered",floating:"floating",inline:"inline",transparent:"transparent"},vertical:"vertical"};var O=h.create({});const P=g.div`
-
-  // @TODO: this should use variables, for Modal inner size.
-  // I'd need to do dependency injection of the variable, from infiniteshelterjs into ishlibjs.
-  position: fixed; // for GalleriesShow
-  top: 60px;
-  right: 60px;
-
-  display: flex;
-  flex-direction: row-reverse;
-`,L=(g.div`
-  margin-right: 5px;
-  cursor: pointer;
-`,g.div`
-  border: 1px solid gray;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-block;
-  padding: .3em 1em;
-`),k=(g(s)`
-  color: ${e=>e.theme.colors.text}
-`,g(c)`
-  color: ${e=>e.theme.colors.text}
-`,g(i)`
-  margin-bottom: 1em;
-  padding: 1em;
-  background: white;
-  cursor: ${e=>e.cursor?e.cursor:"auto"};
-
-  display: flex;
-  flex-direction: column;
-`,t=>{let{...r}=t;return e.createElement(m,C({style:{cursor:"pointer",...r.style}},r))});k.propTypes={onClick:d.func.isRequired};const R=g.div`
-  display: flex;
-  flex-direction: column;
-
-  > * {
-    margin: auto .4em; // @TODO: standardize this size!
-  }
-`,_=t=>{let{children:r,...o}=t;return e.createElement(R,C({className:"FlexCol"},o),r)},j=g.div`
-  display: flex;
-
-  > * {
-    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!
-  }
-`,T=(g.div`
-  position: fixed;
-  z-index: 999;
-  overflow: show;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 50px;
-  height: 50px;
-`,function(e,t,r){void 0===t&&(t=""),void 0===r&&(r=null),(r="string"==typeof r?r:t.replace(/\W/g,"")).length>0&&"undefined"!=typeof window&&(window[r]=e),console.log(`+++ ${t}:`,e)}),I=g(p)`
-  color: ${e=>e.theme.colors.text}
-`,N=g.div`
-  flex-grow: 1;
-  text-align: center;
-  font-size: 1.2rem;
-`,S=t=>{let{children:r,onClose:o,...n}=t;return e.createElement(j,null,e.createElement(N,null,r),e.createElement(k,{onClick:o}))};S.propTypes={onClose:d.func.isRequired},g.div`
-  border: ${e=>e.theme.thinBorder};
-  border-radius: ${e=>e.theme.thinBorderRadius};
-  background: ${e=>e.theme.colors.cardBackground};
-  padding: .5em;
-
-  margin-bottom: 1em;
-`,g.div`
-  border: ${e=>e.theme.thinBorder};
-  border-radius: ${e=>e.theme.thinBorderRadius};
-  background: ${e=>e.theme.colors.cardBackground};
-  color: ${e=>e.theme.colors.text};
-
-  margin: 0 .5em .5em 0;
-  padding: .5em;
-
-  text-align: center;
-
-  width: 18%;
-  max-width: 140px;
-  min-width: 120px;
-`,g.div`
-  height: 100vh;
-`,e.createContext({});var $={LoginModal:"_2YolN",LoginModalOverlay:"_3hqvY",Notice:"_2ifwF"};const U=o=>{const{onError:n,onSuccess:a}=o,{loginModalOpen:l,setLoginModalOpen:i,setRegisterModalOpen:s,useApi:c}=t(B),[m,p]=r(""),[d,u]=r(""),g=c(),h=function(e,t){try{return g.postLogin({email:e,password:t}).then(e=>{i(!1),a(e)}).catch(e=>{n(e)}),Promise.resolve()}catch(e){return Promise.reject(e)}};return E.setAppElement("body"),e.createElement(E,{className:"LoginModal "+$.LoginModal,isOpen:!!l,overlayClassName:$.LoginModalOverlay,portalClassName:$.LoginModalPortal},e.createElement(S,{onClose:()=>i(!1)},"Login"),"string"==typeof l&&e.createElement(j,null,e.createElement("div",{className:$.Notice},l)),e.createElement(_,null,e.createElement("label",{htmlFor:"email"},"Email"),e.createElement("input",{name:"email",type:"email",value:m,onChange:e=>p(e.target.value)}),e.createElement("label",{htmlFor:"password"},"Password"),e.createElement("input",{name:"password",type:"password",value:d,onChange:e=>u(e.target.value),onKeyDown:e=>{"Enter"===e.key&&h(m,d)}}),e.createElement(j,{style:{flexDirection:"row-reverse",justifyContent:"space-between",marginTop:"0.4em"}},e.createElement(L,{onClick:()=>h(m,d)},"Login"))),e.createElement("hr",{style:{margin:"2rem 0",borderWidth:"1px"}}),e.createElement(j,{style:{justifyContent:"center"}},e.createElement("a",{onClick:()=>{i(!1),s(!0)}},"Register Instead")))};U.propTypes={onError:d.func,onSuccess:d.func};const A=o=>{const{setLoginModalOpen:n,registerModalOpen:a,setRegisterModalOpen:l,useApi:i}=t(B),s=i(),[c,m]=r(""),[p,d]=r(""),[u,g]=r("");return e.createElement(E,{className:"LoginModal "+$.LoginModal,isOpen:a,overlayClassName:$.LoginModalOverlay,portalClassName:$.LoginModalPortal},e.createElement(S,{onClose:()=>l(!1)},"Register"),e.createElement(_,null,e.createElement("label",{htmlFor:"email"},"Email"),e.createElement("input",{type:"email",name:"email",value:c,onChange:e=>m(e.target.value)}),e.createElement("label",{htmlFor:"password"},"Password"),e.createElement("input",{type:"password",name:"password",value:p,onChange:e=>d(e.target.value)}),e.createElement("label",{htmlFor:"password2"},"Confirm Password"),e.createElement("input",{type:"password",name:"password2",value:u,onChange:e=>g(e.target.value)}),e.createElement(j,{style:{flexDirection:"row-reverse",justifyContent:"space-between",marginTop:"0.4em"}},e.createElement(L,{className:"Submit",onClick:()=>function(e,t,r){try{return t!==r?(f("Passwords do not match"),Promise.resolve()):(s.doRegister({email:e,password:t}).then(e=>{l(!1),n(e.message)}).catch(e=>{f("Registration failed")}),Promise.resolve())}catch(e){return Promise.reject(e)}}(c,p,u)},"Register")),e.createElement("hr",{style:{margin:"2rem 0",borderWidth:"1px"}}),e.createElement(j,{style:{justifyContent:"center"}},e.createElement("a",{onClick:()=>n(!0)||l(!1)},"Login Instead"))))};A.propTypes={};const B=o({}),z=t=>{let{children:o,...n}=t;T(n,"AuthContextProvider");let{currentUser:a=M.anonUser,setCurrentUser:l,loginModalOpen:i=!1,setLoginModalOpen:s,registerModalOpen:c=!1,setRegisterModalOpen:m}=n,[p,d]=r(a);l&&(p=a,d=l);let[u,g]=r(i);s&&(u=i,g=s);let[h,f]=r(c);m&&(h=c,f=m);const v={currentUser:p,setCurrentUser:d,loginModalOpen:u,setLoginModalOpen:g,registerModalOpen:h,setRegisterModalOpen:f};return e.createElement(B.Provider,{value:{...n,...v}},o)};z.propTypes={useApi:d.func.isRequired};const D=()=>{const[t,o]=r(!1),[n,a]=r(!0);return e.createElement(z,{loginModalOpen:t,setLoginModalOpen:o,registerModalOpen:n,setRegisterModalOpen:a,useApi:()=>({doRegister:e=>{let{email:t,password:r}=e;return O.post("http://localhost:3001/api/users",{email:t,password:r}).then(e=>e.data).then(e=>(T(e,"done registered"),e))}})},e.createElement(U,null),e.createElement(v,{position:"bottom-left"}))},F=e.createContext({}),q=t=>{let{children:o,...a}=t;T(a,"JwtContextProvider 222");const{api:l}=a,[i,s]=r({}),[c,m]=r({});return n(()=>{T("setting currentUser..."),l.getMyAccount().then(e=>{T(e,"got this resp"),s(e)}).catch(e=>{T(e,"e322"),f("Login failed: "+e),s({})})},[]),e.createElement(F.Provider,{value:{api:l,currentUser:i,setCurrentUser:s,loginModalOpen:c,setLoginModalOpen:m}},o)};q.props={api:d.object};const V=g.div`
+import e,{useContext as n,useState as t,createContext as r,useEffect as o,Fragment as a}from"react";import i from"react-dom";import"ionicons/icons";import"@material-ui/core";import l from"@material-ui/core/Box";import{ChevronLeft as c,ChevronRight as s,Close as m,Menu as u}from"@material-ui/icons";import d from"prop-types";import{useHistory as p}from"react-router-dom";import g from"styled-components";import f from"axios";import{toast as h}from"react-toastify";import"@capacitor/core";import v from"react-modal";import"@ionic/react";import E from"@material-ui/core/Drawer";import y from"@material-ui/core/Fab";import"@material-ui/core/IconButton";import x from"@material-ui/core/List";import w from"@material-ui/core/ListItem";import"@material-ui/core/ListItemIcon";function b(){return(b=Object.assign?Object.assign.bind():function(e){for(var n=1;n<arguments.length;n++){var t=arguments[n];for(var r in t)Object.prototype.hasOwnProperty.call(t,r)&&(e[r]=t[r])}return e}).apply(this,arguments)}function C(e,n){if(null==e)return{};var t,r,o={},a=Object.keys(e);for(r=0;r<a.length;r++)n.indexOf(t=a[r])>=0||(o[t]=e[t]);return o}function M(e,n){return n||(n=e.slice(0)),e.raw=n,e}var O={anonUser:{},bottomDrawerOpen:"bottom-drawer-open",collapsible:{description:"descr-sec",extra1:"extra1-sec",extra2:"extra2-sec",extra3:"extra3-sec",map:"map-sec",markers:"markers-sec"},collapsibles:"collapsibles",current_user:"current_user",horizontal:"horizontal",item_types:{gallery:"Gallery",report:"Report",video:"Video"},jwt_token:"jwt_token",layout_onecol:"onecol",layout_mapui:"mapui",locations:{earth:"earth"},map_panel_types:{Equirectangular:"Equirectangular",MapPanel:"MapPanel",MapPanelNoZoom:"MapPanelNoZoom",ThreePanelV1:"ThreePanelV1",ThreePanelV4:"ThreePanelV4"},names:{scratchpad:"Scratchpad"},rated:{nc17:"nc-17"},ratedConfirmation:"rated-confirmation",theme:"theme",themes:{dark:"dark",light:"light"},twofoldPercent:"twofold-percent",variants:{bordered:"bordered",floating:"floating",inline:"inline",transparent:"transparent"},vertical:"vertical"};f.create({});var k,P,L,R,j,_,T,I,N,S,F,U,A,B,z=["children"],D=["children"],q=["children","onClose"],V=g.div(k||(k=M(["\n\n  // @TODO: this should use variables, for Modal inner size.\n  // I'd need to do dependency injection of the variable, from infiniteshelterjs into ishlibjs.\n  position: fixed; // for GalleriesShow\n  top: 60px;\n  right: 60px;\n\n  display: flex;\n  flex-direction: row-reverse;\n"]))),J=(g.div(P||(P=M(["\n  margin-right: 5px;\n  cursor: pointer;\n"]))),g.div(L||(L=M(["\n  border: 1px solid gray;\n  border-radius: 5px;\n  cursor: pointer;\n  display: inline-block;\n  padding: .3em 1em;\n"])))),W=(g(c)(R||(R=M(["\n  color: ","\n"])),function(e){return e.theme.colors.text}),g(s)(j||(j=M(["\n  color: ","\n"])),function(e){return e.theme.colors.text}),g(l)(_||(_=M(["\n  margin-bottom: 1em;\n  padding: 1em;\n  background: white;\n  cursor: ",";\n\n  display: flex;\n  flex-direction: column;\n"])),function(e){return e.cursor?e.cursor:"auto"}),function(n){var t=C(n,z);return e.createElement(m,b({style:b({cursor:"pointer"},t.style)},t))});W.propTypes={onClick:d.func.isRequired};var G=g.div(T||(T=M(["\n  display: flex;\n  flex-direction: column;\n\n  > * {\n    margin: auto .4em; // @TODO: standardize this size!\n  }\n"]))),Y=function(n){var t=n.children,r=C(n,D);return e.createElement(G,b({className:"FlexCol"},r),t)},Z=g.div(I||(I=M(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em; // @TODO: why? the LoginModal needs no margins!\n  }\n"]))),H=(g.div(N||(N=M(["\n  position: fixed;\n  z-index: 999;\n  overflow: show;\n  margin: auto;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  width: 50px;\n  height: 50px;\n"]))),function(e,n,t){void 0===n&&(n=""),void 0===t&&(t=null),(t="string"==typeof t?t:n.replace(/\W/g,"")).length>0&&"undefined"!=typeof window&&(window[t]=e),console.log("+++ "+n+":",e)}),K=g(u)(S||(S=M(["\n  color: ","\n"])),function(e){return e.theme.colors.text}),Q=g.div(F||(F=M(["\n  flex-grow: 1;\n  text-align: center;\n  font-size: 1.2rem;\n"]))),X=function(n){var t=n.children,r=n.onClose;return C(n,q),e.createElement(Z,null,e.createElement(Q,null,t),e.createElement(W,{onClick:r}))};X.propTypes={onClose:d.func.isRequired},g.div(U||(U=M(["\n  border: ",";\n  border-radius: ",";\n  background: ",";\n  padding: .5em;\n\n  margin-bottom: 1em;\n"])),function(e){return e.theme.thinBorder},function(e){return e.theme.thinBorderRadius},function(e){return e.theme.colors.cardBackground}),g.div(A||(A=M(["\n  border: ",";\n  border-radius: ",";\n  background: ",";\n  color: ",";\n\n  margin: 0 .5em .5em 0;\n  padding: .5em;\n\n  text-align: center;\n\n  width: 18%;\n  max-width: 140px;\n  min-width: 120px;\n"])),function(e){return e.theme.thinBorder},function(e){return e.theme.thinBorderRadius},function(e){return e.theme.colors.cardBackground},function(e){return e.theme.colors.text}),g.div(B||(B=M(["\n  height: 100vh;\n"]))),e.createContext({});var $={LoginModal:"_2YolN",LoginModalOverlay:"_3hqvY",Notice:"_2ifwF"},ee=function(r){var o=r.onError,a=r.onSuccess,i=n(re),l=i.loginModalOpen,c=i.setLoginModalOpen,s=i.setRegisterModalOpen,m=i.useApi,u=t(""),d=u[0],p=u[1],g=t(""),f=g[0],h=g[1],E=m(),y=function(e,n){try{return E.postLogin({email:e,password:n}).then(function(e){c(!1),a(e)}).catch(function(e){o(e)}),Promise.resolve()}catch(e){return Promise.reject(e)}};return v.setAppElement("body"),e.createElement(v,{className:"LoginModal "+$.LoginModal,isOpen:!!l,overlayClassName:$.LoginModalOverlay,portalClassName:$.LoginModalPortal},e.createElement(X,{onClose:function(){return c(!1)}},"Login"),"string"==typeof l&&e.createElement(Z,null,e.createElement("div",{className:$.Notice},l)),e.createElement(Y,null,e.createElement("label",{htmlFor:"email"},"Email"),e.createElement("input",{name:"email",type:"email",value:d,onChange:function(e){return p(e.target.value)}}),e.createElement("label",{htmlFor:"password"},"Password"),e.createElement("input",{name:"password",type:"password",value:f,onChange:function(e){return h(e.target.value)},onKeyDown:function(e){"Enter"===e.key&&y(d,f)}}),e.createElement(Z,{style:{flexDirection:"row-reverse",justifyContent:"space-between",marginTop:"0.4em"}},e.createElement(J,{onClick:function(){return y(d,f)}},"Login"))),e.createElement("hr",{style:{margin:"2rem 0",borderWidth:"1px"}}),e.createElement(Z,{style:{justifyContent:"center"}},e.createElement("a",{onClick:function(){c(!1),s(!0)}},"Register Instead")))};ee.propTypes={onError:d.func,onSuccess:d.func};var ne=function(r){var o=n(re),a=o.setLoginModalOpen,i=o.registerModalOpen,l=o.setRegisterModalOpen,c=(0,o.useApi)(),s=t(""),m=s[0],u=s[1],d=t(""),p=d[0],g=d[1],f=t(""),E=f[0],y=f[1];return e.createElement(v,{className:"LoginModal "+$.LoginModal,isOpen:i,overlayClassName:$.LoginModalOverlay,portalClassName:$.LoginModalPortal},e.createElement(X,{onClose:function(){return l(!1)}},"Register"),e.createElement(Y,null,e.createElement("label",{htmlFor:"email"},"Email"),e.createElement("input",{type:"email",name:"email",value:m,onChange:function(e){return u(e.target.value)}}),e.createElement("label",{htmlFor:"password"},"Password"),e.createElement("input",{type:"password",name:"password",value:p,onChange:function(e){return g(e.target.value)}}),e.createElement("label",{htmlFor:"password2"},"Confirm Password"),e.createElement("input",{type:"password",name:"password2",value:E,onChange:function(e){return y(e.target.value)}}),e.createElement(Z,{style:{flexDirection:"row-reverse",justifyContent:"space-between",marginTop:"0.4em"}},e.createElement(J,{className:"Submit",onClick:function(){return function(e,n,t){try{return n!==t?(h("Passwords do not match"),Promise.resolve()):(c.doRegister({email:e,password:n}).then(function(e){l(!1),a(e.message)}).catch(function(e){h("Registration failed")}),Promise.resolve())}catch(e){return Promise.reject(e)}}(m,p,E)}},"Register")),e.createElement("hr",{style:{margin:"2rem 0",borderWidth:"1px"}}),e.createElement(Z,{style:{justifyContent:"center"}},e.createElement("a",{onClick:function(){return a(!0)||l(!1)}},"Login Instead"))))};ne.propTypes={};var te=["children"],re=r({}),oe=function(n){var r=n.children,o=C(n,te);H(o,"AuthContextProvider");var a=o.currentUser,i=void 0===a?O.anonUser:a,l=o.setCurrentUser,c=o.loginModalOpen,s=void 0!==c&&c,m=o.setLoginModalOpen,u=o.registerModalOpen,d=void 0!==u&&u,p=o.setRegisterModalOpen,g=t(i),f=g[0],h=g[1];l&&(f=i,h=l);var v=t(s),E=v[0],y=v[1];m&&(E=s,y=m);var x=t(d),w=x[0],M=x[1];return p&&(w=d,M=p),e.createElement(re.Provider,{value:b({},o,{currentUser:f,setCurrentUser:h,loginModalOpen:E,setLoginModalOpen:y,registerModalOpen:w,setRegisterModalOpen:M})},r)};oe.propTypes={useApi:d.func.isRequired};const ae=n=>{H(n,"Marker");const{label:t="<none>"}=n;return e.createElement(e.Fragment,null,e.createElement("div",{className:"Card",style:{border:"1px solid red",borderRadius:"10px",padding:"10px",maxWidth:"400px"}},"I am a marker! Label: `",t,"`."))},ie=()=>e.createElement(Fragment,null,e.createElement("h1",null,"Hello, world!"),e.createElement(ae,null)),le=e.createContext({}),ce=n=>{let{children:r,...a}=n;H(a,"JwtContextProvider 222");const{api:i}=a,[l,c]=t({}),[s,m]=t({});return o(()=>{H("setting currentUser..."),i.getMyAccount().then(e=>{H(e,"got this resp"),c(e)}).catch(e=>{H(e,"e322"),h("Login failed: "+e),c({})})},[]),e.createElement(le.Provider,{value:{api:i,currentUser:l,setCurrentUser:c,loginModalOpen:s,setLoginModalOpen:m}},r)};ce.props={api:d.object};const se=g.div`
   display: flex;
 
   > * {
     margin: auto .4em;
   }
-`,J=g.div`
+`,me=g.div`
   border: 1px solid red;
-`,W=g.div`
+`,ue=g.div`
   display: flex;
-`,G=(g.div`
+`,de=(g.div`
   display: flex;
 
   > * {
     // margin: auto .4em;
   }
-`,()=>{const{setCurrentUser:r}=t(F);return e.createElement(L,{onClick:()=>{localStorage.removeItem("jwt_token"),r({})}},"Logout")});var Y={__proto__:null,JwtContext:F,JwtContextProvider:q,SimpleJwtRow:()=>{const{currentUser:r}=t(F);return e.createElement(J,null,e.createElement(V,null,r.email&&e.createElement(W,null,e.createElement("i",null,r.email),e.createElement(G,null)),!r.email&&e.createElement(LoginWithPassword,null)))},Logout:G};const Z=g.div`
-`,K=o=>{const{useApi:n}=t(B),a=n(),[l,i]=r(localStorage.getItem(M.names.scratchpad)||"");return e.createElement(Z,null,e.createElement("textarea",{name:"scratchpad",rows:"20",cols:"40",onChange:e=>i(e.target.value),value:l}),e.createElement(P,null,e.createElement(L,{onClick:()=>{localStorage.setItem(M.names.scratchpad,l),a.postProfile({scratchpad:l}).then(e=>{}).catch(e=>{T("Cannot update profile:",e)})}},"Save")))};K.propTypes={};const H=g.div`
+`,()=>{const{setCurrentUser:t}=n(le);return e.createElement(J,{onClick:()=>{localStorage.removeItem("jwt_token"),t({})}},"Logout")});var pe={__proto__:null,JwtContext:le,JwtContextProvider:ce,SimpleJwtRow:()=>{const{currentUser:t}=n(le);return e.createElement(me,null,e.createElement(se,null,t.email&&e.createElement(ue,null,e.createElement("i",null,t.email),e.createElement(de,null))))},Logout:de};const ge=g.div`
+`,fe=r=>{const{useApi:o}=n(re),a=o(),[i,l]=t(localStorage.getItem(O.names.scratchpad)||"");return e.createElement(ge,null,e.createElement("textarea",{name:"scratchpad",rows:"20",cols:"40",onChange:e=>l(e.target.value),value:i}),e.createElement(V,null,e.createElement(J,{onClick:()=>{localStorage.setItem(O.names.scratchpad,i),a.postProfile({scratchpad:i}).then(e=>{}).catch(e=>{H("Cannot update profile:",e)})}},"Save")))};fe.propTypes={};const he=g.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-content: space-between;
-`,Q=t=>{let{children:o,...n}=t;const{listItems:l}=n,[i,s]=e.useState(!1),[c,m]=r(!1),p=u();return e.createElement(a,null,n.variant===M.variants.floating?e.createElement(w,{onClick:()=>s(!0),style:{position:"absolute",top:0,left:0,margin:".5em",zIndex:1},"aria-label":"main menu"},e.createElement(I,null)):e.createElement(I,{onClick:()=>s(!0)}),e.createElement(y,{anchor:"left",open:i,onClose:()=>s(!1)},e.createElement(H,null,e.createElement(x,null,l.map(t=>{let{label:r,key:o,path:n}=t;return e.createElement(b,{button:!0,key:o,onClick:()=>{s(!1),p.push(n())}},r)})),o)))};Q.propTypes={listItems:d.array.isRequired,variant:d.string},process.env.REACT_APP_SERVE&&l.render(e.createElement(D,null),document.getElementById("root"));export{P as Actions,B as AuthContext,z as AuthContextProvider,k as CloseBtn,_ as FlexCol,j as FlexRow,U as LoginModal,S as ModalHeader,A as RegisterModal,K as Scratchpad,Q as SideMenu,Y as jwtManager,T as logg};
+`,ve=n=>{let{children:r,...o}=n;const{listItems:i}=o,[l,c]=e.useState(!1),[s,m]=t(!1),u=p();return e.createElement(a,null,o.variant===O.variants.floating?e.createElement(y,{onClick:()=>c(!0),style:{position:"absolute",top:0,left:0,margin:".5em",zIndex:1},"aria-label":"main menu"},e.createElement(K,null)):e.createElement(K,{onClick:()=>c(!0)}),e.createElement(E,{anchor:"left",open:l,onClose:()=>c(!1)},e.createElement(he,null,e.createElement(x,null,i.map(n=>{let{label:t,key:r,path:o}=n;return e.createElement(w,{button:!0,key:r,onClick:()=>{c(!1),u.push(o())}},t)})),r)))};ve.propTypes={listItems:d.array.isRequired,variant:d.string},process.env.REACT_APP_SERVE&&i.render(e.createElement(ie,null),document.getElementById("root"));export{V as Actions,re as AuthContext,oe as AuthContextProvider,W as CloseBtn,Y as FlexCol,Z as FlexRow,ee as LoginModal,X as ModalHeader,ne as RegisterModal,fe as Scratchpad,ve as SideMenu,pe as jwtManager,H as logg};
 //# sourceMappingURL=index.jsx.module.js.map

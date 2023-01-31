@@ -112,7 +112,7 @@
     vertical: 'vertical'
   };
 
-  var request = axios.create({});
+  axios.create({});
 
   var _excluded = ["children"],
       _excluded2 = ["children"],
@@ -490,46 +490,20 @@
     useApi: PropTypes.func.isRequired
   };
 
-  var config = {
-    apiOrigin: 'http://localhost:3001'
+  var Marker = function Marker(props) {
+    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement("div", {
+      className: "Card",
+      style: {
+        border: '1px solid red',
+        borderRadius: '10px',
+        padding: '10px',
+        maxWidth: '400px'
+      }
+    }, "I am a marker!"));
   };
 
   var TestApp = function TestApp() {
-    var useApi = function useApi() {
-      return {
-        doRegister: function doRegister(_ref) {
-          var email = _ref.email,
-              password = _ref.password;
-          return request.post(config.apiOrigin + "/api/users", {
-            email: email,
-            password: password
-          }).then(function (r) {
-            return r.data;
-          }).then(function (r) {
-            logg(r, 'done registered');
-            return r;
-          });
-        }
-      };
-    };
-
-    var _useState = React.useState(false),
-        loginModalOpen = _useState[0],
-        setLoginModalOpen = _useState[1];
-
-    var _useState2 = React.useState(true),
-        registerModalOpen = _useState2[0],
-        setRegisterModalOpen = _useState2[1];
-
-    return /*#__PURE__*/React__default.createElement(AuthContextProvider, {
-      loginModalOpen: loginModalOpen,
-      setLoginModalOpen: setLoginModalOpen,
-      registerModalOpen: registerModalOpen,
-      setRegisterModalOpen: setRegisterModalOpen,
-      useApi: useApi
-    }, /*#__PURE__*/React__default.createElement(LoginModal, null), /*#__PURE__*/React__default.createElement(reactToastify.ToastContainer, {
-      position: "bottom-left"
-    }));
+    return /*#__PURE__*/React__default.createElement(Fragment, null, /*#__PURE__*/React__default.createElement("h1", null, "Hello, world!"), /*#__PURE__*/React__default.createElement(Marker, null));
   };
 
   var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
@@ -584,7 +558,7 @@
     var _useContext = React.useContext(JwtContext),
         currentUser = _useContext.currentUser;
 
-    return /*#__PURE__*/React__default.createElement(W1, null, /*#__PURE__*/React__default.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React__default.createElement(W2, null, /*#__PURE__*/React__default.createElement("i", null, currentUser.email), /*#__PURE__*/React__default.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React__default.createElement(LoginWithPassword, null)));
+    return /*#__PURE__*/React__default.createElement(W1, null, /*#__PURE__*/React__default.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React__default.createElement(W2, null, /*#__PURE__*/React__default.createElement("i", null, currentUser.email), /*#__PURE__*/React__default.createElement(Logout, null))));
   };
 
   var _W = styled.div(_templateObject4$1 || (_templateObject4$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));

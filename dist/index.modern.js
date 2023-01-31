@@ -1,4 +1,4 @@
-import React, { useContext, useState, createContext, useEffect, Fragment } from 'react';
+import React, { useContext, useState, createContext, useEffect, Fragment as Fragment$1 } from 'react';
 import ReactDOM from 'react-dom';
 import 'ionicons/icons';
 import '@material-ui/core';
@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import '@capacitor/core';
 import Modal from 'react-modal';
 import '@ionic/react';
@@ -114,7 +114,7 @@ var C = {
   vertical: 'vertical'
 };
 
-var request = axios.create({});
+axios.create({});
 
 var _excluded = ["children"],
     _excluded2 = ["children"],
@@ -492,46 +492,20 @@ AuthContextProvider.propTypes = {
   useApi: PropTypes.func.isRequired
 };
 
-var config = {
-  apiOrigin: 'http://localhost:3001'
+var Marker = function Marker(props) {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "Card",
+    style: {
+      border: '1px solid red',
+      borderRadius: '10px',
+      padding: '10px',
+      maxWidth: '400px'
+    }
+  }, "I am a marker!"));
 };
 
 var TestApp = function TestApp() {
-  var useApi = function useApi() {
-    return {
-      doRegister: function doRegister(_ref) {
-        var email = _ref.email,
-            password = _ref.password;
-        return request.post(config.apiOrigin + "/api/users", {
-          email: email,
-          password: password
-        }).then(function (r) {
-          return r.data;
-        }).then(function (r) {
-          logg(r, 'done registered');
-          return r;
-        });
-      }
-    };
-  };
-
-  var _useState = useState(false),
-      loginModalOpen = _useState[0],
-      setLoginModalOpen = _useState[1];
-
-  var _useState2 = useState(true),
-      registerModalOpen = _useState2[0],
-      setRegisterModalOpen = _useState2[1];
-
-  return /*#__PURE__*/React.createElement(AuthContextProvider, {
-    loginModalOpen: loginModalOpen,
-    setLoginModalOpen: setLoginModalOpen,
-    registerModalOpen: registerModalOpen,
-    setRegisterModalOpen: setRegisterModalOpen,
-    useApi: useApi
-  }, /*#__PURE__*/React.createElement(LoginModal, null), /*#__PURE__*/React.createElement(ToastContainer, {
-    position: "bottom-left"
-  }));
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Hello, world!"), /*#__PURE__*/React.createElement(Marker, null));
 };
 
 var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
@@ -586,7 +560,7 @@ var SimpleJwtRow = function SimpleJwtRow() {
   var _useContext = useContext(JwtContext),
       currentUser = _useContext.currentUser;
 
-  return /*#__PURE__*/React.createElement(W1, null, /*#__PURE__*/React.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React.createElement(W2, null, /*#__PURE__*/React.createElement("i", null, currentUser.email), /*#__PURE__*/React.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React.createElement(LoginWithPassword, null)));
+  return /*#__PURE__*/React.createElement(W1, null, /*#__PURE__*/React.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React.createElement(W2, null, /*#__PURE__*/React.createElement("i", null, currentUser.email), /*#__PURE__*/React.createElement(Logout, null))));
 };
 
 var _W = styled.div(_templateObject4$1 || (_templateObject4$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
@@ -668,7 +642,7 @@ var SideMenu = function SideMenu(_ref) {
   var _useState = useState(false);
 
   var history = useHistory();
-  return /*#__PURE__*/React.createElement(Fragment, null, props.variant === C.variants.floating ? /*#__PURE__*/React.createElement(Fab, {
+  return /*#__PURE__*/React.createElement(Fragment$1, null, props.variant === C.variants.floating ? /*#__PURE__*/React.createElement(Fab, {
     onClick: function onClick() {
       return setDrawerOpen(true);
     },

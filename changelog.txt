@@ -9,3 +9,4 @@
         2022-09-12 - deployed (tentatively) to staging of ISh.
 0.5.0 - 2022-10-13 - removed AuthWidget from this repo
 0.6.0 - 2023-01-12 - TestApp_Gallery20230112Chitown is in.
+        2023-01-30 - that probably didn't work well. Revert to 0.5.0, use microbundle-crl to bundle okay, but imports must be managed separately? Anyway, skip 0.6.0

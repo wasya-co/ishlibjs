@@ -2,8 +2,21 @@
 <head>
   <meta charset="UTF-8" />
   <title>Marker - test | ishlibjs</title>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script> -->
+  <!-- <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script>
+const logg = (a, b="", c=null) => {
+  c = "string" === typeof c ? c : b.replace(/\W/g, "");
+  if (c.length > 0 && typeof window !== "undefined") {
+    window[c] = a;
+  }
+
+  console.log(`+++ ${b}:`, a); // eslint-disable-line no-console
+};
+</script>
+
 </head>
 <body>
 
@@ -18,7 +31,7 @@
     const domContainer = document.querySelector('#root')
     const root = ReactDOM.createRoot(domContainer)
 
-    root.render(e(Marker({ label: 'some label' })))
+    root.render(e(Marker, { label: 'z3' }))
   </script>
 
 

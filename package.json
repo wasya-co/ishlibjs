@@ -210,7 +210,7 @@
   },
   "scripts": {
     "build": "microbundle-crl --no-compress",
-    "build_marker": "microbundle-crl src/*.jsx",
+    "build_marker": "microbundle-crl src/*.jsx ; cp dist/Marker.jsx.modern.js public/",
     "deploy": "gh-pages -d example/build",
     "deploy-storybook": "storybook-to-ghpages",
     "jest": "node scripts/test.js --env=jsdom -t current --colors --watchAll=false",

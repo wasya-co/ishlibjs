@@ -5,7 +5,7 @@ import {
 } from "$shared"
 
 const Marker = (props) => {
-  logg(props, 'Marker')
+  // logg(props, 'Marker')
   const {
     label = '<none>',
   } = props

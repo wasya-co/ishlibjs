@@ -21,7 +21,7 @@ const config = {
 const TestApp = () => {
   return (<>
     <h1>Hello, world!</h1>
-    <Marker />
+    <Marker label='my-new-label' />
   </>)
 }
 export default TestApp

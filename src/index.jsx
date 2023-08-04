@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import {
   logg,
 } from "./shared"
-import TestApp from './TestApp'
+import TestApp from './AppTest'
 
 // @TODO: rename
 import * as jwtManager from './components/users/JwtContext' // this syntax is correct
@@ -16,6 +16,9 @@ export { default as AuthWidget } from "./components/users/AuthWidget"
 
 /* C */
 export { CloseBtn } from './shared'
+
+/* D */
+export { doLogout } from './components/users'
 
 /* F */
 export { FlexCol, FlexRow } from "./shared"

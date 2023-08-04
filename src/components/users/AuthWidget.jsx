@@ -94,5 +94,4 @@ const AuthWidget = (props) => {
   </F>
 }
 AuthWidget.propTypes = {} // none so far
-
 export default AuthWidget

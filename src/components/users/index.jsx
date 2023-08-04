@@ -59,6 +59,7 @@ export {
 }
 export { default as AuthWidget } from './AuthWidget'
 
+/* D */
 /* F */
 const { FacebookLogin: _FacebookLogin } = Plugins
 

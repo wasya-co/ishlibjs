@@ -1,23 +1,16 @@
-import React, { useContext, Fragment, useState, createContext, useEffect } from 'react';
+import React, { useContext, Fragment, useState, createContext } from 'react';
 import ReactDOM from 'react-dom';
 import 'ionicons/icons';
 import '@material-ui/core';
 import _Box from '@material-ui/core/Box';
-import { ChevronLeft as ChevronLeft$1, ChevronRight as ChevronRight$1, Close, Menu } from '@material-ui/icons';
+import { ChevronLeft as ChevronLeft$1, ChevronRight as ChevronRight$1, Menu, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { toast as toast$1, ToastContainer } from 'react-toastify';
 import '@capacitor/core';
 import Modal from 'react-modal';
-import '@ionic/react';
-import Drawer from '@material-ui/core/Drawer';
-import Fab from '@material-ui/core/Fab';
-import '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import '@material-ui/core/ListItemIcon';
 
 function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function (target) {
@@ -610,10 +603,6 @@ AuthContextProvider.propTypes = {
   useApi: PropTypes.func.isRequired
 };
 
-var config = {
-  apiOrigin: 'http://localhost:3001'
-};
-
 var TestApp = function TestApp() {
   var useApi = function useApi() {
     return {
@@ -652,185 +641,7 @@ var TestApp = function TestApp() {
   }));
 };
 
-var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
-
-var _excluded$3 = ["children"];
-var JwtContext = React.createContext({});
-
-var JwtContextProvider = function JwtContextProvider(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
-
-  logg(props, 'JwtContextProvider 222');
-  var api = props.api;
-
-  var _useState = useState(C.anonUser),
-      currentUser = _useState[0],
-      setCurrentUser = _useState[1];
-
-  var _useState2 = useState({}),
-      loginModalOpen = _useState2[0],
-      setLoginModalOpen = _useState2[1];
-
-  useEffect(function () {
-    logg('setting currentUser...');
-    api.getMyAccount().then(function (resp) {
-      logg(resp, 'got this resp');
-      setCurrentUser(resp);
-    }).catch(function (e) {
-      logg(e, 'e322');
-      toast$1("Login failed: " + e);
-      setCurrentUser(C.anonUser);
-    });
-  }, []);
-  return /*#__PURE__*/React.createElement(JwtContext.Provider, {
-    value: {
-      api: api,
-      currentUser: currentUser,
-      setCurrentUser: setCurrentUser,
-      loginModalOpen: loginModalOpen,
-      setLoginModalOpen: setLoginModalOpen
-    }
-  }, children);
-};
-
-JwtContextProvider.props = {
-  api: PropTypes.object
-};
-var FlexRow$1 = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
-var W1 = styled.div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n  border: 1px solid red;\n"])));
-var W2 = styled.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n"])));
-var SimpleJwtRow = function SimpleJwtRow() {
-  var _useContext = useContext(JwtContext),
-      currentUser = _useContext.currentUser;
-
-  return /*#__PURE__*/React.createElement(W1, null, /*#__PURE__*/React.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React.createElement(W2, null, /*#__PURE__*/React.createElement("i", null, currentUser.email), /*#__PURE__*/React.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React.createElement(LoginWithPassword, null)));
-};
-
-var _W = styled.div(_templateObject4$1 || (_templateObject4$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
-
-var Logout = function Logout() {
-  var _useContext2 = useContext(JwtContext),
-      setCurrentUser = _useContext2.setCurrentUser;
-
-  var doLogout = function doLogout() {
-    localStorage.removeItem(C.jwt_token);
-    setCurrentUser({});
-  };
-
-  return /*#__PURE__*/React.createElement(Btn, {
-    onClick: doLogout
-  }, "Logout");
-};
-
-var JwtContext$1 = {
-  __proto__: null,
-  JwtContext: JwtContext,
-  JwtContextProvider: JwtContextProvider,
-  SimpleJwtRow: SimpleJwtRow,
-  Logout: Logout
-};
-
-var _templateObject$2;
-var W0 = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n"])));
-
-var Scratchpad = function Scratchpad(props) {
-  var _useContext = useContext(AuthContext),
-      useApi = _useContext.useApi;
-
-  var api = useApi();
-
-  var _useState = useState(localStorage.getItem(C.names.scratchpad) || ''),
-      txt = _useState[0],
-      setTxt = _useState[1];
-
-  var doSave = function doSave() {
-    localStorage.setItem(C.names.scratchpad, txt);
-    api.postProfile({
-      scratchpad: txt
-    }).then(function (data) {}).catch(function (err) {
-      logg('Cannot update profile:', err);
-    });
-  };
-
-  return /*#__PURE__*/React.createElement(W0, null, /*#__PURE__*/React.createElement("textarea", {
-    name: "scratchpad",
-    rows: "20",
-    cols: "40",
-    onChange: function onChange(e) {
-      return setTxt(e.target.value);
-    },
-    value: txt
-  }), /*#__PURE__*/React.createElement(Actions, null, /*#__PURE__*/React.createElement(Btn, {
-    onClick: doSave
-  }, "Save")));
-};
-
-Scratchpad.propTypes = {};
-
-var _excluded$4 = ["children"];
-
-var _templateObject$3;
-var W0$1 = styled.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
-
-var SideMenu = function SideMenu(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$4);
-
-  var listItems = props.listItems;
-
-  var _React$useState = React.useState(false),
-      drawerOpen = _React$useState[0],
-      setDrawerOpen = _React$useState[1];
-
-  var _useState = useState(false);
-
-  var history = useHistory();
-  return /*#__PURE__*/React.createElement(Fragment, null, props.variant === C.variants.floating ? /*#__PURE__*/React.createElement(Fab, {
-    onClick: function onClick() {
-      return setDrawerOpen(true);
-    },
-    style: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      margin: '.5em',
-      zIndex: 1
-    },
-    "aria-label": "main menu"
-  }, /*#__PURE__*/React.createElement(MenuIcon, null)) : /*#__PURE__*/React.createElement(MenuIcon, {
-    onClick: function onClick() {
-      return setDrawerOpen(true);
-    }
-  }), /*#__PURE__*/React.createElement(Drawer, {
-    anchor: "left",
-    open: drawerOpen,
-    onClose: function onClose() {
-      return setDrawerOpen(false);
-    }
-  }, /*#__PURE__*/React.createElement(W0$1, null, /*#__PURE__*/React.createElement(List, null, listItems.map(function (_ref2) {
-    var label = _ref2.label,
-        key = _ref2.key,
-        path = _ref2.path;
-    return /*#__PURE__*/React.createElement(ListItem, {
-      button: true,
-      key: key,
-      onClick: function onClick() {
-        setDrawerOpen(false);
-        history.push(path());
-      }
-    }, label);
-  })), children)));
-};
-
-SideMenu.propTypes = {
-  listItems: PropTypes.array.isRequired,
-  variant: PropTypes.string
-};
-
 if (process.env.REACT_APP_SERVE) {
   ReactDOM.render( /*#__PURE__*/React.createElement(TestApp, null), document.getElementById('root'));
 }
-
-export { Actions, AuthContext, AuthContextProvider, AuthWidget, CloseBtn, FlexCol, FlexRow, LoginModal, ModalHeader, RegisterModal, Scratchpad, SideMenu, JwtContext$1 as jwtManager, logg };
 //# sourceMappingURL=index.modern.js.map
